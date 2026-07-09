@@ -6,8 +6,8 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase CDN (Unpkg for maximum stability) -->
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Supabase CDN (Standard global variable package) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-100 min-h-screen pb-24">
 
@@ -203,7 +203,6 @@
                 lblQty: "పరిమాణం (Qty)",
                 lblPaidBy: "ఎవరు చెల్లించారు?",
                 saveBtn: "సేవ్ చేయండి",
-                listHeading: "ఖర్చులు",
                 lblPendingBal: "మిగిలిన బ్యాలెన్స్:",
                 noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
                 uiBtn: "English UI",
@@ -226,7 +225,6 @@
                 lblQty: "Quantity",
                 lblPaidBy: "Who Paid?",
                 saveBtn: "Save Expense",
-                listHeading: "Expenses List",
                 lblPendingBal: "Pending Balance to Clear:",
                 noExpenses: "No expenses logged yet",
                 uiBtn: "తెలుగు UI",
@@ -328,7 +326,6 @@
             document.getElementById('lblQty').innerText = t.lblQty;
             document.getElementById('lblPaidBy').innerText = t.lblPaidBy;
             document.getElementById('saveBtn').innerText = t.saveBtn;
-            document.getElementById('listHeading').innerText = t.listHeading;
             document.getElementById('lblPendingBal').innerText = t.lblPendingBal;
             document.getElementById('reportHeader').innerText = t.reportHeader;
             document.getElementById('peopleHeader').innerText = t.peopleHeader;
@@ -372,4 +369,6 @@
             const micBtn = document.getElementById('micBtn');
 
             recognition.onstart = () => {
-                st
+                statusText.innerText = translations[uiLanguage].statusListening;
+                micBtn.classList.add('bg-red-500', 'animate-pulse');
+                
