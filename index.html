@@ -9,14 +9,13 @@
     <!-- Supabase CDN (Database Connection) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-gray-100 min-h-screen pb-10">
+<body class="bg-gray-100 min-h-screen pb-24">
 
-    <!-- 1. DATABASE SETUP CONFIGURATION SCREEN -->
+    <!-- DATABASE SETUP SCREEN (Only shows if keys are missing) -->
     <div id="setupScreen" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full space-y-4">
             <h2 class="text-xl font-bold text-gray-800">Database Setup (డేటాబేస్ సెటప్)</h2>
-            <p class="text-sm text-gray-600">Please paste your Supabase keys to connect your shared family database. These keys are saved safely on your device.</p>
-            
+            <p class="text-sm text-gray-600">Please paste your Supabase keys to connect your shared family database.</p>
             <div>
                 <label class="block text-xs font-semibold text-gray-600">Supabase Project URL</label>
                 <input type="text" id="setupUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm">
@@ -25,15 +24,14 @@
                 <label class="block text-xs font-semibold text-gray-600">Supabase Anon/Public Key</label>
                 <textarea id="setupKey" placeholder="eyJhbGciOi..." rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm"></textarea>
             </div>
-            
-            <button onclick="saveSetupKeys()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+            <button onclick="saveSetupKeys()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
                 Connect Database (కనెక్ట్ చేయండి)
             </button>
         </div>
     </div>
 
-    <!-- 2. MAIN APPLICATION SCREEN -->
-    <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+    <!-- MAIN HEADER -->
+    <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
         <h1 id="appTitle" class="text-xl font-bold">Family Expenses</h1>
         <div class="flex gap-2">
             <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
@@ -45,36 +43,28 @@
         </div>
     </header>
 
-    <main class="max-w-md mx-auto p-4 mt-4 space-y-6">
-
-        <!-- Speech Input Section -->
+    <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
+    <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-6">
+        <!-- Voice Input -->
         <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
             <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak to Enter</h2>
             <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">
-                    English
-                </button>
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">
-                    తెలుగు (Telugu)
-                </button>
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">English</button>
+                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">తెలుగు</button>
             </div>
             <div class="flex justify-center py-2">
-                <button id="micBtn" onclick="startListening()" class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl shadow-lg active:scale-95 transition">
-                    🎙️
-                </button>
+                <button id="micBtn" onclick="startListening()" class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl shadow-lg active:scale-95 transition">🎙️</button>
             </div>
             <p id="statusText" class="text-sm text-gray-500">Tap microphone button to speak</p>
         </div>
 
-        <!-- Expense Form -->
+        <!-- Form -->
         <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
             <h2 id="formHeading" class="text-lg font-medium text-gray-700">Expense Details</h2>
-            
             <div>
                 <label id="lblItem" class="block text-sm font-medium text-gray-600">Item Name</label>
                 <input type="text" id="itemName" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
             </div>
-
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label id="lblAmount" class="block text-sm font-medium text-gray-600">Amount (₹)</label>
@@ -82,10 +72,9 @@
                 </div>
                 <div>
                     <label id="lblQty" class="block text-sm font-medium text-gray-600">Quantity</label>
-                    <input type="text" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                    <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
                 </div>
             </div>
-
             <div>
                 <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">Who Paid?</label>
                 <select id="paidBy" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
@@ -96,39 +85,129 @@
                     <option value="Other">Other (ఇతరులు)</option>
                 </select>
             </div>
-
             <button onclick="saveExpense()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
                 Save Expense
             </button>
         </div>
+    </div>
 
-        <!-- Expense List -->
-        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
-            <h2 id="listHeading" class="text-lg font-medium text-gray-700">Expenses List</h2>
-            <div id="expenseList" class="space-y-2 divide-y divide-gray-100">
-                <p id="noExpensesText" class="text-gray-400 text-center py-4">Loading database...</p>
-            </div>
-            
-            <div class="pt-4 border-t border-gray-200 flex justify-between items-center font-bold text-gray-800">
-                <span id="lblPendingBal">Pending Balance to Clear:</span>
-                <span id="pendingTotal" class="text-red-600 text-lg">₹0</span>
-            </div>
+    <!-- ==================== PAGE 2: DASHBOARD REPORTS ==================== -->
+    <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <!-- Interactive Cards Section -->
+        <h2 id="reportHeader" class="text-xl font-bold text-gray-800">Time-Period Expenses</h2>
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Daily Card -->
+            <button onclick="filterReport('daily')" class="bg-gradient-to-br from-teal-500 to-teal-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
+                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Today (ఈరోజు)</span>
+                <span id="cardDailyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <!-- Weekly Card -->
+            <button onclick="filterReport('weekly')" class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
+                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Weekly (వారం)</span>
+                <span id="cardWeeklyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <!-- Monthly Card -->
+            <button onclick="filterReport('monthly')" class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
+                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Monthly (నెల)</span>
+                <span id="cardMonthlyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <!-- Yearly Card -->
+            <button onclick="filterReport('yearly')" class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
+                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Yearly (సంవత్సరం)</span>
+                <span id="cardYearlyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
         </div>
 
-    </main>
+        <!-- Expense Log Box -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 id="reportListTitle" class="text-lg font-bold text-gray-700">Displaying: All</h3>
+                <button onclick="filterReport('all')" class="text-xs text-blue-600 font-semibold underline">Show All</button>
+            </div>
+            <div id="expenseList" class="space-y-2 divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                <p class="text-gray-400 text-center py-4">No expenses found.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 3: PEOPLE & SETTLEMENTS ==================== -->
+    <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <h2 id="peopleHeader" class="text-xl font-bold text-gray-800">Who Paid What?</h2>
+        
+        <!-- Individual Spending Lists -->
+        <div class="space-y-4">
+            <!-- Ganesh -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Ganesh</h3>
+                    <p class="text-xs text-gray-500">Total amount spent out-of-pocket</p>
+                </div>
+                <span id="totalGanesh" class="text-2xl font-black text-green-600">₹0</span>
+            </div>
+            <!-- Sujatha -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Sujatha</h3>
+                    <p class="text-xs text-gray-500">Total amount spent out-of-pocket</p>
+                </div>
+                <span id="totalSujatha" class="text-2xl font-black text-green-600">₹0</span>
+            </div>
+            <!-- Hari -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Hari</h3>
+                    <p class="text-xs text-gray-500">Total amount spent out-of-pocket</p>
+                </div>
+                <span id="totalHari" class="text-2xl font-black text-green-600">₹0</span>
+            </div>
+            <!-- Others -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 id="lblOthersName" class="text-lg font-bold text-gray-800">Others</h3>
+                    <p class="text-xs text-gray-500">Total amount spent by others</p>
+                </div>
+                <span id="totalOthers" class="text-2xl font-black text-green-600">₹0</span>
+            </div>
+            <!-- Pending Balances (Unpaid) -->
+            <div class="bg-red-50 p-6 rounded-xl shadow-md border border-red-100 flex justify-between items-center">
+                <div>
+                    <h3 id="lblUnpaidTab" class="text-lg font-black text-red-900">Pending Dues (Credit Tab)</h3>
+                    <p class="text-xs text-red-600">To be paid back/cleared later</p>
+                </div>
+                <span id="totalUnpaid" class="text-3xl font-black text-red-600">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== NATIVE BOTTOM NAVIGATION BAR ==================== -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 flex justify-around p-3 z-40 shadow-lg">
+        <button onclick="navigateTo('pageAdd')" id="navAdd" class="flex flex-col items-center gap-1 text-blue-600 font-bold transition">
+            <span class="text-2xl">➕</span>
+            <span id="navTextAdd" class="text-xs">Add Expense</span>
+        </button>
+        <button onclick="navigateTo('pageReports')" id="navReports" class="flex flex-col items-center gap-1 text-gray-400 font-medium transition">
+            <span class="text-2xl">📊</span>
+            <span id="navTextRep" class="text-xs">Reports</span>
+        </button>
+        <button onclick="navigateTo('pagePeople')" id="navPeople" class="flex flex-col items-center gap-1 text-gray-400 font-medium transition">
+            <span class="text-2xl">🤝</span>
+            <span id="navTextPeo" class="text-xs">People & Dues</span>
+        </button>
+    </nav>
 
     <script>
         let supabaseClient = null;
-        let speechLanguage = 'en-IN'; // Default speech: English
-        let uiLanguage = 'en'; // Default UI: English
+        let speechLanguage = 'en-IN';
+        let uiLanguage = 'en'; 
         let expenses = [];
+        let activeFilter = 'all'; // Filters: all, daily, weekly, monthly, yearly
 
         const translations = {
             te: {
                 title: "ఇంటి ఖర్చులు",
                 speechHeading: "మాట్లాడి ఎంటర్ చేయండి",
                 statusIdle: "మైక్ బటన్ నొక్కి మాట్లాడండి",
-                statusListening: "వింటున్నాను... మాట్లాడండి (Listening...)",
+                statusListening: "వింటున్నాను... మాట్లాడండి",
                 formHeading: "ఖర్చు వివరాలు",
                 lblItem: "వస్తువు పేరు",
                 lblAmount: "ధర (Amount ₹)",
@@ -136,9 +215,16 @@
                 lblPaidBy: "ఎవరు చెల్లించారు?",
                 saveBtn: "సేవ్ చేయండి",
                 listHeading: "ఖర్చులు",
-                lblPendingBal: "మిగిలిన బ్యాలెన్స్ (Pending Balance):",
+                lblPendingBal: "మిగిలిన బ్యాలెన్స్:",
                 noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
-                uiBtn: "English UI"
+                uiBtn: "English UI",
+                reportHeader: "కాలాల వారీగా ఖర్చులు",
+                peopleHeader: "ఎవరు ఎంత చెల్లించారు?",
+                lblOthersName: "ఇతరులు",
+                lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)",
+                navAdd: "చేర్చండి",
+                navReports: "రిపోర్టులు",
+                navPeople: "మనుషులు & బకాయిలు"
             },
             en: {
                 title: "Family Expenses",
@@ -154,13 +240,19 @@
                 listHeading: "Expenses List",
                 lblPendingBal: "Pending Balance to Clear:",
                 noExpenses: "No expenses logged yet",
-                uiBtn: "తెలుగు UI"
+                uiBtn: "తెలుగు UI",
+                reportHeader: "Time-Period Expenses",
+                peopleHeader: "Who Paid What?",
+                lblOthersName: "Others",
+                lblUnpaidTab: "Pending Dues (Credit Tab)",
+                navAdd: "Add Expense",
+                navReports: "Reports",
+                navPeople: "People & Dues"
             }
         };
 
-        // Initialize Database Client on Load
         window.addEventListener('DOMContentLoaded', () => {
-            applyUILanguageText(); // Set initial UI elements based on default (English)
+            applyUILanguageText(); // Default UI starts in English 
             checkDatabaseSetup();
         });
 
@@ -199,6 +291,27 @@
             }
         }
 
+        // NAVIGATION (Multi-Page simulation)
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-container').forEach(el => el.classList.add('hidden'));
+            // Show targeted page
+            document.getElementById(pageId).classList.remove('hidden');
+
+            // Reset navigation tab colors
+            const navs = ['navAdd', 'navReports', 'navPeople'];
+            navs.forEach(nav => {
+                const el = document.getElementById(nav);
+                el.classList.remove('text-blue-600', 'font-bold');
+                el.classList.add('text-gray-400', 'font-medium');
+            });
+
+            // Highlight active nav tab
+            const activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
+            activeNav.classList.remove('text-gray-400', 'font-medium');
+            activeNav.classList.add('text-blue-600', 'font-bold');
+        }
+
         function toggleUILanguage() {
             uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
             applyUILanguageText();
@@ -219,6 +332,15 @@
             document.getElementById('saveBtn').innerText = t.saveBtn;
             document.getElementById('listHeading').innerText = t.listHeading;
             document.getElementById('lblPendingBal').innerText = t.lblPendingBal;
+            document.getElementById('reportHeader').innerText = t.reportHeader;
+            document.getElementById('peopleHeader').innerText = t.peopleHeader;
+            document.getElementById('lblOthersName').innerText = t.lblOthersName;
+            document.getElementById('lblUnpaidTab').innerText = t.lblUnpaidTab;
+            
+            // Navbar
+            document.getElementById('navTextAdd').innerText = t.navAdd;
+            document.getElementById('navTextRep').innerText = t.navReports;
+            document.getElementById('navTextPeo').innerText = t.navPeople;
             
             renderExpenses();
         }
@@ -240,7 +362,7 @@
         function startListening() {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                alert("Speech recognition is not supported on this browser. Please use Chrome on Android, or Safari on iPad/iPhone.");
+                alert("Speech recognition is not supported on this browser.");
                 return;
             }
 
@@ -253,153 +375,4 @@
             const micBtn = document.getElementById('micBtn');
 
             recognition.onstart = () => {
-                statusText.innerText = translations[uiLanguage].statusListening;
-                micBtn.classList.add('bg-red-500', 'animate-pulse');
-                micBtn.classList.remove('bg-green-600');
-            };
-
-            recognition.onend = () => {
-                statusText.innerText = translations[uiLanguage].statusIdle;
-                micBtn.classList.remove('bg-red-500', 'animate-pulse');
-                micBtn.classList.add('bg-green-600');
-            };
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                processVoiceText(transcript);
-            };
-
-            recognition.onerror = (e) => {
-                console.error(e);
-                statusText.innerText = "Error capturing voice input. Try again.";
-            };
-
-            recognition.start();
-        }
-
-        function processVoiceText(text) {
-            let amount = "";
-            let item = text;
-
-            const numberMatch = text.match(/\d+/);
-            if (numberMatch) {
-                amount = numberMatch[0];
-                item = text.replace(amount, "").trim();
-            }
-
-            item = item.replace(/రూపాయలు|rupees|rupee/gi, "").trim();
-
-            document.getElementById('itemName').value = item;
-            document.getElementById('itemAmount').value = amount;
-        }
-
-        // DATABASE OPERATIONS
-
-        async function loadExpenses() {
-            try {
-                const { data, error } = await supabaseClient
-                    .from('expenses')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                if (error) throw error;
-                expenses = data;
-                renderExpenses();
-            } catch (err) {
-                console.error("Fetch error:", err);
-                alert("Failed to load data. Please check your network connection.");
-            }
-        }
-
-        async function saveExpense() {
-            const name = document.getElementById('itemName').value.trim();
-            const amount = parseFloat(document.getElementById('itemAmount').value);
-            const qty = document.getElementById('itemQty').value.trim();
-            const paidBy = document.getElementById('paidBy').value;
-
-            if (!name || isNaN(amount)) {
-                alert("Enter valid item details.");
-                return;
-            }
-
-            try {
-                const { error } = await supabaseClient
-                    .from('expenses')
-                    .insert([{ name, amount, qty, paid_by: paidBy }]);
-
-                if (error) throw error;
-
-                loadExpenses();
-                document.getElementById('itemName').value = "";
-                document.getElementById('itemAmount').value = "";
-                document.getElementById('itemQty').value = "1";
-                document.getElementById('paidBy').value = "Unpaid";
-            } catch (err) {
-                console.error("Save error:", err);
-                alert("Could not save to database.");
-            }
-        }
-
-        async function deleteExpense(id) {
-            if (!confirm("Are you sure you want to delete this item?")) return;
-
-            try {
-                const { error } = await supabaseClient
-                    .from('expenses')
-                    .delete()
-                    .eq('id', id);
-
-                if (error) throw error;
-                loadExpenses();
-            } catch (err) {
-                console.error("Delete error:", err);
-                alert("Could not delete item.");
-            }
-        }
-
-        function renderExpenses() {
-            const listContainer = document.getElementById('expenseList');
-            listContainer.innerHTML = "";
-
-            if (expenses.length === 0) {
-                listContainer.innerHTML = `<p id="noExpensesText" class="text-gray-400 text-center py-4">${translations[uiLanguage].noExpenses}</p>`;
-                document.getElementById('pendingTotal').innerText = "₹0";
-                return;
-            }
-
-            let pendingTotal = 0;
-
-            expenses.forEach(exp => {
-                if (exp.paid_by === 'Unpaid') {
-                    pendingTotal += exp.amount;
-                }
-
-                const isUnpaid = exp.paid_by === 'Unpaid';
-                const badgeColor = isUnpaid ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800';
-                const badgeLabel = isUnpaid ? 'Unpaid' : `Paid by ${exp.paid_by}`;
-
-                const itemHTML = `
-                    <div class="flex justify-between items-center py-3">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2">
-                                <span class="font-medium text-gray-800">${exp.name}</span>
-                                <span class="text-xs text-gray-400">(Qty: ${exp.qty})</span>
-                            </div>
-                            <span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ${badgeColor}">
-                                ${badgeLabel}
-                            </span>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <span class="font-bold text-gray-800">₹${exp.amount}</span>
-                            <button onclick="deleteExpense(${exp.id})" class="text-red-500 hover:text-red-700 text-sm">❌</button>
-                        </div>
-                    </div>
-                `;
-                listContainer.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            document.getElementById('pendingTotal').innerText = `₹${pendingTotal}`;
-        }
-    </script>
-</body>
-</html>
+                statusT
