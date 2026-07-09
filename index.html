@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Expense Tracker</title>
+    <!-- Link App Manifest & Icons -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%231e293b'/><text x='50%25' y='55%25' font-family='sans-serif' font-size='220' font-weight='bold' fill='white' dominant-baseline='middle' text-anchor='middle'>₹</text></svg>">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -1738,5 +1743,13 @@
             });
         }
     </script>
+ // Register App Offline Helper
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').then(function() {
+                console.log("Offline helper synced.");
+            }).catch(function(err) {
+                console.warn("Offline error:", err);
+            });
+        }   
 </body>
 </html>
