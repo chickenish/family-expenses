@@ -11,8 +11,8 @@
 
     <!-- TABLET REMOTE TROUBLESHOOTER -->
     <script>
-        window.onerror = function(message, source, lineno) {
-            alert("Tablet Error Captured:\n" + message + "\nLine: " + lineno);
+        window.onerror = function(msg, url, line) {
+            alert("Tablet Error: " + msg + "\nLine: " + line);
             return false;
         };
     </script>
@@ -27,7 +27,7 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Ganesh" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
@@ -74,6 +74,42 @@
                     <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
                 </div>
                 <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
+    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-center space-y-2">
+                <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
+                <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
+                </div>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update</button>
+                </div>
             </div>
         </div>
     </div>
@@ -159,7 +195,7 @@
                 </select>
             </div>
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-200 text-slate-700 p-2 rounded-lg font-bold transition text-sm">Cancel Editing</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-slate-200 text-slate-700 p-2 rounded-lg font-bold transition text-sm">Cancel Editing</button>
         </div>
     </div>
 
@@ -328,7 +364,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-850">Clear All Dues</button>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -538,7 +574,6 @@
                 safeClass('loginScreen', 'add', 'hidden');
             } else {
                 safeClass('registerScreen', 'add', 'hidden');
-                
                 if (isLogged === 'true') {
                     var p;
                     try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User" }; }
@@ -681,6 +716,12 @@
             logoutProfile();
         }
 
+        // ==================== COGNIZANT DEFENSIVE SECURE ROLE AUDITING ====================
+        function hasPermission() {
+            var u = (appUser || "").toLowerCase().trim();
+            return (u === "sujatha" || u === "hari"); // Strictly checks username [1]
+        }
+
         // ==================== STORAGE & COMPRESSION ====================
         function compressAttachmentPhoto(input) {
             if (!input.files || !input.files[0]) return;
@@ -759,7 +800,6 @@
 
                     var compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
 
-                    // COGNIZANT CORRECTED: No longer hardcoded to Monthly Kirana! Prompts for bill name to auto-categorize [1]!
                     var billName = prompt("Bill Photo Captured successfully!\nPlease enter a Name or Item Description for this bill:");
                     if (!billName || billName.trim() === "") {
                         alert("Cancelled. Bill name is required.");
@@ -768,7 +808,7 @@
 
                     var billAmount = prompt("Enter the Total Bill Amount (₹) for \"" + billName + "\":");
                     if (billAmount && !isNaN(parseFloat(billAmount))) {
-                        var detectedCategory = detectCategory(billName); // Dynamically matching category [1]
+                        var detectedCategory = detectCategory(billName); 
                         
                         var newExpense = {
                             id: Date.now(),
@@ -920,13 +960,11 @@
                 if (name.indexOf(vegKeywords[i]) !== -1) return 'Vegetables';
             }
 
-            // Monthly Kirana recognition [1]
             var kiranaKeywords = ['kirana', 'provisions', 'dmart', 'grocery', 'groceries', 'supermarket', 'సామాన్లు', 'కిరాణా', 'సరుకులు', 'నెల సామాన్లు'];
-            for (var k = 0; i < kiranaKeywords.length; k++) {
+            for (var k = 0; k < kiranaKeywords.length; k++) {
                 if (name.indexOf(kiranaKeywords[k]) !== -1) return 'Monthly Kirana';
             }
 
-            // Cooking Oil recognition [1]
             var oilKeywords = ['oil', 'cooking oil', 'sunflower oil', 'nune', 'నూనె', 'ఆయిల్'];
             for (var o = 0; o < oilKeywords.length; o++) {
                 if (name.indexOf(oilKeywords[o]) !== -1) return 'Oil';
@@ -1157,8 +1195,14 @@
             loadExpenses();
         }
 
-        // ==================== CLEAR DUELS DYNAMICS ====================
+        // ==================== CLEAR DUELS DYNAMICS (SECURED FOR SUJATHA AND HARI ONLY) ====================
         function clearUnpaidExpenses() {
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
+
             var unpaidTotal = 0;
             expenses.forEach(function(exp) {
                 if (exp.paid_by === 'Unpaid') {
@@ -1199,6 +1243,12 @@
         }
 
         function clearMemberDues(member) {
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
+
             var currentSpent = 0;
             expenses.forEach(function(exp) {
                 if (exp.paid_by === member) {
@@ -1239,6 +1289,12 @@
         }
 
         function clearMilkCurdEggsUnpaid() {
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
+
             var spentMilkCurdEggsUnpaid = 0;
             expenses.forEach(function(exp) {
                 var isTargetCategory = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
@@ -1351,7 +1407,6 @@
         }
 
         function calculateCategoryGrid() {
-            // Updated Categories mapping list [1]
             var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
             var gridData = {};
             for (var i = 0; i < categories.length; i++) {
