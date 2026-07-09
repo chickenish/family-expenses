@@ -6,39 +6,113 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Free OCR Library -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body class="bg-gray-100 min-h-screen pb-24">
 
+    <!-- USER NAME CAPTURE MODAL -->
+    <div id="usernameModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4 text-center">
+            <h2 class="text-xl font-black text-gray-800">Who is using the app today?</h2>
+            <p class="text-xs text-gray-500">ఎవరు ఉపయోగిస్తున్నారు? This name will tag items you record or edit.</p>
+            
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="selectAppUser('Ganesh')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Ganesh</button>
+                <button onclick="selectAppUser('Sujatha')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Sujatha</button>
+                <button onclick="selectAppUser('Hari')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Hari</button>
+                <button onclick="showCustomUserField()" class="p-3 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-700 active:scale-95 transition">Other</button>
+            </div>
+
+            <div id="customUserContainer" class="hidden space-y-2 pt-2">
+                <input type="text" id="customUsernameInput" placeholder="Type your name" class="w-full p-3 border border-gray-300 rounded-lg text-center font-semibold">
+                <button onclick="saveCustomUser()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO VIEWER MODAL -->
+    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
+        <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
+        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+    </div>
+
     <!-- MAIN HEADER -->
     <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
-        <h1 id="appTitle" class="text-xl font-bold">Family Expenses</h1>
-        <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
-            తెలుగు UI
-        </button>
+        <div>
+            <h1 id="appTitle" class="text-lg font-extrabold tracking-wide">Family Expenses</h1>
+            <p class="text-[10px] opacity-90 font-medium" id="currentUserDisplay">Logged in: Guest</p>
+        </div>
+        <div class="flex gap-2">
+            <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-2 py-1 rounded text-xs font-semibold">
+                తెలుగు UI
+            </button>
+            <button onclick="promptUserChange()" class="bg-blue-700 px-2 py-1 rounded text-xs font-semibold">
+                👤 Switch
+            </button>
+        </div>
     </header>
 
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-6">
-        <!-- Voice Input -->
+        
+        <!-- Voice & Photo Scan Container -->
         <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
-            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak to Enter</h2>
+            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak or Scan List</h2>
+            
             <div class="flex justify-center gap-2">
                 <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">English</button>
                 <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">తెలుగు</button>
             </div>
-            <div class="flex justify-center py-2">
-                <button id="micBtn" onclick="startListening()" class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl shadow-lg active:scale-95 transition">🎙️</button>
+            
+            <!-- Quick Actions Grid -->
+            <div class="grid grid-cols-2 gap-4 py-2">
+                <div class="flex flex-col items-center">
+                    <button id="micBtn" onclick="startListening()" class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl shadow-md active:scale-95 transition">🎙️</button>
+                    <span id="voiceLabel" class="text-xs text-gray-500 mt-1">Tap & Speak</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <label class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl shadow-md active:scale-95 transition cursor-pointer">
+                        📷
+                        <input type="file" accept="image/*" capture="camera" id="ocrInput" class="hidden" onchange="scanPaperList(this)">
+                    </label>
+                    <span id="scanLabel" class="text-xs text-gray-500 mt-1">Scan Paper List</span>
+                </div>
             </div>
-            <p id="statusText" class="text-sm text-gray-500">Tap microphone button to speak</p>
+            <p id="statusText" class="text-sm text-gray-500">Choose action above</p>
         </div>
 
         <!-- Form -->
         <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
-            <h2 id="formHeading" class="text-lg font-medium text-gray-700">Expense Details</h2>
+            <div class="flex justify-between items-center border-b pb-2">
+                <h2 id="formHeading" class="text-lg font-bold text-gray-700">Expense Details</h2>
+                <span id="editBadge" class="hidden text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Editing Mode</span>
+            </div>
+            
+            <!-- Custom Date Field -->
+            <div>
+                <label id="lblDate" class="block text-sm font-medium text-gray-600">Date (తేదీ)</label>
+                <input type="date" id="itemDate" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+
             <div>
                 <label id="lblItem" class="block text-sm font-medium text-gray-600">Item Name</label>
-                <input type="text" id="itemName" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                <input type="text" id="itemName" oninput="autoDetectFormCategory(this.value)" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
             </div>
+
+            <!-- Auto Category Dropdown -->
+            <div>
+                <label id="lblCategory" class="block text-sm font-medium text-gray-600">Category (వర్గం)</label>
+                <select id="itemCategory" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg bg-gray-50 font-semibold text-blue-700">
+                    <option value="Milk">Milk (పాలు)</option>
+                    <option value="Curd">Curd (పెరుగు)</option>
+                    <option value="Eggs">Eggs (గుడ్లు)</option>
+                    <option value="Chicken">Chicken (చికెన్)</option>
+                    <option value="Tiffins">Tiffins (టిఫిన్స్)</option>
+                    <option value="Other expenses">Other expenses (ఇతర ఖర్చులు)</option>
+                </select>
+            </div>
+
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label id="lblAmount" class="block text-sm font-medium text-gray-600">Amount (₹)</label>
@@ -49,6 +123,7 @@
                     <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
                 </div>
             </div>
+
             <div>
                 <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">Who Paid?</label>
                 <select id="paidBy" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
@@ -59,40 +134,81 @@
                     <option value="Other">Other (ఇతరులు)</option>
                 </select>
             </div>
-            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
+
+            <!-- EXPENSE ITEM PHOTO ATTACHMENT -->
+            <div class="border-t pt-3 space-y-2">
+                <label id="lblAttach" class="block text-sm font-bold text-gray-700">Attach Item or Receipt Image</label>
+                <div class="flex items-center gap-3">
+                    <label class="px-4 py-2 border border-blue-300 rounded-lg bg-blue-50 text-blue-800 text-xs font-bold cursor-pointer active:scale-95 transition">
+                        📎 Select Image / Camera
+                        <input type="file" accept="image/*" id="expensePhotoField" class="hidden" onchange="compressAttachmentPhoto(this)">
+                    </label>
+                    <button type="button" id="clearPhotoBtn" onclick="clearAttachedPhoto()" class="hidden text-xs text-red-500 font-semibold underline">Remove</button>
+                </div>
+                <!-- Resized thumbnail display -->
+                <div class="flex justify-start">
+                    <img id="imagePreview" src="" class="hidden w-20 h-20 object-cover rounded-lg border border-gray-300 shadow-sm mt-1">
+                </div>
+            </div>
+
+            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-md">
                 Save Expense
+            </button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-500 hover:bg-gray-600 text-white p-2 rounded-lg font-bold transition">
+                Cancel Editing
             </button>
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: DASHBOARD REPORTS ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
-        <!-- Interactive Cards Section -->
         <h2 id="reportHeader" class="text-xl font-bold text-gray-800">Time-Period Expenses</h2>
+        
+        <!-- Interactive Date Cards -->
         <div class="grid grid-cols-2 gap-4">
-            <button onclick="filterReport('daily')" class="bg-gradient-to-br from-teal-500 to-teal-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
-                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Today (ఈరోజు)</span>
+            <button onclick="filterReport('daily')" class="bg-gradient-to-br from-teal-500 to-teal-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardDayTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Today (ఈరోజు)</span>
                 <span id="cardDailyAmt" class="block text-2xl font-black mt-2">₹0</span>
             </button>
-            <button onclick="filterReport('weekly')" class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
-                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Weekly (వారం)</span>
+            <button onclick="filterReport('weekly')" class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardWeekTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Weekly (వారం)</span>
                 <span id="cardWeeklyAmt" class="block text-2xl font-black mt-2">₹0</span>
             </button>
-            <button onclick="filterReport('monthly')" class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
-                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Monthly (నెల)</span>
+            <button onclick="filterReport('monthly')" class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardMonthTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Monthly (నెల)</span>
                 <span id="cardMonthlyAmt" class="block text-2xl font-black mt-2">₹0</span>
             </button>
-            <button onclick="filterReport('yearly')" class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-left text-white shadow-md active:scale-95 transition">
-                <span class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Yearly (సంవత్సరం)</span>
+            <button onclick="filterReport('yearly')" class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardYearTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Yearly (సంవత్సరం)</span>
                 <span id="cardYearlyAmt" class="block text-2xl font-black mt-2">₹0</span>
             </button>
+        </div>
+
+        <!-- Category Wise Totals Box -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h3 id="catTotalsTitle" class="text-lg font-bold text-gray-700">Category Wise Totals</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b text-gray-500">
+                            <th class="py-2">Category</th>
+                            <th class="py-2 text-right">Paid</th>
+                            <th class="py-2 text-right text-red-600">Unpaid</th>
+                            <th class="py-2 text-right font-bold text-blue-700">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryTableBody" class="divide-y text-gray-700 font-medium">
+                        <!-- Category Summaries injected here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Expense Log Box -->
         <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
             <div class="flex justify-between items-center">
                 <h3 id="reportListTitle" class="text-lg font-bold text-gray-700">Displaying: All</h3>
-                <button onclick="filterReport('all')" class="text-xs text-blue-600 font-semibold underline">Show All</button>
+                <button id="showAllBtn" onclick="filterReport('all')" class="text-xs text-blue-600 font-semibold underline">Show All</button>
             </div>
             <div id="expenseList" class="space-y-2 divide-y divide-gray-100 max-h-96 overflow-y-auto">
                 <p class="text-gray-400 text-center py-4">No expenses found.</p>
@@ -100,44 +216,83 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 3: PEOPLE & SETTLEMENTS ==================== -->
+    <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
+    <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <h2 id="compareHeader" class="text-xl font-bold text-gray-800">Monthly Comparisons</h2>
+        
+        <!-- Overspending Highlights Card -->
+        <div id="alertCard" class="bg-yellow-50 border border-yellow-100 p-5 rounded-2xl shadow-sm space-y-2">
+            <h3 id="overspentTitle" class="text-md font-bold text-yellow-800">⚠️ Spending Analysis</h3>
+            <p id="overspentDetails" class="text-sm text-yellow-700">Log some expenses to analyze comparative data.</p>
+        </div>
+
+        <!-- Month Comparative List -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h3 id="histMonthsTitle" class="text-lg font-bold text-gray-700">Month-over-Month Spending</h3>
+            <div id="comparisonList" class="space-y-4">
+                <!-- Comparisons listed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 4: PEOPLE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="peopleHeader" class="text-xl font-bold text-gray-800">Who Paid What?</h2>
         <div class="space-y-4">
+            <!-- Ganesh -->
             <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Ganesh</h3>
-                    <p class="text-xs text-gray-500">Total spent out-of-pocket</p>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
                 </div>
-                <span id="totalGanesh" class="text-2xl font-black text-green-600">₹0</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalGanesh" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Ganesh')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
             </div>
+            <!-- Sujatha -->
             <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Sujatha</h3>
-                    <p class="text-xs text-gray-500">Total spent out-of-pocket</p>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
                 </div>
-                <span id="totalSujatha" class="text-2xl font-black text-green-600">₹0</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalSujatha" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Sujatha')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
             </div>
+            <!-- Hari -->
             <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
                 <div>
                     <h3 class="text-lg font-bold text-gray-800">Hari</h3>
-                    <p class="text-xs text-gray-500">Total spent out-of-pocket</p>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
                 </div>
-                <span id="totalHari" class="text-2xl font-black text-green-600">₹0</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalHari" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Hari')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
             </div>
+            <!-- Others -->
             <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
                 <div>
                     <h3 id="lblOthersName" class="text-lg font-bold text-gray-800">Others</h3>
                     <p class="text-xs text-gray-500">Total spent by others</p>
                 </div>
-                <span id="totalOthers" class="text-2xl font-black text-green-600">₹0</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalOthers" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Other')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
             </div>
+            <!-- Pending Balances (Unpaid) -->
             <div class="bg-red-50 p-6 rounded-xl shadow-md border border-red-100 flex justify-between items-center">
                 <div>
                     <h3 id="lblUnpaidTab" class="text-lg font-black text-red-900">Pending Dues (Credit Tab)</h3>
                     <p class="text-xs text-red-600">To be paid back later</p>
                 </div>
-                <span id="totalUnpaid" class="text-3xl font-black text-red-600">₹0</span>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalUnpaid" class="text-2xl font-black text-red-600">₹0</span>
+                    <button onclick="clearUnpaidExpenses()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-bold shadow-sm">Clear Unpaid Dues</button>
+                </div>
             </div>
         </div>
     </div>
@@ -152,414 +307,12 @@
             <span class="text-2xl">📊</span>
             <span id="navTextRep" class="text-xs">Reports</span>
         </button>
+        <button onclick="navigateTo('pageCompare')" id="navCompare" class="flex flex-col items-center gap-1 text-gray-400 font-medium">
+            <span class="text-2xl">⚖️</span>
+            <span id="navTextComp" class="text-xs">Comparison</span>
+        </button>
         <button onclick="navigateTo('pagePeople')" id="navPeople" class="flex flex-col items-center gap-1 text-gray-400 font-medium">
             <span class="text-2xl">🤝</span>
             <span id="navTextPeo" class="text-xs">People & Dues</span>
         </button>
-    </nav>
-
-    <script>
-        // Completely ES5-Compatible Javascript (No arrow functions, no const/let, no backticks)
-        var speechLanguage = 'en-IN';
-        var uiLanguage = 'en'; 
-        var expenses = [];
-        var activeFilter = 'all';
-
-        var translations = {
-            te: {
-                title: "ఇంటి ఖర్చులు",
-                speechHeading: "మాట్లాడి ఎంటర్ చేయండి",
-                statusIdle: "మైక్ బటన్ నొక్కి మాట్లాడండి",
-                statusListening: "వింటున్నాను... మాట్లాడండి",
-                formHeading: "ఖర్చు వివరాలు",
-                lblItem: "వస్తువు పేరు",
-                lblAmount: "ధర (Amount ₹)",
-                lblQty: "పరిమాణం (Qty)",
-                lblPaidBy: "ఎవరు చెల్లించారు?",
-                saveBtn: "సేవ్ చేయండి",
-                noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
-                uiBtn: "English UI",
-                reportHeader: "కాలాల వారీగా ఖర్చులు",
-                peopleHeader: "ఎవరు ఎంత చెల్లించారు?",
-                lblOthersName: "ఇతరులు",
-                lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)",
-                navAdd: "చేర్చండి",
-                navReports: "రిపోర్టులు",
-                navPeople: "మనుషులు & బకాయిలు"
-            },
-            en: {
-                title: "Family Expenses",
-                speechHeading: "Speak to Enter",
-                statusIdle: "Tap microphone button to speak",
-                statusListening: "Listening... speak now",
-                formHeading: "Expense Details",
-                lblItem: "Item Name",
-                lblAmount: "Amount (₹)",
-                lblQty: "Quantity",
-                lblPaidBy: "Who Paid?",
-                saveBtn: "Save Expense",
-                noExpenses: "No expenses logged yet",
-                uiBtn: "తెలుగు UI",
-                reportHeader: "Time-Period Expenses",
-                peopleHeader: "Who Paid What?",
-                lblOthersName: "Others",
-                lblUnpaidTab: "Pending Dues (Credit Tab)",
-                navAdd: "Add Expense",
-                navReports: "Reports",
-                navPeople: "People & Dues"
-            }
-        };
-
-        window.addEventListener('DOMContentLoaded', function() {
-            applyUILanguageText(); 
-            loadExpensesLocal();
-        });
-
-        function navigateTo(pageId) {
-            var containers = document.querySelectorAll('.page-container');
-            for (var i = 0; i < containers.length; i++) {
-                containers[i].classList.add('hidden');
-            }
-            document.getElementById(pageId).classList.remove('hidden');
-
-            var navs = ['navAdd', 'navReports', 'navPeople'];
-            for (var j = 0; j < navs.length; j++) {
-                var el = document.getElementById(navs[j]);
-                if (el) {
-                    el.classList.remove('text-blue-600', 'font-bold');
-                    el.classList.add('text-gray-400', 'font-medium');
-                }
-            }
-
-            var activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
-            if (activeNav) {
-                activeNav.classList.remove('text-gray-400', 'font-medium');
-                activeNav.classList.add('text-blue-600', 'font-bold');
-            }
-        }
-
-        function toggleUILanguage() {
-            uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
-            applyUILanguageText();
-        }
-
-        function safeSetText(id, text) {
-            var el = document.getElementById(id);
-            if (el) {
-                el.innerText = text;
-            }
-        }
-
-        function applyUILanguageText() {
-            var t = translations[uiLanguage];
-            
-            safeSetText('appTitle', t.title);
-            safeSetText('uiLangBtn', t.uiBtn);
-            safeSetText('speechHeading', t.speechHeading);
-            safeSetText('statusText', t.statusIdle);
-            safeSetText('formHeading', t.formHeading);
-            safeSetText('lblItem', t.lblItem);
-            safeSetText('lblAmount', t.lblAmount);
-            safeSetText('lblQty', t.lblQty);
-            safeSetText('lblPaidBy', t.lblPaidBy);
-            safeSetText('saveBtn', t.saveBtn);
-            safeSetText('reportHeader', t.reportHeader);
-            safeSetText('peopleHeader', t.peopleHeader);
-            safeSetText('lblOthersName', t.lblOthersName);
-            safeSetText('lblUnpaidTab', t.lblUnpaidTab);
-            
-            safeSetText('navTextAdd', t.navAdd);
-            safeSetText('navTextRep', t.navReports);
-            safeSetText('navTextPeo', t.navPeople);
-            
-            renderExpenses();
-        }
-
-        function setSpeechLanguage(lang) {
-            speechLanguage = lang;
-            var btnTe = document.getElementById('btnTe');
-            var btnEn = document.getElementById('btnEn');
-            
-            if (lang === 'te-IN') {
-                if (btnTe) btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
-                if (btnEn) btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
-            } else {
-                if (btnTe) btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
-                if (btnEn) btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
-            }
-        }
-
-        function startListening() {
-            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert("Speech recognition is not supported on this device's browser.");
-                return;
-            }
-
-            var recognition = new SpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = speechLanguage;
-
-            var statusText = document.getElementById('statusText');
-            var micBtn = document.getElementById('micBtn');
-
-            recognition.onstart = function() {
-                if (statusText) statusText.innerText = translations[uiLanguage].statusListening;
-                if (micBtn) {
-                    micBtn.classList.add('bg-red-500', 'animate-pulse');
-                    micBtn.classList.remove('bg-green-600');
-                }
-            };
-
-            recognition.onend = function() {
-                if (statusText) statusText.innerText = translations[uiLanguage].statusIdle;
-                if (micBtn) {
-                    micBtn.classList.remove('bg-red-500', 'animate-pulse');
-                    micBtn.classList.add('bg-green-600');
-                }
-            };
-
-            recognition.onresult = function(event) {
-                var transcript = event.results[0][0].transcript;
-                processVoiceText(transcript);
-            };
-
-            recognition.start();
-        }
-
-        function processVoiceText(text) {
-            var amount = "";
-            var qty = 1;
-            var item = text;
-
-            var numbers = text.match(/\d+/g);
-            if (numbers) {
-                if (numbers.length === 1) {
-                    amount = numbers[0];
-                    item = text.replace(amount, "").trim();
-                } else if (numbers.length >= 2) {
-                    var num1 = parseInt(numbers[0]);
-                    var num2 = parseInt(numbers[1]);
-                    amount = Math.max(num1, num2);
-                    qty = Math.min(num1, num2);
-                    item = text.replace(num1.toString(), "").replace(num2.toString(), "").trim();
-                }
-            }
-
-            item = item.replace(/రూపాయలు|rupees|rupee/gi, "").trim();
-
-            var nameInput = document.getElementById('itemName');
-            var amtInput = document.getElementById('itemAmount');
-            var qtyInput = document.getElementById('itemQty');
-
-            if (nameInput) nameInput.value = item;
-            if (amtInput) amtInput.value = amount;
-            if (qtyInput) qtyInput.value = qty;
-        }
-
-        // LOCAL STORAGE OPERATIONS (Instead of Supabase)
-
-        function loadExpensesLocal() {
-            var data = localStorage.getItem('family_expenses_local');
-            if (data) {
-                expenses = JSON.parse(data);
-            } else {
-                expenses = [];
-            }
-            renderExpenses();
-            calculateSummaryData();
-        }
-
-        function saveExpenseLocal() {
-            var nameEl = document.getElementById('itemName');
-            var amtEl = document.getElementById('itemAmount');
-            var qtyEl = document.getElementById('itemQty');
-            var paidEl = document.getElementById('paidBy');
-
-            if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
-
-            var name = nameEl.value.trim();
-            var amount = parseFloat(amtEl.value);
-            var qty = parseFloat(qtyEl.value) || 1;
-            var paidBy = paidEl.value;
-
-            if (!name || isNaN(amount)) {
-                alert("Enter valid details.");
-                return;
-            }
-
-            var expense = {
-                id: Date.now(),
-                created_at: new Date().toISOString(),
-                name: name,
-                amount: amount,
-                qty: qty,
-                paid_by: paidBy
-            };
-
-            expenses.push(expense);
-            localStorage.setItem('family_expenses_local', JSON.stringify(expenses));
-            
-            loadExpensesLocal();
-
-            // Reset Form
-            nameEl.value = "";
-            amtEl.value = "";
-            qtyEl.value = "1";
-            paidEl.value = "Unpaid";
-            
-            navigateTo('pageReports');
-        }
-
-        function deleteExpenseLocal(id) {
-            if (!confirm("Are you sure?")) return;
-
-            expenses = expenses.filter(function(exp) {
-                return exp.id !== id;
-            });
-            localStorage.setItem('family_expenses_local', JSON.stringify(expenses));
-            loadExpensesLocal();
-        }
-
-        function calculateSummaryData() {
-            var totalDaily = 0;
-            var totalWeekly = 0;
-            var totalMonthly = 0;
-            var totalYearly = 0;
-
-            var spentGanesh = 0;
-            var spentSujatha = 0;
-            var spentHari = 0;
-            var spentOthers = 0;
-            var spentUnpaid = 0;
-
-            var now = new Date();
-            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            var lastWeek = new Date();
-            lastWeek.setDate(now.getDate() - 7);
-
-            expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at);
-                var totalItemPrice = exp.amount * exp.qty;
-
-                if (expDate >= startOfToday) {
-                    totalDaily += totalItemPrice;
-                }
-                if (expDate >= lastWeek) {
-                    totalWeekly += totalItemPrice;
-                }
-                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) {
-                    totalMonthly += totalItemPrice;
-                }
-                if (expDate.getFullYear() === now.getFullYear()) {
-                    totalYearly += totalItemPrice;
-                }
-
-                if (exp.paid_by === 'Ganesh') spentGanesh += totalItemPrice;
-                else if (exp.paid_by === 'Sujatha') spentSujatha += totalItemPrice;
-                else if (exp.paid_by === 'Hari') spentHari += totalItemPrice;
-                else if (exp.paid_by === 'Other') spentOthers += totalItemPrice;
-                else if (exp.paid_by === 'Unpaid') spentUnpaid += totalItemPrice;
-            });
-
-            safeSetText('cardDailyAmt', '₹' + totalDaily);
-            safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
-            safeSetText('cardMonthlyAmt', '₹' + totalMonthly);
-            safeSetText('cardYearlyAmt', '₹' + totalYearly);
-
-            safeSetText('totalGanesh', '₹' + spentGanesh);
-            safeSetText('totalSujatha', '₹' + spentSujatha);
-            safeSetText('totalHari', '₹' + spentHari);
-            safeSetText('totalOthers', '₹' + spentOthers);
-            safeSetText('totalUnpaid', '₹' + spentUnpaid);
-        }
-
-        function filterReport(type) {
-            activeFilter = type;
-            var titleEl = document.getElementById('reportListTitle');
-            if (titleEl) {
-                var titles = {
-                    all: "All Expenses",
-                    daily: "Today's Expenses",
-                    weekly: "Weekly Expenses",
-                    monthly: "Monthly Expenses",
-                    yearly: "Yearly Expenses"
-                };
-                titleEl.innerText = titles[type] || "Expenses Log";
-            }
-            renderExpenses();
-        }
-
-        function renderExpenses() {
-            var listContainer = document.getElementById('expenseList');
-            if (!listContainer) return;
-            listContainer.innerHTML = "";
-
-            var now = new Date();
-            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            var lastWeek = new Date();
-            lastWeek.setDate(now.getDate() - 7);
-
-            var filtered = expenses.filter(function(exp) {
-                if (activeFilter === 'all') return true;
-                var expDate = new Date(exp.created_at);
-
-                if (activeFilter === 'daily') {
-                    return expDate >= startOfToday;
-                }
-                if (activeFilter === 'weekly') {
-                    return expDate >= lastWeek;
-                }
-                if (activeFilter === 'monthly') {
-                    return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
-                }
-                if (activeFilter === 'yearly') {
-                    return expDate.getFullYear() === now.getFullYear();
-                }
-                return true;
-            });
-
-            if (filtered.length === 0) {
-                listContainer.innerHTML = '<p class="text-gray-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>';
-                safeSetText('pendingTotal', "₹0");
-                return;
-            }
-
-            var pendingTotal = 0;
-
-            filtered.forEach(function(exp) {
-                var itemTotalPrice = exp.amount * exp.qty;
-
-                if (exp.paid_by === 'Unpaid') {
-                    pendingTotal += itemTotalPrice;
-                }
-
-                var isUnpaid = exp.paid_by === 'Unpaid';
-                var badgeColor = isUnpaid ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800';
-                var badgeLabel = isUnpaid ? 'Unpaid' : 'Paid by ' + exp.paid_by;
-
-                var itemHTML = 
-                    '<div class="flex justify-between items-center py-3">' +
-                        '<div class="flex-1">' +
-                            '<div class="flex items-center gap-2">' +
-                                '<span class="font-medium text-gray-800">' + exp.name + '</span>' +
-                                '<span class="text-xs text-gray-400">(Qty: ' + exp.qty + ')</span>' +
-                            '</div>' +
-                            '<span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' +
-                                badgeLabel +
-                            '</span>' +
-                        '</div>' +
-                        '<div class="flex items-center gap-3">' +
-                            '<span class="font-bold text-gray-800">₹' + itemTotalPrice + '</span>' +
-                            '<button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button>' +
-                        '</div>' +
-                    '</div>';
-                listContainer.insertAdjacentHTML('beforeend', itemHTML);
-            });
-
-            safeSetText('pendingTotal', '₹' + pendingTotal);
-        }
-    </script>
-</body>
-</html>
+        
