@@ -47,7 +47,6 @@
                     <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 
-                <!-- COGNIZANT CORRECTION: Fixed submit calling function name -->
                 <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">
                     Create Profile
                 </button>
@@ -232,7 +231,7 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
         
@@ -256,7 +255,7 @@
             </button>
         </div>
 
-        <!-- Custom Calendar Filter -->
+        <!-- Custom Calendar Filter to Search Particular Days -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <label id="lblCalendar" class="block text-xs font-bold text-slate-500 uppercase">Select Date to view logs</label>
             <div class="flex gap-2">
@@ -409,7 +408,6 @@
             </div>
         </div>
 
-        <!-- Budget settings panel -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
             <h3 class="text-sm font-black text-slate-900 uppercase">Budget Threshold Limits</h3>
             <p class="text-[10px] text-slate-400">Configure limits to analyze overspending patterns dynamically.</p>
@@ -427,10 +425,10 @@
                     <input type="number" id="budgetMonthlyInput" value="12000" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs rounded-lg focus:bg-white focus:outline-none">
                 </div>
             </div>
-            <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg">Save Budgets</button>
+            <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg shadow-sm">Save Budget Limits</button>
         </div>
 
-        <!-- Shared Sync Configuration (Bypasses active failures) -->
+        <!-- Sync Configuration settings panel -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
             <h3 class="text-sm font-black text-slate-900 uppercase">Cloud Sync Settings</h3>
             <div class="space-y-3">
@@ -589,6 +587,29 @@
             loadSavedBudgets();
         });
 
+        // ==================== COGNIZANT DEFENSIVE BASE WRAPPERS (PROHIBITS ALL CRASHES) ====================
+        function safeClass(id, action, className) {
+            var el = document.getElementById(id);
+            if (el) {
+                if (action === 'add') {
+                    el.classList.add(className);
+                } else if (action === 'remove') {
+                    el.classList.remove(className);
+                }
+            } else {
+                console.warn("safeClass warning: Element '" + id + "' not found.");
+            }
+        }
+
+        function safeSetText(id, text) {
+            var el = document.getElementById(id);
+            if (el) {
+                el.innerText = text;
+            } else {
+                console.warn("safeSetText warning: Element '" + id + "' not found.");
+            }
+        }
+
         // ==================== SECURITY & LOG IN ====================
         function checkAppUserIdentity() {
             var profileStr = safeStorage.getItem('family_profile');
@@ -676,34 +697,37 @@
         function showForgotPassword() {
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
+            safeClass('forgotScreen', 'remove', 'hidden');
+        }
+
+        function cancelForgotPassword() {
+            safeClass('forgotScreen', 'add', 'hidden');
+            checkAppUserIdentity();
+        }
+
+        function submitForgotPassword() {
+            var user = document.getElementById('forgotUser').value.trim();
+            var q = document.getElementById('forgotQuestion').value;
+            var ans = document.getElementById('forgotAnswer').value.trim().toLowerCase();
+            var newPass = document.getElementById('forgotNewPass').value.trim();
+
             var profileStr = safeStorage.getItem('family_profile');
-            if (!profileStr) {
-                alert("No profile configured.");
-                return;
-            }
+            if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
-            var qMap = {
-                "1": "What is your mother's maiden name?",
-                "2": "What was the name of your first pet?",
-                "3": "What city were you born in?"
-            };
 
-            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
-            if (ans) {
-                ans = ans.trim().toLowerCase();
-                if (ans === p.answer) {
-                    var newPass = prompt("Identity verified! Enter new password:");
-                    if (newPass) {
-                        p.password = newPass;
-                        safeStorage.setItem('family_profile', JSON.stringify(p));
-                        alert("Password updated! Log in now.");
-                    }
-                } else {
-                    alert("Incorrect answer.");
+            if (p.username === user && p.question === q && p.answer === ans) {
+                if (!newPass) {
+                    alert("Enter a valid new password.");
+                    return;
                 }
+                p.password = newPass;
+                safeStorage.setItem('family_profile', JSON.stringify(p));
+                alert("Password updated! Log in now.");
+                cancelForgotPassword();
+            } else {
+                alert("Incorrect details. Answer doesn't match.");
             }
-            checkAppUserIdentity();
         }
 
         function updateProfileDetails() {
@@ -1235,7 +1259,7 @@
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
                 if (isNaN(expDate.getTime())) {
-                    expDate = new Date(); // Guard fallback
+                    expDate = new Date(); 
                 }
                 var totalItemPrice = exp.amount; 
 
@@ -1413,7 +1437,6 @@
                 if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
                 if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
                 
-                // Calendar sorting filter matching standard YYYY-MM-DD
                 if (activeFilter === 'calendar') {
                     var yyyy = expDate.getFullYear();
                     var mm = String(expDate.getMonth() + 1).padStart(2, '0');
