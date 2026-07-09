@@ -9,190 +9,318 @@
     <!-- Free OCR Library -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
-<body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
+<body class="bg-gray-100 min-h-screen pb-24">
 
-    <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
-    <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <div class="text-center space-y-2">
-                <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
-                <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
-            </div>
+    <!-- USER NAME CAPTURE MODAL -->
+    <div id="usernameModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4 text-center">
+            <h2 class="text-xl font-black text-gray-800">Who is using the app today?</h2>
+            <p class="text-xs text-gray-500">ఎవరు ఉపయోగిస్తున్నారు? This name will tag items you record or edit.</p>
             
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Ganesh" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none focus:border-slate-800">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none focus:border-slate-800">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none focus:border-slate-800">
-                        <option value="1">What city were you born in?</option>
-                        <option value="2">What was your first school's name?</option>
-                        <option value="3">What is your favorite food?</option>
-                        <option value="4">What is your mother's favorite dish?</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
-                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none focus:border-slate-800">
-                </div>
-                
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-800 transition active:scale-95 shadow">
-                    Create Profile
-                </button>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+                <button onclick="selectAppUser('Ganesh')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Ganesh</button>
+                <button onclick="selectAppUser('Sujatha')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Sujatha</button>
+                <button onclick="selectAppUser('Hari')" class="p-3 bg-blue-50 border border-blue-200 rounded-xl font-bold text-blue-800 active:scale-95 transition">Hari</button>
+                <button onclick="showCustomUserField()" class="p-3 bg-gray-100 border border-gray-200 rounded-xl font-bold text-gray-700 active:scale-95 transition">Other</button>
             </div>
-        </div>
-    </div>
 
-    <!-- ==================== 2. LOGIN SCREEN ==================== -->
-    <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <div class="text-center space-y-2">
-                <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
-                <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50">
-                </div>
-                
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
-                        <span class="text-xs font-bold text-slate-600">Remember Me</span>
-                    </label>
-                    <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
-                </div>
-
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-800 transition active:scale-95 shadow">
-                    Login
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
-    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <div class="text-center space-y-2">
-                <h2 class="text-xl font-black text-slate-900">Reset Password</h2>
-                <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
-            </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 font-semibold">
-                        <option value="1">What city were you born in?</option>
-                        <option value="2">What was your first school's name?</option>
-                        <option value="3">What is your favorite food?</option>
-                        <option value="4">What is your mother's favorite dish?</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
-                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
-                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50">
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back to Login</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update Pass</button>
-                </div>
+            <div id="customUserContainer" class="hidden space-y-2 pt-2">
+                <input type="text" id="customUsernameInput" placeholder="Type your name" class="w-full p-3 border border-gray-300 rounded-lg text-center font-semibold">
+                <button onclick="saveCustomUser()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold">Submit</button>
             </div>
         </div>
     </div>
 
     <!-- PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal" class="hidden fixed inset-0 bg-slate-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
+    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
         <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-sm font-bold bg-slate-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
         <div>
-            <h1 id="appTitle" class="text-md font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
-            <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
+            <h1 id="appTitle" class="text-lg font-extrabold tracking-wide">Family Expenses</h1>
+            <p class="text-[10px] opacity-90 font-medium" id="currentUserDisplay">Logged in: Guest</p>
         </div>
-        <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-3 py-1 rounded-lg text-xs font-bold transition">
-            తెలుగు UI
-        </button>
+        <div class="flex gap-2">
+            <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-2 py-1 rounded text-xs font-semibold">
+                తెలుగు UI
+            </button>
+            <button onclick="promptUserChange()" class="bg-blue-700 px-2 py-1 rounded text-xs font-semibold">
+                👤 Switch
+            </button>
+        </div>
     </header>
 
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
-    <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
+    <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-6">
         
         <!-- Action Card -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
-            <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
+        <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
+            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak, Scan, or Attach Photo</h2>
             
             <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white">English</button>
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">English</button>
+                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">తెలుగు</button>
             </div>
             
             <!-- Quick Actions Grid -->
-            <div class="grid grid-cols-3 gap-2 py-1">
+            <div class="grid grid-cols-3 gap-2 py-2">
                 <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
-                    <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
-                    <span id="voiceLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Speak</span>
+                    <button id="micBtn" onclick="startListening()" class="w-14 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition">🎙️</button>
+                    <span id="voiceLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Tap & Speak</span>
                 </div>
                 <!-- Camera Scan Button -->
                 <div class="flex flex-col items-center">
-                    <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
+                    <label class="w-14 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition cursor-pointer">
                         📷
                         <input type="file" accept="image/*" capture="camera" id="ocrInput" class="hidden" onchange="scanPaperList(this)">
                     </label>
-                    <span id="scanLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Scan List</span>
+                    <span id="scanLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Scan List</span>
                 </div>
                 <!-- Attach Image Button -->
                 <div class="flex flex-col items-center">
-                    <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
+                    <label class="w-14 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition cursor-pointer">
                         📎
                         <input type="file" accept="image/*" id="expensePhotoField" class="hidden" onchange="compressAttachmentPhoto(this)">
                     </label>
-                    <span id="photoLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Photo</span>
+                    <span id="photoLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Attach Photo</span>
                 </div>
             </div>
             
-            <!-- Image Status Preview Inside Card -->
-            <div id="imageStatusArea" class="hidden flex items-center justify-center gap-2 p-1.5 bg-slate-100 border border-slate-200 rounded-lg max-w-[200px] mx-auto">
-                <img id="imagePreview" src="" class="w-6 h-6 object-cover rounded border border-slate-300">
-                <span class="text-[10px] text-slate-800 font-bold">Attached!</span>
-                <button type="button" onclick="clearAttachedPhoto()" class="text-red-500 text-[10px] font-bold underline ml-1">Remove</button>
+            <!-- Image attachment status display inside Choose Action Card -->
+            <div id="imageStatusArea" class="hidden flex items-center justify-center gap-2 p-2 bg-blue-50 border border-blue-100 rounded-lg max-w-xs mx-auto">
+                <img id="imagePreview" src="" class="w-8 h-8 object-cover rounded border">
+                <span class="text-xs text-blue-800 font-bold">Image Attached!</span>
+                <button type="button" onclick="clearAttachedPhoto()" class="text-red-500 text-xs font-bold underline ml-2">Remove</button>
             </div>
 
-            <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
+            <p id="statusText" class="text-sm text-gray-500">Choose action above</p>
         </div>
 
         <!-- Form -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
-            <div class="flex justify-between items-center border-b pb-1">
-                <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
-                <span id="editBadge" class="hidden text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Editing</span>
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h2 id="formHeading" class="text-lg font-bold text-gray-700">Expense Details</h2>
+                <span id="editBadge" class="hidden text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Editing Mode</span>
             </div>
 
             <div>
-                <label id="lblItem" class="block text-xs font-bold text-slate-500 uppercase">Item Name</label>
-                <input type="text" id="itemName" placeholder="e.g. Milk / పాలు" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg focus:bg-white focus:outline-none">
+                <label id="lblItem" class="block text-sm font-medium text-gray-600">Item Name</label>
+                <input type="text" id="itemName" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
             </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label id="lblAmount" class="block text-sm font-medium text-gray-600">Amount (₹)</label>
+                    <input type="number" id="itemAmount" placeholder="0" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label id="lblQty" class="block text-sm font-medium text-gray-600">Quantity</label>
+                    <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+
+            <div>
+                <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">Who Paid?</label>
+                <select id="paidBy" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                    <option value="Unpaid">Unpaid / Credit Tab (ఉంచాము)</option>
+                    <option value="Ganesh">Ganesh</option>
+                    <option value="Sujatha">Sujatha</option>
+                    <option value="Hari">Hari</option>
+                    <option value="Other">Other (ఇతరులు)</option>
+                </select>
+            </div>
+
+            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-md">
+                Save Expense
+            </button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-500 hover:bg-gray-600 text-white p-2 rounded-lg font-bold transition">
+                Cancel Editing
+            </button>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
+    <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <h2 id="reportHeader" class="text-xl font-bold text-gray-800">Time-Period Expenses</h2>
+        
+        <!-- Interactive Date Cards -->
+        <div class="grid grid-cols-2 gap-4">
+            <button onclick="filterReport('daily')" class="bg-gradient-to-br from-teal-500 to-teal-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardDayTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Today (ఈరోజు)</span>
+                <span id="cardDailyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <button onclick="filterReport('weekly')" class="bg-gradient-to-br from-indigo-500 to-indigo-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardWeekTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Weekly (వారం)</span>
+                <span id="cardWeeklyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <button onclick="filterReport('monthly')" class="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardMonthTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Monthly (నెల)</span>
+                <span id="cardMonthlyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+            <button onclick="filterReport('yearly')" class="bg-gradient-to-br from-orange-500 to-orange-600 p-5 rounded-2xl text-left text-white shadow active:scale-95 transition">
+                <span id="cardYearTitle" class="block text-xs uppercase tracking-wider opacity-85 font-semibold">Yearly (సంవత్సరం)</span>
+                <span id="cardYearlyAmt" class="block text-2xl font-black mt-2">₹0</span>
+            </button>
+        </div>
+
+        <!-- Category Wise Totals Box -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h3 id="catTotalsTitle" class="text-lg font-bold text-gray-700">Category Wise Totals</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-sm text-left">
+                    <thead>
+                        <tr class="border-b text-gray-500">
+                            <th class="py-2">Category</th>
+                            <th class="py-2 text-right">Paid</th>
+                            <th class="py-2 text-right text-red-600">Unpaid</th>
+                            <th class="py-2 text-right font-bold text-blue-700">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryTableBody" class="divide-y text-gray-700 font-medium">
+                        <!-- Category Summaries injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Expense Log Box -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 id="reportListTitle" class="text-lg font-bold text-gray-700">Displaying: All</h3>
+                <button id="showAllBtn" onclick="filterReport('all')" class="text-xs text-blue-600 font-semibold underline">Show All</button>
+            </div>
+            <div id="expenseList" class="space-y-2 divide-y divide-gray-100 max-h-96 overflow-y-auto">
+                <p class="text-gray-400 text-center py-4">No expenses found.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
+    <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <h2 id="compareHeader" class="text-xl font-bold text-gray-800">Monthly Comparisons</h2>
+        
+        <!-- Overspending Highlights Card -->
+        <div id="alertCard" class="bg-yellow-50 border border-yellow-100 p-5 rounded-2xl shadow-sm space-y-2">
+            <h3 id="overspentTitle" class="text-md font-bold text-yellow-800">⚠️ Spending Analysis</h3>
+            <p id="overspentDetails" class="text-sm text-yellow-700">Log some expenses to analyze comparative data.</p>
+        </div>
+
+        <!-- Month Comparative List -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h3 id="histMonthsTitle" class="text-lg font-bold text-gray-700">Month-over-Month Spending</h3>
+            <div id="comparisonList" class="space-y-4">
+                <!-- Comparisons listed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== PAGE 4: PEOPLE & SETTLEMENTS ==================== -->
+    <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        <h2 id="peopleHeader" class="text-xl font-bold text-gray-800">Who Paid What?</h2>
+        <div class="space-y-4">
+            <!-- Ganesh -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Ganesh</h3>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalGanesh" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Ganesh')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
+            </div>
+            <!-- Sujatha -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Sujatha</h3>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalSujatha" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Sujatha')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
+            </div>
+            <!-- Hari -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Hari</h3>
+                    <p class="text-xs text-gray-500">Total out-of-pocket spent</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalHari" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Hari')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
+            </div>
+            <!-- Others -->
+            <div class="bg-white p-5 rounded-xl shadow-md flex justify-between items-center">
+                <div>
+                    <h3 id="lblOthersName" class="text-lg font-bold text-gray-800">Others</h3>
+                    <p class="text-xs text-gray-500">Total spent by others</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalOthers" class="text-xl font-black text-green-600">₹0</span>
+                    <button onclick="clearMemberDues('Other')" class="px-2 py-0.5 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded text-xs font-semibold">Cleared (సేటిల్)</button>
+                </div>
+            </div>
+            <!-- Pending Balances (Unpaid) -->
+            <div class="bg-red-50 p-6 rounded-xl shadow-md border border-red-100 flex justify-between items-center">
+                <div>
+                    <h3 id="lblUnpaidTab" class="text-lg font-black text-red-900">Pending Dues (Credit Tab)</h3>
+                    <p class="text-xs text-red-600">To be paid back later</p>
+                </div>
+                <div class="flex flex-col items-end gap-1">
+                    <span id="totalUnpaid" class="text-2xl font-black text-red-600">₹0</span>
+                    <button onclick="clearUnpaidExpenses()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-xs font-bold shadow-sm">Clear Unpaid Dues</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 flex justify-around p-3 z-40 shadow-lg">
+        <button onclick="navigateTo('pageAdd')" id="navAdd" class="flex flex-col items-center gap-1 text-blue-600 font-bold">
+            <span class="text-2xl">➕</span>
+            <span id="navTextAdd" class="text-xs">Add Expense</span>
+        </button>
+        <button onclick="navigateTo('pageReports')" id="navReports" class="flex flex-col items-center gap-1 text-gray-400 font-medium">
+            <span class="text-2xl">📊</span>
+            <span id="navTextRep" class="text-xs">Reports</span>
+        </button>
+        <button onclick="navigateTo('pageCompare')" id="navCompare" class="flex flex-col items-center gap-1 text-gray-400 font-medium">
+            <span class="text-2xl">⚖️</span>
+            <span id="navTextComp" class="text-xs">Comparison</span>
+        </button>
+        <button onclick="navigateTo('pagePeople')" id="navPeople" class="flex flex-col items-center gap-1 text-gray-400 font-medium">
+            <span class="text-2xl">🤝</span>
+            <span id="navTextPeo" class="text-xs">People & Dues</span>
+        </button>
+    </nav>
+
+    <script>
+        // Completely ES5 Compliant (Highly stable on tablet Chrome)
+        var speechLanguage = 'en-IN';
+        var uiLanguage = 'en'; 
+        var expenses = [];
+        var activeFilter = 'all';
+        var appUser = "";
+        var tempCompressedPhoto = ""; // Attachment base64 data
+        var editingExpenseId = null;
+
+        var translations = {
+            te: {
+                title: "ఇంటి ఖర్చులు",
+                speechHeading: "మాట్లాడండి, స్కాన్ చేయండి లేదా ఫోటో జోడించండి",
+                voiceLabel: "మాట్లాడి ఎంటర్ చేయండి",
+                scanLabel: "స్కాన్ లిస్ట్",
+                photoLabel: "ఫోటో జత చేయండి",
+                statusIdle: "పై వాటిని ఎంచుకోండి",
+                statusListening: "వింటున్నాను... మాట్లాడండి",
+                statusScanning: "లిస్టును చదువుతున్నాను... దయచేసి ఆగండి...",
+                formHeading: "ఖర్చు వివరాలు",
+                lblItem: "వస్తువు పేరు",
+                lblAmount: "ధర (Amount ₹)",
+        
