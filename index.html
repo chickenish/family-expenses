@@ -14,7 +14,7 @@
     <!-- 1. DATABASE SETUP CONFIGURATION SCREEN -->
     <div id="setupScreen" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full space-y-4">
-            <h2 class="text-xl font-bold text-gray-800">డేటాబేస్ సెటప్ (Database Setup)</h2>
+            <h2 class="text-xl font-bold text-gray-800">Database Setup (డేటాబేస్ సెటప్)</h2>
             <p class="text-sm text-gray-600">Please paste your Supabase keys to connect your shared family database. These keys are saved safely on your device.</p>
             
             <div>
@@ -27,17 +27,17 @@
             </div>
             
             <button onclick="saveSetupKeys()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-                కనెక్ట్ చేయండి (Connect Database)
+                Connect Database (కనెక్ట్ చేయండి)
             </button>
         </div>
     </div>
 
     <!-- 2. MAIN APPLICATION SCREEN -->
     <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
-        <h1 class="text-xl font-bold">ఇంటి ఖర్చులు (Family Expenses)</h1>
+        <h1 id="appTitle" class="text-xl font-bold">Family Expenses</h1>
         <div class="flex gap-2">
             <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
-                English UI
+                తెలుగు UI
             </button>
             <button onclick="clearKeys()" class="bg-red-800 px-2 py-1 rounded text-xs font-semibold" title="Reset Database Keys">
                 ⚙️ Setup
@@ -49,13 +49,13 @@
 
         <!-- Speech Input Section -->
         <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
-            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">మాట్లాడి ఎంటర్ చేయండి (Speak to Enter)</h2>
+            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak to Enter</h2>
             <div class="flex justify-center gap-2">
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">
-                    తెలుగు (Telugu)
-                </button>
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">
                     English
+                </button>
+                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">
+                    తెలుగు (Telugu)
                 </button>
             </div>
             <div class="flex justify-center py-2">
@@ -63,54 +63,54 @@
                     🎙️
                 </button>
             </div>
-            <p id="statusText" class="text-sm text-gray-500">మైక్ బటన్ నొక్కి మాట్లాడండి (Tap mic and speak)</p>
+            <p id="statusText" class="text-sm text-gray-500">Tap microphone button to speak</p>
         </div>
 
         <!-- Expense Form -->
         <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
-            <h2 id="formHeading" class="text-lg font-medium text-gray-700">ఖర్చు వివరాలు (Expense Details)</h2>
+            <h2 id="formHeading" class="text-lg font-medium text-gray-700">Expense Details</h2>
             
             <div>
-                <label id="lblItem" class="block text-sm font-medium text-gray-600">వస్తువు పేరు (Item Name)</label>
-                <input type="text" id="itemName" placeholder="e.g., పాలు / Milk" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                <label id="lblItem" class="block text-sm font-medium text-gray-600">Item Name</label>
+                <input type="text" id="itemName" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label id="lblAmount" class="block text-sm font-medium text-gray-600">ధర (Amount ₹)</label>
+                    <label id="lblAmount" class="block text-sm font-medium text-gray-600">Amount (₹)</label>
                     <input type="number" id="itemAmount" placeholder="0" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
                 </div>
                 <div>
-                    <label id="lblQty" class="block text-sm font-medium text-gray-600">పరిమాణం (Qty)</label>
+                    <label id="lblQty" class="block text-sm font-medium text-gray-600">Quantity</label>
                     <input type="text" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
                 </div>
             </div>
 
             <div>
-                <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">ఎవరు చెల్లించారు? (Who Paid?)</label>
+                <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">Who Paid?</label>
                 <select id="paidBy" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
-                    <option value="Unpaid">ఉంచాము (Unpaid / Credit Tab)</option>
+                    <option value="Unpaid">Unpaid / Credit Tab (ఉంచాము)</option>
                     <option value="Ganesh">Ganesh</option>
                     <option value="Sujatha">Sujatha</option>
                     <option value="Hari">Hari</option>
-                    <option value="Other">ఇతరులు (Other)</option>
+                    <option value="Other">Other (ఇతరులు)</option>
                 </select>
             </div>
 
             <button onclick="saveExpense()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
-                సేవ్ చేయండి (Save Expense)
+                Save Expense
             </button>
         </div>
 
         <!-- Expense List -->
         <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
-            <h2 id="listHeading" class="text-lg font-medium text-gray-700">ఖర్చులు (Expenses List)</h2>
+            <h2 id="listHeading" class="text-lg font-medium text-gray-700">Expenses List</h2>
             <div id="expenseList" class="space-y-2 divide-y divide-gray-100">
-                <p id="noExpensesText" class="text-gray-400 text-center py-4">డేటా లోడ్ అవుతోంది... (Loading database...)</p>
+                <p id="noExpensesText" class="text-gray-400 text-center py-4">Loading database...</p>
             </div>
             
             <div class="pt-4 border-t border-gray-200 flex justify-between items-center font-bold text-gray-800">
-                <span id="lblPendingBal">మిగిలిన బ్యాలెన్స్ (Pending Balance):</span>
+                <span id="lblPendingBal">Pending Balance to Clear:</span>
                 <span id="pendingTotal" class="text-red-600 text-lg">₹0</span>
             </div>
         </div>
@@ -119,8 +119,8 @@
 
     <script>
         let supabaseClient = null;
-        let speechLanguage = 'te-IN';
-        let uiLanguage = 'te';
+        let speechLanguage = 'en-IN'; // Default speech: English
+        let uiLanguage = 'en'; // Default UI: English
         let expenses = [];
 
         const translations = {
@@ -160,6 +160,7 @@
 
         // Initialize Database Client on Load
         window.addEventListener('DOMContentLoaded', () => {
+            applyUILanguageText(); // Set initial UI elements based on default (English)
             checkDatabaseSetup();
         });
 
@@ -171,7 +172,6 @@
                 document.getElementById('setupScreen').classList.remove('hidden');
             } else {
                 document.getElementById('setupScreen').classList.add('hidden');
-                // Create Supabase Client
                 supabaseClient = supabase.createClient(savedUrl, savedKey);
                 loadExpenses();
             }
@@ -200,9 +200,14 @@
         }
 
         function toggleUILanguage() {
-            uiLanguage = (uiLanguage === 'te') ? 'en' : 'te';
+            uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
+            applyUILanguageText();
+        }
+
+        function applyUILanguageText() {
             const t = translations[uiLanguage];
             
+            document.getElementById('appTitle').innerText = t.title;
             document.getElementById('uiLangBtn').innerText = t.uiBtn;
             document.getElementById('speechHeading').innerText = t.speechHeading;
             document.getElementById('statusText').innerText = t.statusIdle;
@@ -292,7 +297,6 @@
 
         async function loadExpenses() {
             try {
-                // Fetch latest expenses from Supabase
                 const { data, error } = await supabaseClient
                     .from('expenses')
                     .select('*')
@@ -319,14 +323,12 @@
             }
 
             try {
-                // Insert into Supabase
                 const { error } = await supabaseClient
                     .from('expenses')
                     .insert([{ name, amount, qty, paid_by: paidBy }]);
 
                 if (error) throw error;
 
-                // Reload and clear form inputs
                 loadExpenses();
                 document.getElementById('itemName').value = "";
                 document.getElementById('itemAmount').value = "";
@@ -342,7 +344,6 @@
             if (!confirm("Are you sure you want to delete this item?")) return;
 
             try {
-                // Delete from Supabase
                 const { error } = await supabaseClient
                     .from('expenses')
                     .delete()
