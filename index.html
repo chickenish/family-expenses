@@ -12,7 +12,7 @@
 <body class="bg-gray-100 min-h-screen pb-24">
 
     <!-- USER NAME CAPTURE MODAL -->
-    <div id="usernameModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
+    <div id="usernameModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4 text-center">
             <h2 class="text-xl font-black text-gray-800">Who is using the app today?</h2>
             <p class="text-xs text-gray-500">ఎవరు ఉపయోగిస్తున్నారు? This name will tag items you record or edit.</p>
@@ -56,9 +56,9 @@
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-6">
         
-        <!-- Voice & Photo Scan Container -->
+        <!-- Action Card -->
         <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
-            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak or Scan List</h2>
+            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">Speak, Scan, or Attach Photo</h2>
             
             <div class="flex justify-center gap-2">
                 <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">English</button>
@@ -66,19 +66,37 @@
             </div>
             
             <!-- Quick Actions Grid -->
-            <div class="grid grid-cols-2 gap-4 py-2">
+            <div class="grid grid-cols-3 gap-2 py-2">
+                <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
-                    <button id="micBtn" onclick="startListening()" class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl shadow-md active:scale-95 transition">🎙️</button>
-                    <span id="voiceLabel" class="text-xs text-gray-500 mt-1">Tap & Speak</span>
+                    <button id="micBtn" onclick="startListening()" class="w-14 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition">🎙️</button>
+                    <span id="voiceLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Tap & Speak</span>
                 </div>
+                <!-- Camera Scan Button -->
                 <div class="flex flex-col items-center">
-                    <label class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl shadow-md active:scale-95 transition cursor-pointer">
+                    <label class="w-14 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition cursor-pointer">
                         📷
                         <input type="file" accept="image/*" capture="camera" id="ocrInput" class="hidden" onchange="scanPaperList(this)">
                     </label>
-                    <span id="scanLabel" class="text-xs text-gray-500 mt-1">Scan Paper List</span>
+                    <span id="scanLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Scan List</span>
+                </div>
+                <!-- Attach Image Button -->
+                <div class="flex flex-col items-center">
+                    <label class="w-14 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-white text-2xl shadow active:scale-95 transition cursor-pointer">
+                        📎
+                        <input type="file" accept="image/*" id="expensePhotoField" class="hidden" onchange="compressAttachmentPhoto(this)">
+                    </label>
+                    <span id="photoLabel" class="text-[10px] font-semibold text-gray-500 mt-1">Attach Photo</span>
                 </div>
             </div>
+            
+            <!-- Image attachment status display inside Choose Action Card -->
+            <div id="imageStatusArea" class="hidden flex items-center justify-center gap-2 p-2 bg-blue-50 border border-blue-100 rounded-lg max-w-xs mx-auto">
+                <img id="imagePreview" src="" class="w-8 h-8 object-cover rounded border">
+                <span class="text-xs text-blue-800 font-bold">Image Attached!</span>
+                <button type="button" onclick="clearAttachedPhoto()" class="text-red-500 text-xs font-bold underline ml-2">Remove</button>
+            </div>
+
             <p id="statusText" class="text-sm text-gray-500">Choose action above</p>
         </div>
 
@@ -88,29 +106,10 @@
                 <h2 id="formHeading" class="text-lg font-bold text-gray-700">Expense Details</h2>
                 <span id="editBadge" class="hidden text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Editing Mode</span>
             </div>
-            
-            <!-- Custom Date Field -->
-            <div>
-                <label id="lblDate" class="block text-sm font-medium text-gray-600">Date (తేదీ)</label>
-                <input type="date" id="itemDate" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
-            </div>
 
             <div>
                 <label id="lblItem" class="block text-sm font-medium text-gray-600">Item Name</label>
-                <input type="text" id="itemName" oninput="autoDetectFormCategory(this.value)" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
-            </div>
-
-            <!-- Auto Category Dropdown -->
-            <div>
-                <label id="lblCategory" class="block text-sm font-medium text-gray-600">Category (వర్గం)</label>
-                <select id="itemCategory" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg bg-gray-50 font-semibold text-blue-700">
-                    <option value="Milk">Milk (పాలు)</option>
-                    <option value="Curd">Curd (పెరుగు)</option>
-                    <option value="Eggs">Eggs (గుడ్లు)</option>
-                    <option value="Chicken">Chicken (చికెన్)</option>
-                    <option value="Tiffins">Tiffins (టిఫిన్స్)</option>
-                    <option value="Other expenses">Other expenses (ఇతర ఖర్చులు)</option>
-                </select>
+                <input type="text" id="itemName" placeholder="e.g., Milk / పాలు" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -133,22 +132,6 @@
                     <option value="Hari">Hari</option>
                     <option value="Other">Other (ఇతరులు)</option>
                 </select>
-            </div>
-
-            <!-- EXPENSE ITEM PHOTO ATTACHMENT -->
-            <div class="border-t pt-3 space-y-2">
-                <label id="lblAttach" class="block text-sm font-bold text-gray-700">Attach Item or Receipt Image</label>
-                <div class="flex items-center gap-3">
-                    <label class="px-4 py-2 border border-blue-300 rounded-lg bg-blue-50 text-blue-800 text-xs font-bold cursor-pointer active:scale-95 transition">
-                        📎 Select Image / Camera
-                        <input type="file" accept="image/*" id="expensePhotoField" class="hidden" onchange="compressAttachmentPhoto(this)">
-                    </label>
-                    <button type="button" id="clearPhotoBtn" onclick="clearAttachedPhoto()" class="hidden text-xs text-red-500 font-semibold underline">Remove</button>
-                </div>
-                <!-- Resized thumbnail display -->
-                <div class="flex justify-start">
-                    <img id="imagePreview" src="" class="hidden w-20 h-20 object-cover rounded-lg border border-gray-300 shadow-sm mt-1">
-                </div>
             </div>
 
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-md">
@@ -315,4 +298,29 @@
             <span class="text-2xl">🤝</span>
             <span id="navTextPeo" class="text-xs">People & Dues</span>
         </button>
+    </nav>
+
+    <script>
+        // Completely ES5 Compliant (Highly stable on tablet Chrome)
+        var speechLanguage = 'en-IN';
+        var uiLanguage = 'en'; 
+        var expenses = [];
+        var activeFilter = 'all';
+        var appUser = "";
+        var tempCompressedPhoto = ""; // Attachment base64 data
+        var editingExpenseId = null;
+
+        var translations = {
+            te: {
+                title: "ఇంటి ఖర్చులు",
+                speechHeading: "మాట్లాడండి, స్కాన్ చేయండి లేదా ఫోటో జోడించండి",
+                voiceLabel: "మాట్లాడి ఎంటర్ చేయండి",
+                scanLabel: "స్కాన్ లిస్ట్",
+                photoLabel: "ఫోటో జత చేయండి",
+                statusIdle: "పై వాటిని ఎంచుకోండి",
+                statusListening: "వింటున్నాను... మాట్లాడండి",
+                statusScanning: "లిస్టును చదువుతున్నాను... దయచేసి ఆగండి...",
+                formHeading: "ఖర్చు వివరాలు",
+                lblItem: "వస్తువు పేరు",
+                lblAmount: "ధర (Amount ₹)",
         
