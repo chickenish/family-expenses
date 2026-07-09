@@ -9,7 +9,7 @@
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
 
-    <!-- TABLET REMOTE TROUBLESHOOTER (Alerts exact crashes) -->
+    <!-- TABLET REMOTE TROUBLESHOOTER -->
     <script>
         window.onerror = function(msg, url, line) {
             alert("Tablet Error: " + msg + "\nLine: " + line);
@@ -19,105 +19,148 @@
 
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Create Profile</h2>
-            <p class="text-xs text-slate-400">Set up your username and password.</p>
-            <div class="space-y-3 text-left">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
+            <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
+            <div class="space-y-4 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
+                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Answer</label>
-                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
+                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-850 focus:bg-white focus:outline-none">
                 </div>
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition">Create Profile</button>
+                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">Create Profile</button>
             </div>
         </div>
     </div>
 
     <!-- ==================== 2. LOGIN SCREEN ==================== -->
     <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Sign In</h2>
-            <p class="text-xs text-slate-400">Sign in to manage records.</p>
-            <div class="space-y-3 text-left">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
+            <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
+            <div class="space-y-4 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm font-semibold">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
                 </div>
-                <div class="flex items-center justify-between text-xs font-bold">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-900">
-                        <span class="text-slate-500">Remember Me</span>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
+                        <span class="text-xs font-bold text-slate-600">Remember Me</span>
                     </label>
-                    <button onclick="showForgotPassword()" class="text-slate-400 hover:text-slate-700 underline">Forgot Password?</button>
+                    <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
                 </div>
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
             </div>
         </div>
     </div>
 
     <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
     <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
             <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
-            <p class="text-xs text-slate-500">Verify security question details.</p>
-            <div class="space-y-3 text-left">
+            <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
+            <div class="space-y-4 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
-                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                    <label class="block text-xs font-bold text-slate-800 uppercase">Username</label>
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">Your Security Answer</label>
-                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-500 uppercase">New Password</label>
-                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
                 </div>
-                <div class="grid grid-cols-2 gap-2 pt-2">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2 rounded-lg font-bold text-xs">Back</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2 rounded-lg font-bold text-xs">Update</button>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ==================== 4. INTERACTIVE TILES NUMPAD OVERLAYS ==================== -->
+    <div id="numpadModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 text-center">
+            <h3 class="text-xs uppercase font-black text-slate-400" id="numpadCategoryTitle">Logging Expense</h3>
+            <div class="text-3xl font-black text-slate-900 py-3 bg-slate-50 rounded-xl border" id="numpadDisplay">₹ 0</div>
+            
+            <div class="grid grid-cols-3 gap-2 text-xl font-bold">
+                <button onclick="tapNumpad('1')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">1</button>
+                <button onclick="tapNumpad('2')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">2</button>
+                <button onclick="tapNumpad('3')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">3</button>
+                <button onclick="tapNumpad('4')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">4</button>
+                <button onclick="tapNumpad('5')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">5</button>
+                <button onclick="tapNumpad('6')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">6</button>
+                <button onclick="tapNumpad('7')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">7</button>
+                <button onclick="tapNumpad('8')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">8</button>
+                <button onclick="tapNumpad('9')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">9</button>
+                <button onclick="tapNumpad('C')" class="p-4 bg-red-50 text-red-600 rounded-xl">C</button>
+                <button onclick="tapNumpad('0')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">0</button>
+                <button onclick="tapNumpad('DEL')" class="p-4 bg-slate-100 active:bg-slate-200 rounded-xl">⌫</button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 pt-2">
+                <button onclick="closeNumpad()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-xl font-bold text-sm">Cancel</button>
+                <button onclick="submitNumpadAmount()" class="w-full bg-slate-900 text-white p-3 rounded-xl font-black text-sm">Next ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NUMPAD LEDGER WHO PAID OVERLAY -->
+    <div id="paymentModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-xl max-w-sm w-full space-y-4 text-center">
+            <h3 class="text-md font-black text-slate-800 uppercase" id="paymentModalTitle">Who paid?</h3>
+            <p class="text-xs text-slate-400">Select payment source to record transaction instantly.</p>
+            <div class="flex flex-col gap-2 pt-2">
+                <button onclick="selectNumpadPayer('Unpaid')" class="p-3 bg-red-50 border border-red-200 rounded-xl font-bold text-red-900 active:scale-95 transition">Unpaid / Credit Tab (ఉంచాము)</button>
+                <button onclick="selectNumpadPayer('Ganesh')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Ganesh</button>
+                <button onclick="selectNumpadPayer('Sujatha')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Sujatha</button>
+                <button onclick="selectNumpadPayer('Hari')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Hari</button>
+                <button onclick="selectNumpadPayer('Other')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Other (ఇతరులు)</button>
+            </div>
+            <button onclick="closePaymentModal()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-sm mt-2">Back</button>
+        </div>
+    </div>
+
     <!-- PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-95 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
+    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
         <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-xs font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
-            <h1 id="appTitle" class="text-sm font-black uppercase text-slate-900">Family Expenses</h1>
+            <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
         </div>
         <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-2.5 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
@@ -126,19 +169,16 @@
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
         
-        <!-- Choose Action Card (Lines 110-145) -->
+        <!-- Action Card -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
-            <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm">English</button>
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
-            </div>
-            
             <div class="grid grid-cols-3 gap-2 py-1">
+                <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
                     <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
                     <span id="voiceLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Speak</span>
                 </div>
+                <!-- Camera Snap Button -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📷
@@ -146,6 +186,7 @@
                     </label>
                     <span id="cameraLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Bill Camera</span>
                 </div>
+                <!-- Attach Image Button -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📎
@@ -163,7 +204,73 @@
             <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
         </div>
 
-        <!-- Form Details -->
+        <!-- QUICK FAVORITES PANEL -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Daily Favorites</h3>
+            <div class="grid grid-cols-2 gap-2 text-left font-bold text-slate-800">
+                <button onclick="quickLogExpense('Milk', 58, 2, 'Milk')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                    <span>🥛 Milk (2 packs)</span>
+                    <span class="text-slate-500">₹58</span>
+                </button>
+                <button onclick="quickLogExpense('Eggs', 92, 12, 'Eggs')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                    <span>🥚 Eggs (1 Dozen)</span>
+                    <span class="text-slate-500">₹92</span>
+                </button>
+                <button onclick="quickLogExpense('Curd Big', 30, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                    <span>🥣 Curd Big</span>
+                    <span class="text-slate-500">₹30</span>
+                </button>
+                <button onclick="quickLogExpense('Curd Small', 15, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                    <span>🥣 Curd Small</span>
+                    <span class="text-slate-500">₹15</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- VISUAL TILE NUMPAD PORTAL CARD -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Visual Category Keys</h3>
+            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold text-slate-700">
+                <button onclick="launchNumpadForTile('Milk')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🥛</span>
+                    <span>Milk</span>
+                </button>
+                <button onclick="launchNumpadForTile('Curd')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🥣</span>
+                    <span>Curd</span>
+                </button>
+                <button onclick="launchNumpadForTile('Eggs')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🥚</span>
+                    <span>Eggs</span>
+                </button>
+                <button onclick="launchNumpadForTile('Vegetables')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🍅</span>
+                    <span>Vegetables</span>
+                </button>
+                <button onclick="launchNumpadForTile('Tiffins')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🍽️</span>
+                    <span>Tiffins</span>
+                </button>
+                <button onclick="launchNumpadForTile('Oil')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🛢️</span>
+                    <span>Oil</span>
+                </button>
+                <button onclick="launchNumpadForTile('Monthly Kirana')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">📦</span>
+                    <span class="text-[10px]">Mo. Kirana</span>
+                </button>
+                <button onclick="launchNumpadForTile('Meat')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">🥩</span>
+                    <span class="text-[10px] leading-tight">Chicken/Mutton/Fish</span>
+                </button>
+                <button onclick="launchNumpadForTile('Others')" class="p-3 border border-slate-200 rounded-xl bg-slate-50 active:bg-slate-100 flex flex-col items-center gap-1 transition">
+                    <span class="text-xl">✏️</span>
+                    <span>Others</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Form -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
@@ -194,28 +301,28 @@
                 </select>
             </div>
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-200 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-250 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
         
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
                 <span id="cardDailyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardWeekTitle" class="block text-[10px] uppercase font-bold text-slate-400">Weekly</span>
                 <span id="cardWeeklyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardMonthTitle" class="block text-[10px] uppercase font-bold text-slate-400">Monthly</span>
-                <span id="cardMonthlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardMonthlyAmt" class="block text-lg font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardYearTitle" class="block text-[10px] uppercase font-bold text-slate-400">Yearly</span>
                 <span id="cardYearlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
@@ -234,7 +341,7 @@
             <div class="overflow-x-auto">
                 <table class="min-w-full text-xs text-left">
                     <thead>
-                        <tr class="border-b border-slate-100 text-slate-400 font-black uppercase">
+                        <tr class="border-b border-slate-100 text-slate-400 uppercase font-black">
                             <th class="py-2">Category</th>
                             <th class="py-2 text-right">Paid</th>
                             <th class="py-2 text-right">Unpaid</th>
@@ -260,7 +367,6 @@
     <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
-        
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -305,7 +411,6 @@
 
     <!-- ==================== PAGE 4: PROFILE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
-        
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
@@ -316,7 +421,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -326,7 +431,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -336,7 +441,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -346,10 +451,9 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
-
                 <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm flex justify-between items-center">
                     <div>
                         <h3 class="text-sm font-black text-amber-900">Milk, Curd & Eggs Unpaid Dues</h3>
@@ -357,10 +461,9 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalMilkCurdEggsUnpaid" class="text-md font-black text-amber-950">₹0</span>
-                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
-                
                 <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex justify-between items-center">
                     <div>
                         <h3 id="lblUnpaidTab" class="text-sm font-black text-slate-900">Pending Dues</h3>
@@ -368,7 +471,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded">Clear All Dues</button>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded shadow hover:bg-slate-800">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -424,8 +527,8 @@
                     <input type="password" id="editPassword" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 text-xs rounded-lg focus:bg-white focus:outline-none">
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="updateProfileDetails()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold">Save Settings</button>
-                    <button onclick="logoutProfile()" class="w-full border border-slate-200 text-red-500 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Logout / Reset</button>
+                    <button onclick="updateProfileDetails()" class="w-full bg-slate-955 text-white p-2.5 rounded-lg text-xs font-bold">Save Settings</button>
+                    <button onclick="logoutProfile()" class="w-full border border-slate-200 text-red-500 p-2 bg-slate-50 text-xs font-bold rounded">Logout / Reset</button>
                 </div>
             </div>
         </div>
@@ -454,29 +557,30 @@
     <!-- ==================== IMMUTABLE SECURED ENGINE ==================== -->
     <script>
         var safeStorage = {
-            getItem: function(k) { try { return localStorage.getItem(k); } catch(e) { return this[k] || null; } },
-            setItem: function(k, v) { try { localStorage.setItem(k, v); } catch(e) { this[k] = v; } },
-            removeItem: function(k) { try { localStorage.removeItem(k); } catch(e) { delete this[k]; } }
+            getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
+            setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
+            removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
         };
 
-        var speechLanguage = 'en-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
+        var speechLanguage = 'te-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
+        var numpadActiveCategory = "", numpadActiveName = "", tempNumpadValue = "", numpadQty = 1;
 
         var translations = {
             te: {
-                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను...",
-                formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
+                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను... మాట్లాడండి",
+                formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం (Qty)", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
                 reportHeader: "కాలాల వారీగా ఖర్చులు", peopleHeader: "బకాయిలు", lblOthersName: "ఇతరులు", lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)", navAdd: "చేర్చండి", navReports: "రిపోర్టులు", navPeople: "ప్రొఫైల్ & బకాయిలు",
-                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "Analysis", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
+                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
             },
             en: {
-                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening...",
+                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening... speak now",
                 formHeading: "Expense Details", lblItem: "Item Name", lblAmount: "Amount (₹)", lblQty: "Quantity", lblPaidBy: "Who Paid?", saveBtn: "Save Expense", noExpenses: "No expenses logged yet", uiBtn: "తెలుగు UI",
                 reportHeader: "Time-Period Expenses", peopleHeader: "Ledger Dues", lblOthersName: "Others", lblUnpaidTab: "Pending Dues", navAdd: "Add Expense", navReports: "Reports", navPeople: "Dues & Profile",
-                compareHeader: "Monthly Comparisons", overspentTitle: "Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
+                compareHeader: "Monthly Comparisons", overspentTitle: "⚠️ Spending Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
             }
         };
 
-        // DOM CONTROL BINDINGS (CRASH PREVENTING SYSTEM) [2]
+        // DOM CONTROL BINDINGS (CRASH PREVENTING SYSTEM)
         function safeClass(id, action, className) {
             var el = document.getElementById(id);
             if (el) {
@@ -497,7 +601,7 @@
             loadSavedBudgets();
         });
 
-        // IDENTITY SECURITY ENGINE [3]
+        // IDENTITY SECURITY ENGINE
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
             var isLogged = safeStorage.getItem('is_logged_in');
@@ -572,34 +676,27 @@
         function showForgotPassword() {
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
-            safeClass('forgotScreen', 'remove', 'hidden');
-        }
-
-        function cancelForgotPassword() {
-            safeClass('forgotScreen', 'add', 'hidden');
-            checkUser();
-        }
-
-        function submitForgotPassword() {
-            var user = document.getElementById('forgotUser').value.trim();
-            var q = document.getElementById('forgotQuestion').value;
-            var ans = document.getElementById('forgotAnswer').value.trim().toLowerCase();
-            var newPass = document.getElementById('forgotNewPass').value.trim();
-
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
+            var qMap = {"1":"What is your mother's maiden name?","2":"What was the name of your first pet?","3":"What city were you born in?"};
 
-            if (p.username === user && p.question === q && p.answer === ans) {
-                if (!newPass) { alert("Enter a valid new password."); return; }
-                p.password = newPass;
-                safeStorage.setItem('family_profile', JSON.stringify(p));
-                alert("Password updated! Log in now.");
-                cancelForgotPassword();
-            } else {
-                alert("Incorrect details. Answer doesn't match.");
+            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
+            if (ans) {
+                ans = ans.trim().toLowerCase();
+                if (ans === p.answer) {
+                    var newPass = prompt("Identity verified! Enter new password:");
+                    if (newPass) {
+                        p.password = newPass;
+                        safeStorage.setItem('family_profile', JSON.stringify(p));
+                        alert("Password updated! Log in now.");
+                    }
+                } else {
+                    alert("Incorrect answer.");
+                }
             }
+            checkUser();
         }
 
         function updateProfileDetails() {
@@ -618,7 +715,7 @@
         }
 
         function logoutProfile() {
-            if (confirm("Reset connection or Logout?")) {
+            if (confirm("Reset login credentials or Logout from this device?")) {
                 safeStorage.removeItem('is_logged_in');
                 checkUser();
             }
@@ -715,6 +812,109 @@
             input.value = ""; 
         }
 
+        // ==================== VISUAL TILE NUMPAD CONTROLLER ====================
+        function launchNumpadForTile(category) {
+            tempNumpadValue = "";
+            numpadActiveCategory = category;
+            numpadActiveName = category;
+
+            if (category === 'Meat') {
+                var meatChoice = prompt("Please select Item:\n1. Chicken (కోడి)\n2. Mutton (మటన్)\n3. Fish (చేప)\n\nEnter Number (1, 2, or 3):");
+                if (meatChoice === "1") { numpadActiveCategory = "Chicken"; numpadActiveName = "Chicken"; }
+                else if (meatChoice === "2") { numpadActiveCategory = "Mutton"; numpadActiveName = "Mutton"; }
+                else if (meatChoice === "3") { numpadActiveCategory = "Fish"; numpadActiveName = "Fish"; }
+                else { alert("Invalid choice. Operation cancelled."); return; }
+            }
+
+            if (category === 'Others') {
+                var otherDesc = prompt("Please enter what you bought:");
+                if (!otherDesc || otherDesc.trim() === "") { alert("Item description required."); return; }
+                numpadActiveCategory = "Other expenses";
+                numpadActiveName = otherDesc.trim();
+            }
+
+            document.getElementById('numpadCategoryTitle').innerText = "Logging: " + numpadActiveName;
+            document.getElementById('numpadDisplay').innerText = "₹ 0";
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        function tapNumpad(char) {
+            var display = document.getElementById('numpadDisplay');
+            if (char === 'C') {
+                tempNumpadValue = "";
+            } else if (char === 'DEL') {
+                if (tempNumpadValue.length > 0) {
+                    tempNumpadValue = tempNumpadValue.substring(0, tempNumpadValue.length - 1);
+                }
+            } else {
+                if (tempNumpadValue.length < 7) {
+                    tempNumpadValue += char;
+                }
+            }
+            display.innerText = "₹ " + (tempNumpadValue || "0");
+        }
+
+        function closeNumpad() {
+            safeClass('numpadModal', 'add', 'hidden');
+        }
+
+        function submitNumpadAmount() {
+            var finalAmt = parseFloat(tempNumpadValue);
+            if (isNaN(finalAmt) || finalAmt <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+
+            // Default qty to 1
+            numpadQty = 1;
+
+            // Prompt for Quantity only for specified categories [1]
+            var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
+            if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
+                var qtyInput = prompt("Enter Quantity (పరిమాణం) for \"" + numpadActiveName + "\":", "1");
+                if (qtyInput === null) return; // Cancelled entire flow
+                var parsedQty = parseFloat(qtyInput);
+                if (!isNaN(parsedQty) && parsedQty > 0) {
+                    numpadQty = parsedQty;
+                }
+            }
+
+            safeClass('numpadModal', 'add', 'hidden');
+            safeClass('paymentModal', 'remove', 'hidden');
+            document.getElementById('paymentModalTitle').innerText = "Who paid ₹" + finalAmt + "?";
+        }
+
+        function closePaymentModal() {
+            safeClass('paymentModal', 'add', 'hidden');
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        function selectNumpadPayer(payer) {
+            var finalAmt = parseFloat(tempNumpadValue);
+            if (isNaN(finalAmt) || finalAmt <= 0) return;
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: numpadActiveName,
+                amount: finalAmt,
+                qty: numpadQty, // Use the dynamically collected quantity [1]
+                paid_by: payer,
+                category: numpadActiveCategory,
+                photo: "",
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            safeClass('paymentModal', 'add', 'hidden');
+            alert("Success! Recorded: " + numpadActiveName + " (₹" + finalAmt + ") logged successfully!");
+            navigateTo('pageReports');
+        }
+
         // FILTER CALENDAR
         function filterLogBySpecificDate(dateString) {
             if (!dateString) return;
@@ -762,7 +962,7 @@
             }
         }
 
-        // BUDGET CONTROLS
+        // BUDGETS
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
@@ -779,7 +979,7 @@
             calculateSummaryData();
         }
 
-        // SPEECH SYNONYMS CATEGORY PARSER
+        // AUTO CATEGORIZE SYNONYMS MAP
         function detectCategory(itemName) {
             var name = itemName.toLowerCase();
             if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
@@ -816,6 +1016,22 @@
             }
         }
 
+        // BILINGUAL LOGIC
+        function convertWordsToNumbers(text) {
+            var t = text.toLowerCase();
+            var words = {
+                "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+                "double": 2, "dozen": 12, "half": 0.5, "pack": 1, "packet": 1,
+                "fifteen": 15, "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100,
+                "సగం": 0.5, "అర": 0.5, "ఒకటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9, "పది": 10,
+                "పదిహేను": 15, "ఇరవై": 20, "ముప్పై": 30, "నలభై": 40, "యాభై": 50, "అరవై": 60, "డెబ్బై": 70, "ఎనభై": 80, "తొంభై": 90, "వంద": 100
+            };
+            for (var key in words) {
+                t = t.replace(new RegExp(key, 'g'), words[key]);
+            }
+            return t;
+        }
+
         function startListening() {
             var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRec) { alert("Voice typing is not supported on this browser."); return; }
@@ -834,38 +1050,65 @@
                 var textResult = event.results[0][0].transcript;
                 processVoiceText(textResult);
             };
+            rec.onerror = function(event) {
+                if (event.error === 'not-allowed') {
+                    alert("Mic Access Denied!\nPlease check browser settings and allow Microphone permissions.");
+                } else if (event.error === 'no-speech') {
+                    alert("No speech detected. Speak closer to the microphone.");
+                } else {
+                    alert("Microphone Error: " + event.error + "\nSetting fallback...");
+                    speechLanguage = 'en-IN';
+                }
+            };
             rec.start();
         }
 
-        function processVoiceText(text) {
-            var amount = "", qty = 1, item = text;
-            var numMatches = text.match(/\d+/g);
-            if (numMatches) {
-                if (numMatches.length === 1) {
-                    amount = numMatches[0]; item = text.replace(amount, "").trim();
-                } else if (numMatches.length >= 2) {
+        function processVoiceText(rawText) {
+            var text = convertWordsToNumbers(rawText);
+            var amount = "", qty = 1, item = rawText;
+            var matches = text.match(/\d+(\.\d+)?/g);
+            if (matches) {
+                if (matches.length === 1) {
+                    amount = matches[0];
+                    item = rawText.replace(new RegExp(amount, 'g'), "").trim();
+                } else if (matches.length >= 2) {
                     var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
                     var uMatch = text.match(rx);
                     if (uMatch) {
-                        qty = parseInt(uMatch[1]);
-                        for (var i = 0; i < numMatches.length; i++) {
-                            if (parseInt(numMatches[i]) !== qty) { amount = numMatches[i]; break; }
+                        qty = parseFloat(uMatch[1]);
+                        for (var i = 0; i < matches.length; i++) {
+                            var parsedNum = parseFloat(matches[i]);
+                            if (parsedNum !== qty) { amount = parsedNum; break; }
                         }
-                        if (!amount) amount = Math.max(parseInt(numMatches[0]), parseInt(numMatches[1]));
-                        item = text.replace(uMatch[0], "").replace(amount, "").trim();
+                        if (!amount) amount = Math.max(parseFloat(matches[0]), parseFloat(matches[1]));
+                        item = rawText.replace(new RegExp(qty, 'g'), "").replace(new RegExp(amount, 'g'), "").trim();
                     } else {
-                        var n1 = parseInt(numMatches[0]), n2 = parseInt(numMatches[1]);
-                        amount = Math.max(n1, n2); qty = Math.min(n1, n2);
-                        item = text.replace(n1.toString(), "").replace(n2.toString(), "").trim();
+                        var num1 = parseFloat(matches[0]), num2 = parseFloat(matches[1]);
+                        amount = Math.max(num1, num2); qty = Math.min(num1, num2);
+                        item = rawText.replace(new RegExp(num1, 'g'), "").replace(new RegExp(num2, 'g'), "").trim();
                     }
                 }
             }
-            item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
+            item = item.replace(/రూపాయలు|రూపాయల|rupees|rupee|rs|packets|packet|packs|pack|ప్యాకెట్|ప్యాకెట్లు/gi, "").trim();
             var elN = document.getElementById('itemName'), elA = document.getElementById('itemAmount'), elQ = document.getElementById('itemQty');
             if (elN) elN.value = item; if (elA) elA.value = amount; if (elQ) elQ.value = qty;
         }
 
-        // ==================== CALCS AND DATA INTERFACE ====================
+        // ONE-TAP FAVORITES QUICK LOG ENGINE
+        function quickLogExpense(name, amount, qty, category) {
+            var dateVal = new Date().toISOString();
+            var creatorName = appUser || "Guest";
+            var newExpense = {
+                id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: "Unpaid", category: category, photo: "", recorded_by: creatorName, edited_by: ""
+            };
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            alert("Logged: " + name + " (₹" + amount + ") successfully!");
+            navigateTo('pageReports');
+        }
+
+        // ==================== RECOVERY & LOADING ====================
         function loadExpenses() {
             var stored = safeStorage.getItem('family_expenses_data');
             var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
@@ -948,7 +1191,7 @@
             safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
         }
 
-        // ==================== CLEAR MEMBERS DUELS (SECURED FOR SUJATHA AND HARI ONLY) ====================
+        // ==================== CLEAR DUELS (SECURED) ====================
         function clearUnpaidExpenses() {
             if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
             var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
@@ -1028,6 +1271,7 @@
             safeSetText('totalGanesh', '₹' + spentG); safeSetText('totalSujatha', '₹' + spentS); safeSetText('totalHari', '₹' + spentH); safeSetText('totalOthers', '₹' + spentO);
             safeSetText('totalUnpaid', '₹' + spentU); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
             
+            // Progress Update
             var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
             safeSetText('budgetDailyProgress', '₹' + dSum + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + wSum + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + mSum + ' / ₹' + budM);
 
