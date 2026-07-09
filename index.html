@@ -254,3 +254,122 @@
             } else {
                 try {
                     // Check if library loaded successfully
+                    if (typeof supabase === 'undefined') {
+                        throw new Error("Supabase script blocked or not loaded.");
+                    }
+                    // Attempt connection
+                    supabaseClient = supabase.createClient(savedUrl, savedKey);
+                    document.getElementById('setupScreen').classList.add('hidden');
+                    loadExpenses();
+                } catch (err) {
+                    console.error("Database connection failed:", err);
+                    // Clear bad data from memory to unfreeze the page
+                    localStorage.removeItem('family_sb_url');
+                    localStorage.removeItem('family_sb_key');
+                    document.getElementById('setupScreen').classList.remove('hidden');
+                    alert("Database connection failed. Please re-enter your keys cleanly.");
+                }
+            }
+        }
+
+        function saveSetupKeys() {
+            const url = document.getElementById('setupUrl').value.trim();
+            const key = document.getElementById('setupKey').value.trim();
+
+            if (!url || !key) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            localStorage.setItem('family_sb_url', url);
+            localStorage.setItem('family_sb_key', key);
+            checkDatabaseSetup();
+        }
+
+        function clearKeys() {
+            if(confirm("Do you want to reset your database connection configuration?")) {
+                localStorage.removeItem('family_sb_url');
+                localStorage.removeItem('family_sb_key');
+                location.reload();
+            }
+        }
+
+        function navigateTo(pageId) {
+            document.querySelectorAll('.page-container').forEach(el => el.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+
+            const navs = ['navAdd', 'navReports', 'navPeople'];
+            navs.forEach(nav => {
+                const el = document.getElementById(nav);
+                el.classList.remove('text-blue-600', 'font-bold');
+                el.classList.add('text-gray-400', 'font-medium');
+            });
+
+            const activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
+            activeNav.classList.remove('text-gray-400', 'font-medium');
+            activeNav.classList.add('text-blue-600', 'font-bold');
+        }
+
+        function toggleUILanguage() {
+            uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
+            applyUILanguageText();
+        }
+
+        function applyUILanguageText() {
+            const t = translations[uiLanguage];
+            
+            document.getElementById('appTitle').innerText = t.title;
+            document.getElementById('uiLangBtn').innerText = t.uiBtn;
+            document.getElementById('speechHeading').innerText = t.speechHeading;
+            document.getElementById('statusText').innerText = t.statusIdle;
+            document.getElementById('formHeading').innerText = t.formHeading;
+            document.getElementById('lblItem').innerText = t.lblItem;
+            document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblQty').innerText = t.lblQty;
+            document.getElementById('lblPaidBy').innerText = t.lblPaidBy;
+            document.getElementById('saveBtn').innerText = t.saveBtn;
+            document.getElementById('listHeading').innerText = t.listHeading;
+            document.getElementById('lblPendingBal').innerText = t.lblPendingBal;
+            document.getElementById('reportHeader').innerText = t.reportHeader;
+            document.getElementById('peopleHeader').innerText = t.peopleHeader;
+            document.getElementById('lblOthersName').innerText = t.lblOthersName;
+            document.getElementById('lblUnpaidTab').innerText = t.lblUnpaidTab;
+            
+            document.getElementById('navTextAdd').innerText = t.navAdd;
+            document.getElementById('navTextRep').innerText = t.navReports;
+            document.getElementById('navTextPeo').innerText = t.navPeople;
+            
+            renderExpenses();
+        }
+
+        function setSpeechLanguage(lang) {
+            speechLanguage = lang;
+            const btnTe = document.getElementById('btnTe');
+            const btnEn = document.getElementById('btnEn');
+            
+            if (lang === 'te-IN') {
+                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+            } else {
+                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+            }
+        }
+
+        function startListening() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Speech recognition is not supported on this browser.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = speechLanguage;
+
+            const statusText = document.getElementById('statusText');
+            const micBtn = document.getElementById('micBtn');
+
+            recognition.onstart = () => {
+                st
