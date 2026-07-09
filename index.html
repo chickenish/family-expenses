@@ -9,121 +9,136 @@
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
 
-    <!-- TABLET REMOTE TROUBLESHOOTER (Guards against silent startup crashes) -->
+    <!-- TABLET REMOTE TROUBLESHOOTER (Alerts exact crashes) -->
     <script>
-        window.onerror = function(message, source, lineno) {
-            alert("Tablet Error Captured:\n" + message + "\nLine: " + lineno);
+        window.onerror = function(msg, url, line) {
+            alert("Tablet Error: " + msg + "\nLine: " + line);
             return false;
         };
     </script>
 
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <div class="text-center space-y-2">
-                <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
-                <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
-            </div>
-            
-            <div class="space-y-4">
+        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-xl font-black text-slate-900">Create Profile</h2>
+            <p class="text-xs text-slate-400">Set up your username and password.</p>
+            <div class="space-y-3 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Ganesh" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Password</label>
+                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm focus:bg-white focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
-                        <option value="1">What was your first school's name?</option>
-                        <option value="2">What is your favorite food?</option>
-                        <option value="3">What is your mother's favorite dish?</option>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Security Question</label>
+                    <select id="regQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
-                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Answer</label>
+                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
-                
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">
-                    Create Profile
-                </button>
+                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition">Create Profile</button>
             </div>
         </div>
     </div>
 
     <!-- ==================== 2. LOGIN SCREEN ==================== -->
     <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <div class="text-center space-y-2">
-                <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
-                <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
-            </div>
-            
-            <div class="space-y-4">
+        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-xl font-black text-slate-900">Sign In</h2>
+            <p class="text-xs text-slate-400">Sign in to manage records.</p>
+            <div class="space-y-3 text-left">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm font-semibold">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
                 </div>
-                
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
-                        <span class="text-xs font-bold text-slate-600">Remember Me</span>
+                <div class="flex items-center justify-between text-xs font-bold">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-900">
+                        <span class="text-slate-500">Remember Me</span>
                     </label>
-                    <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
+                    <button onclick="showForgotPassword()" class="text-slate-400 hover:text-slate-700 underline">Forgot Password?</button>
                 </div>
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
+            </div>
+        </div>
+    </div>
 
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">
-                    Login
-                </button>
+    <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
+    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
+        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
+            <p class="text-xs text-slate-500">Verify security question details.</p>
+            <div class="space-y-3 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Username</label>
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Security Question</label>
+                    <select id="forgotQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase">New Password</label>
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2 rounded-lg font-bold text-xs">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2 rounded-lg font-bold text-xs">Update</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
+    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-95 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
         <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+        <p class="text-white mt-4 text-xs font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
-            <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
+            <h1 id="appTitle" class="text-sm font-black uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
         </div>
-        <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-3 py-1 rounded-lg text-xs font-bold transition">
-            తెలుగు UI
-        </button>
+        <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-2.5 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
     </header>
 
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
         
-        <!-- Action Card -->
+        <!-- Choose Action Card (Lines 110-145) -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
-            
             <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white">English</button>
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm">English</button>
                 <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
             </div>
             
-            <!-- Quick Actions Grid with Direct Camera Button -->
             <div class="grid grid-cols-3 gap-2 py-1">
-                <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
                     <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
                     <span id="voiceLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Speak</span>
                 </div>
-                <!-- Camera Snap Button (Directly prompts for bill entry) -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📷
@@ -131,7 +146,6 @@
                     </label>
                     <span id="cameraLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Bill Camera</span>
                 </div>
-                <!-- Attach Image Button -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📎
@@ -141,27 +155,24 @@
                 </div>
             </div>
             
-            <div id="imageStatusArea" class="hidden flex items-center justify-center gap-2 p-1.5 bg-slate-100 border border-slate-200 rounded-lg max-w-[200px] mx-auto">
+            <div id="imageStatusArea" class="hidden flex items-center justify-center gap-1.5 p-1.5 bg-slate-100 border border-slate-200 rounded-lg max-w-[200px] mx-auto">
                 <img id="imagePreview" src="" class="w-6 h-6 object-cover rounded border border-slate-300">
                 <span class="text-[10px] text-slate-800 font-bold">Attached!</span>
                 <button type="button" onclick="clearAttachedPhoto()" class="text-red-500 text-[10px] font-bold underline ml-1">Remove</button>
             </div>
-
             <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
         </div>
 
-        <!-- Form -->
+        <!-- Form Details -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
                 <span id="editBadge" class="hidden text-[10px] font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Editing</span>
             </div>
-
             <div>
                 <label id="lblItem" class="block text-xs font-bold text-slate-500 uppercase">Item Name</label>
                 <input type="text" id="itemName" placeholder="e.g. Milk / పాలు" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg focus:bg-white focus:outline-none">
             </div>
-
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label id="lblAmount" class="block text-xs font-bold text-slate-500 uppercase">Amount (₹)</label>
@@ -172,7 +183,6 @@
                     <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg focus:bg-white focus:outline-none">
                 </div>
             </div>
-
             <div>
                 <label id="lblPaidBy" class="block text-xs font-bold text-slate-500 uppercase">Who Paid?</label>
                 <select id="paidBy" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-slate-800 font-bold focus:bg-white focus:outline-none">
@@ -183,21 +193,15 @@
                     <option value="Other">Other (ఇతరులు)</option>
                 </select>
             </div>
-
-            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">
-                Save Expense
-            </button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-200 text-slate-700 p-2 rounded-lg font-bold transition text-sm">
-                Cancel Editing
-            </button>
+            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-200 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
         
-        <!-- Interactive Date Cards -->
         <div class="grid grid-cols-2 gap-3">
             <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
@@ -217,7 +221,6 @@
             </button>
         </div>
 
-        <!-- Custom Calendar Filter -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <label id="lblCalendar" class="block text-xs font-bold text-slate-500 uppercase">Select Date to view logs</label>
             <div class="flex gap-2">
@@ -226,26 +229,23 @@
             </div>
         </div>
 
-        <!-- Category Wise Totals Box -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <h3 id="catTotalsTitle" class="text-sm font-bold text-slate-800 uppercase tracking-wide">Category Totals</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full text-xs text-left">
                     <thead>
-                        <tr class="border-b border-slate-100 text-slate-400 uppercase font-black">
+                        <tr class="border-b border-slate-100 text-slate-400 font-black uppercase">
                             <th class="py-2">Category</th>
                             <th class="py-2 text-right">Paid</th>
                             <th class="py-2 text-right">Unpaid</th>
                             <th class="py-2 text-right font-black text-slate-900">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold">
-                    </tbody>
+                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Expense Log Box -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h3 id="reportListTitle" class="text-sm font-bold text-slate-800 uppercase">Displaying: All</h3>
@@ -261,7 +261,6 @@
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
         
-        <!-- Budget Tracking Card -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -269,8 +268,8 @@
                     <span>Daily Budget</span>
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -278,8 +277,8 @@
                     <span>Weekly Budget</span>
                     <span id="budgetWeeklyProgress">₹0 / ₹3000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetWeeklyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetWeeklyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -287,23 +286,20 @@
                     <span>Monthly Budget</span>
                     <span id="budgetMonthlyProgress">₹0 / ₹12000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetMonthlyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetMonthlyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
         </div>
 
-        <!-- Overspending Analysis / Tips Card -->
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
-            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1">
-            </div>
+            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
         </div>
 
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 id="histMonthsTitle" class="text-sm font-bold text-slate-800 uppercase">Month Spending History</h3>
-            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100">
-            </div>
+            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100"></div>
         </div>
     </div>
 
@@ -320,7 +316,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -330,7 +326,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -340,7 +336,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -350,7 +346,18 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-black text-amber-900">Milk, Curd & Eggs Unpaid Dues</h3>
+                        <p class="text-[10px] text-amber-700 font-bold">Outstanding Unpaid Grocery Tab</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalMilkCurdEggsUnpaid" class="text-md font-black text-amber-950">₹0</span>
+                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 
@@ -361,7 +368,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-850">Clear All Dues</button>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -387,7 +394,6 @@
             <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg shadow-sm">Save Budgets</button>
         </div>
 
-        <!-- Sync Configuration settings panel -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
             <h3 class="text-sm font-black text-slate-900 uppercase">Cloud Sync Settings</h3>
             <div class="space-y-3">
@@ -445,109 +451,37 @@
         </button>
     </nav>
 
+    <!-- ==================== IMMUTABLE SECURED ENGINE ==================== -->
     <script>
-        // IMMUTABLE CRASH PREVENTING MEMORY PROXY (100% immune to storage restrictions)
         var safeStorage = {
-            getItem: function(key) {
-                try { return localStorage.getItem(key); } catch(e) { return this[key] || null; }
-            },
-            setItem: function(key, val) {
-                try { localStorage.setItem(key, val); } catch(e) { this[key] = val; }
-            },
-            removeItem: function(key) {
-                try { localStorage.removeItem(key); } catch(e) { delete this[key]; }
-            }
+            getItem: function(k) { try { return localStorage.getItem(k); } catch(e) { return this[k] || null; } },
+            setItem: function(k, v) { try { localStorage.setItem(k, v); } catch(e) { this[k] = v; } },
+            removeItem: function(k) { try { localStorage.removeItem(k); } catch(e) { delete this[k]; } }
         };
 
-        var speechLanguage = 'en-IN';
-        var uiLanguage = 'en'; 
-        var expenses = [];
-        var activeFilter = 'all';
-        var selectedCalendarDate = ""; 
-        var appUser = "";
-        var tempCompressedPhoto = ""; 
-        var editingExpenseId = null;
+        var speechLanguage = 'en-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
 
         var translations = {
             te: {
-                title: "ఇంటి ఖర్చులు",
-                speechHeading: "మార్గాలు ఎంచుకోండి",
-                voiceLabel: "మాట్లాడండి",
-                cameraLabel: "బిల్ కెమెరా",
-                photoLabel: "ఫోటో జత",
-                statusIdle: "పై వాటిని ఎంచుకోండి",
-                statusListening: "వింటున్నాను... మాట్లాడండి",
-                formHeading: "ఖర్చు వివరాలు",
-                lblItem: "వస్తువు పేరు",
-                lblAmount: "ధర (Amount ₹)",
-                lblQty: "పరిమాణం (Qty)",
-                lblPaidBy: "ఎవరు చెల్లించారు?",
-                saveBtn: "సేవ్ చేయండి",
-                noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
-                uiBtn: "English UI",
-                reportHeader: "కాలాల వారీగా ఖర్చులు",
-                peopleHeader: "బకాయిలు",
-                lblOthersName: "ఇతరులు",
-                lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)",
-                navAdd: "చేర్చండి",
-                navReports: "రిపోర్టులు",
-                navPeople: "ప్రొఫైల్ & బకాయిలు",
-                compareHeader: "నెలవారీ సరిపోలికలు",
-                overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ",
-                histMonthsTitle: "నెలవారీ ఖర్చులు",
-                catTotalsTitle: "విభాగాల వారీగా ఖర్చులు",
-                navCompare: "పోలికలు",
-                cardDayTitle: "ఈరోజు",
-                cardWeekTitle: "వారం",
-                cardMonthTitle: "నెల",
-                cardYearTitle: "సంవత్సరం",
-                lblCalendar: "తేదీ ఎంచుకోండి"
+                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను...",
+                formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
+                reportHeader: "కాలాల వారీగా ఖర్చులు", peopleHeader: "బకాయిలు", lblOthersName: "ఇతరులు", lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)", navAdd: "చేర్చండి", navReports: "రిపోర్టులు", navPeople: "ప్రొఫైల్ & బకాయిలు",
+                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "Analysis", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
             },
             en: {
-                title: "Family Expenses",
-                speechHeading: "Choose Action",
-                voiceLabel: "Speak",
-                cameraLabel: "Bill Camera",
-                photoLabel: "Photo",
-                statusIdle: "Select action above",
-                statusListening: "Listening... speak now",
-                formHeading: "Expense Details",
-                lblItem: "Item Name",
-                lblAmount: "Amount (₹)",
-                lblQty: "Quantity",
-                lblPaidBy: "Who Paid?",
-                saveBtn: "Save Expense",
-                noExpenses: "No expenses logged yet",
-                uiBtn: "తెలుగు UI",
-                reportHeader: "Time-Period Expenses",
-                peopleHeader: "Ledger Dues",
-                lblOthersName: "Others",
-                lblUnpaidTab: "Pending Dues",
-                navAdd: "Add Expense",
-                navReports: "Reports",
-                navPeople: "Dues & Profile",
-                compareHeader: "Monthly Comparisons",
-                overspentTitle: "⚠️ Spending Analysis",
-                histMonthsTitle: "Month Spending History",
-                catTotalsTitle: "Category Totals",
-                navCompare: "Compare",
-                cardDayTitle: "Today",
-                cardWeekTitle: "Weekly",
-                cardMonthTitle: "Monthly",
-                cardYearTitle: "Yearly",
-                lblCalendar: "Select Date to view logs"
+                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening...",
+                formHeading: "Expense Details", lblItem: "Item Name", lblAmount: "Amount (₹)", lblQty: "Quantity", lblPaidBy: "Who Paid?", saveBtn: "Save Expense", noExpenses: "No expenses logged yet", uiBtn: "తెలుగు UI",
+                reportHeader: "Time-Period Expenses", peopleHeader: "Ledger Dues", lblOthersName: "Others", lblUnpaidTab: "Pending Dues", navAdd: "Add Expense", navReports: "Reports", navPeople: "Dues & Profile",
+                compareHeader: "Monthly Comparisons", overspentTitle: "Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
             }
         };
 
-        // ==================== BASE CRASH GUARDS DEFINITIONS ====================
+        // DOM CONTROL BINDINGS (CRASH PREVENTING SYSTEM) [2]
         function safeClass(id, action, className) {
             var el = document.getElementById(id);
             if (el) {
-                if (action === 'add') {
-                    el.classList.add(className);
-                } else if (action === 'remove') {
-                    el.classList.remove(className);
-                }
+                if (action === 'add') el.classList.add(className);
+                else if (action === 'remove') el.classList.remove(className);
             }
         }
 
@@ -563,7 +497,7 @@
             loadSavedBudgets();
         });
 
-        // ==================== SECURITY & LOG IN ====================
+        // IDENTITY SECURITY ENGINE [3]
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
             var isLogged = safeStorage.getItem('is_logged_in');
@@ -573,19 +507,13 @@
                 safeClass('loginScreen', 'add', 'hidden');
             } else {
                 safeClass('registerScreen', 'add', 'hidden');
-                
                 if (isLogged === 'true') {
-                    var p;
-                    try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User" }; }
+                    var p = { username: "User" };
+                    try { p = JSON.parse(profileStr); } catch(e) {}
                     appUser = p.username;
-                    var displayEl = document.getElementById('currentUserDisplay');
-                    if (displayEl) {
-                        displayEl.innerText = "User: " + p.username;
-                    }
+                    safeSetText('currentUserDisplay', "User: " + p.username);
                     var editEl = document.getElementById('editUsername');
-                    if (editEl) {
-                        editEl.value = p.username;
-                    }
+                    if (editEl) editEl.value = p.username;
                     safeClass('loginScreen', 'add', 'hidden');
                 } else {
                     safeClass('loginScreen', 'remove', 'hidden');
@@ -604,13 +532,7 @@
                 return;
             }
 
-            var profile = {
-                username: user,
-                password: pass,
-                question: q,
-                answer: ans
-            };
-
+            var profile = { username: user, password: pass, question: q, answer: ans };
             safeStorage.setItem('family_profile', JSON.stringify(profile));
             safeStorage.setItem('is_logged_in', 'true');
             checkUser();
@@ -650,55 +572,45 @@
         function showForgotPassword() {
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
+            safeClass('forgotScreen', 'remove', 'hidden');
+        }
+
+        function cancelForgotPassword() {
+            safeClass('forgotScreen', 'add', 'hidden');
+            checkUser();
+        }
+
+        function submitForgotPassword() {
+            var user = document.getElementById('forgotUser').value.trim();
+            var q = document.getElementById('forgotQuestion').value;
+            var ans = document.getElementById('forgotAnswer').value.trim().toLowerCase();
+            var newPass = document.getElementById('forgotNewPass').value.trim();
+
             var profileStr = safeStorage.getItem('family_profile');
-            if (!profileStr) {
-                alert("No profile configured.");
-                return;
-            }
+            if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
-            var qMap = {
-                "1": "What is your mother's maiden name?",
-                "2": "What was the name of your first pet?",
-                "3": "What city were you born in?"
-            };
 
-            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
-            if (ans) {
-                ans = ans.trim().toLowerCase();
-                if (ans === p.answer) {
-                    var newPass = prompt("Identity verified! Enter new password:");
-                    if (newPass) {
-                        p.password = newPass;
-                        safeStorage.setItem('family_profile', JSON.stringify(p));
-                        alert("Password updated! Log in now.");
-                    }
-                } else {
-                    alert("Incorrect answer.");
-                }
+            if (p.username === user && p.question === q && p.answer === ans) {
+                if (!newPass) { alert("Enter a valid new password."); return; }
+                p.password = newPass;
+                safeStorage.setItem('family_profile', JSON.stringify(p));
+                alert("Password updated! Log in now.");
+                cancelForgotPassword();
+            } else {
+                alert("Incorrect details. Answer doesn't match.");
             }
-            checkUser();
         }
 
         function updateProfileDetails() {
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) return;
-            var p;
-            try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User", password: "" }; }
-
+            var p; try { p = JSON.parse(profileStr); } catch(e) {}
             var newUser = document.getElementById('editUsername').value.trim();
             var newPass = document.getElementById('editPassword').value.trim();
-
-            if (!newUser) {
-                alert("Username cannot be empty.");
-                return;
-            }
-
+            if (!newUser) { alert("Username is required."); return; }
             p.username = newUser;
-            if (newPass) {
-                p.password = newPass;
-            }
-
+            if (newPass) p.password = newPass;
             safeStorage.setItem('family_profile', JSON.stringify(p));
             document.getElementById('editPassword').value = "";
             alert("Settings updated!");
@@ -706,7 +618,7 @@
         }
 
         function logoutProfile() {
-            if (confirm("Reset login credentials or Logout from this device?")) {
+            if (confirm("Reset connection or Logout?")) {
                 safeStorage.removeItem('is_logged_in');
                 checkUser();
             }
@@ -716,26 +628,25 @@
             logoutProfile();
         }
 
-        // ==================== STORAGE & COMPRESSION ====================
+        // ROLE PERMISSIONS
+        function hasPermission() {
+            var u = (appUser || "").toLowerCase().trim();
+            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari [1]
+        }
+
+        // COMPRESSION ENGINE
         function compressAttachmentPhoto(input) {
             if (!input.files || !input.files[0]) return;
-            var file = input.files[0];
-            var reader = new FileReader();
-
+            var file = input.files[0], reader = new FileReader();
             reader.onload = function(e) {
                 var img = new Image();
                 img.onload = function() {
                     var canvas = document.createElement('canvas');
-                    var max_width = 300;
-                    var scale = max_width / img.width;
-                    canvas.width = max_width;
-                    canvas.height = img.height * scale;
-
+                    var max_w = 300, scale = max_w / img.width;
+                    canvas.width = max_w; canvas.height = img.height * scale;
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
                     tempCompressedPhoto = canvas.toDataURL('image/jpeg', 0.6);
-
                     var preview = document.getElementById('imagePreview');
                     if (preview) preview.src = tempCompressedPhoto;
                     safeClass('imageStatusArea', 'remove', 'hidden');
@@ -756,67 +667,47 @@
         function viewPhotoById(id) {
             var photoData = "";
             for (var i = 0; i < expenses.length; i++) {
-                if (expenses[i].id === id) {
-                    photoData = expenses[i].photo;
-                    break;
-                }
+                if (expenses[i].id === id) { photoData = expenses[i].photo; break; }
             }
-
             if (!photoData) return;
             var viewer = document.getElementById('photoViewerModal');
             var img = document.getElementById('viewerImage');
-            if (viewer && img) {
-                img.src = photoData;
-                viewer.classList.remove('hidden');
-            }
+            if (viewer && img) { img.src = photoData; viewer.classList.remove('hidden'); }
         }
 
         function closePhotoViewer() {
             document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
-        // ==================== DIRECT BILL CAMERA CAPTURE ====================
+        // DIRECT CAMERA CAPTURE [5]
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
-            var file = input.files[0];
-            var reader = new FileReader();
-
+            var file = input.files[0], reader = new FileReader();
             reader.onload = function(e) {
                 var img = new Image();
                 img.onload = function() {
                     var canvas = document.createElement('canvas');
-                    var max_width = 300;
-                    var scale = max_width / img.width;
-                    canvas.width = max_width;
-                    canvas.height = img.height * scale;
-
+                    var max_w = 300, scale = max_w / img.width;
+                    canvas.width = max_w; canvas.height = img.height * scale;
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    var b64 = canvas.toDataURL('image/jpeg', 0.6);
 
-                    var compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                    var bName = prompt("Bill Photo Captured successfully!\nPlease enter a Name or Item Description for this bill:");
+                    if (!bName || bName.trim() === "") { alert("Cancelled. Bill name is required."); return; }
 
-                    var billAmount = prompt("Bill Photo Captured successfully!\nPlease enter the Total Bill Amount (₹):");
-                    if (billAmount && !isNaN(parseFloat(billAmount))) {
-                        var newExpense = {
-                            id: Date.now(),
-                            created_at: new Date().toISOString(), 
-                            name: "Bill Receipt",
-                            amount: parseFloat(billAmount),
-                            qty: 1,
-                            paid_by: "Unpaid", 
-                            category: "Other expenses",
-                            photo: compressedBase64,
-                            recorded_by: appUser || "Guest",
-                            edited_by: ""
+                    var bAmt = prompt("Enter the Total Bill Amount (₹) for \"" + bName + "\":");
+                    if (bAmt && !isNaN(parseFloat(bAmt))) {
+                        var detCat = detectCategory(bName);
+                        var newExp = {
+                            id: Date.now(), created_at: new Date().toISOString(), name: bName, amount: parseFloat(bAmt), qty: 1,
+                            paid_by: "Unpaid", category: detCat, photo: b64, recorded_by: appUser || "Guest", edited_by: ""
                         };
-                        
-                        expenses.push(newExpense);
+                        expenses.push(newExp);
                         saveToLocalAndCloud(expenses);
-                        alert("Bill recorded! Cost: ₹" + parseFloat(billAmount));
+                        alert("Logged bill! Category: " + detCat + " (Total ₹" + bAmt + ")");
                         navigateTo('pageReports');
-                    } else {
-                        alert("Cancelled or invalid amount entered.");
-                    }
+                    } else { alert("Cancelled or invalid amount."); }
                 };
                 img.src = e.target.result;
             };
@@ -824,15 +715,12 @@
             input.value = ""; 
         }
 
-        // ==================== DATE SELECTOR FILTER ====================
+        // FILTER CALENDAR
         function filterLogBySpecificDate(dateString) {
             if (!dateString) return;
-            selectedCalendarDate = dateString; // YYYY-MM-DD
-            activeFilter = 'calendar';
-            
+            selectedCalendarDate = dateString; activeFilter = 'calendar';
             var parts = dateString.split('-');
-            var displayDate = parts[2] + '/' + parts[1] + '/' + parts[0];
-            safeSetText('reportListTitle', 'Date: ' + displayDate);
+            safeSetText('reportListTitle', 'Date: ' + parts[2] + '/' + parts[1] + '/' + parts[0]);
             renderExpenses();
         }
 
@@ -842,431 +730,319 @@
             filterReport('all');
         }
 
-        // ==================== DYNAMIC REST CLOUD SHARE SYNC ====================
+        // DYNAMIC CLOUD SYNC
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
-
-            if (!url || !key) {
-                alert("Please fill in both fields.");
-                return;
-            }
-
-            if (url.substring(url.length - 1) === '/') {
-                url = url.substring(0, url.length - 1);
-            }
-
-            safeStorage.setItem('sync_url', url);
-            safeStorage.setItem('sync_key', key);
-            
+            if (!url || !key) { alert("Please fill in all fields."); return; }
+            if (url.substring(url.length - 1) === '/') { url = url.substring(0, url.length - 1); }
+            safeStorage.setItem('sync_url', url); safeStorage.setItem('sync_key', key);
             alert("Database linked! Syncing current records...");
             loadExpenses();
         }
 
         function disableCloudSync() {
-            safeStorage.removeItem('sync_url');
-            safeStorage.removeItem('sync_key');
-            document.getElementById('syncUrl').value = "";
-            document.getElementById('syncKey').value = "";
+            safeStorage.removeItem('sync_url'); safeStorage.removeItem('sync_key');
+            document.getElementById('syncUrl').value = ""; document.getElementById('syncKey').value = "";
             alert("Switched to Local Offline Mode!");
             loadExpenses();
         }
 
         function saveToLocalAndCloud(expensesArray) {
             safeStorage.setItem('family_expenses_data', JSON.stringify(expensesArray));
-
-            var syncUrl = safeStorage.getItem('sync_url');
-            var syncKey = safeStorage.getItem('sync_key');
-
-            if (syncUrl && syncKey) {
-                var targetUrl = syncUrl + '/rest/v1/expenses';
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
                 var lastItem = expensesArray[expensesArray.length - 1];
                 if (!lastItem) return;
-
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", targetUrl, true);
-                xhr.setRequestHeader("apikey", syncKey);
-                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
-                xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
-
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                            console.log("Cloud synced successfully!");
-                        } else {
-                            console.warn("Sync delay. Saved locally.", xhr.responseText);
-                        }
-                    }
-                };
+                xhr.open("POST", url + '/rest/v1/expenses', true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                xhr.setRequestHeader("Content-Type", "application/json"); xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
                 xhr.send(JSON.stringify(lastItem));
             }
         }
 
-        // ==================== BUDGET STORAGE ====================
+        // BUDGET CONTROLS
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
             var m = safeStorage.getItem('budget_monthly') || "12000";
-
-            var elD = document.getElementById('budgetDailyInput');
-            var elW = document.getElementById('budgetWeeklyInput');
-            var elM = document.getElementById('budgetMonthlyInput');
-
-            if (elD) elD.value = d;
-            if (elW) elW.value = w;
-            if (elM) elM.value = m;
+            var elD = document.getElementById('budgetDailyInput'), elW = document.getElementById('budgetWeeklyInput'), elM = document.getElementById('budgetMonthlyInput');
+            if (elD) elD.value = d; if (elW) elW.value = w; if (elM) elM.value = m;
         }
 
         function saveBudgets() {
-            var d = document.getElementById('budgetDailyInput').value;
-            var w = document.getElementById('budgetWeeklyInput').value;
-            var m = document.getElementById('budgetMonthlyInput').value;
-
-            safeStorage.setItem('budget_daily', d);
-            safeStorage.setItem('budget_weekly', w);
-            safeStorage.setItem('budget_monthly', m);
-
+            safeStorage.setItem('budget_daily', document.getElementById('budgetDailyInput').value);
+            safeStorage.setItem('budget_weekly', document.getElementById('budgetWeeklyInput').value);
+            safeStorage.setItem('budget_monthly', document.getElementById('budgetMonthlyInput').value);
             alert("Budgets updated successfully!");
             calculateSummaryData();
         }
 
-        // ==================== RECOGNITION AND SYNONYMS ====================
+        // SPEECH SYNONYMS CATEGORY PARSER
         function detectCategory(itemName) {
             var name = itemName.toLowerCase();
             if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
             if (name.indexOf('curd') !== -1 || name.indexOf('పెరుగు') !== -1) return 'Curd';
             if (name.indexOf('egg') !== -1 || name.indexOf('guddu') !== -1 || name.indexOf('gudlu') !== -1 || name.indexOf('గుడ్లు') !== -1 || name.indexOf('గుడ్డు') !== -1) return 'Eggs';
             if (name.indexOf('chicken') !== -1 || name.indexOf('chiken') !== -1 || name.indexOf('చికెన్') !== -1) return 'Chicken';
-            
-            // Mutton, Fish, Vegetables additions
             if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
             if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
             
-            var vegKeywords = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'gourd'];
-            for (var i = 0; i < vegKeywords.length; i++) {
-                if (name.indexOf(vegKeywords[i]) !== -1) return 'Vegetables';
-            }
+            var veg = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'gourd'];
+            for (var i = 0; i < veg.length; i++) { if (name.indexOf(veg[i]) !== -1) return 'Vegetables'; }
 
-            if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1 || name.indexOf('poori') !== -1) return 'Tiffins';
-            
+            var kir = ['kirana', 'provisions', 'dmart', 'grocery', 'groceries', 'supermarket', 'సామాన్లు', 'కిరాణా', 'సరుకులు', 'నెల సామాన్లు'];
+            for (var k = 0; k < kir.length; k++) { if (name.indexOf(kir[k]) !== -1) return 'Monthly Kirana'; }
+
+            var oil = ['oil', 'cooking oil', 'sunflower oil', 'nune', 'నూనె', 'ఆయిల్'];
+            for (var o = 0; o < oil.length; o++) { if (name.indexOf(oil[o]) !== -1) return 'Oil'; }
+
+            if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1) return 'Tiffins';
             return 'Other expenses';
         }
 
-        function processVoiceText(text) {
-            var amount = "";
-            var qty = 1;
-            var item = text;
+        // MIC INPUT
+        function setSpeechLanguage(lang) {
+            speechLanguage = lang;
+            var btnTe = document.getElementById('btnTe');
+            var btnEn = document.getElementById('btnEn');
+            if (lang === 'te-IN') {
+                if (btnTe) { btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm"; }
+                if (btnEn) { btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600"; }
+            } else {
+                if (btnTe) { btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600"; }
+                if (btnEn) { btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm"; }
+            }
+        }
 
-            var numberMatches = text.match(/\d+/g);
-            
-            if (numberMatches) {
-                if (numberMatches.length === 1) {
-                    amount = numberMatches[0];
-                    item = text.replace(amount, "").trim();
-                } else if (numberMatches.length >= 2) {
+        function startListening() {
+            var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) { alert("Voice typing is not supported on this browser."); return; }
+            var rec = new SpeechRec(); rec.continuous = false; rec.interimResults = false; rec.lang = speechLanguage;
+            var txt = document.getElementById('statusText'), mic = document.getElementById('micBtn');
+
+            rec.onstart = function() {
+                if (txt) txt.innerText = translations[uiLanguage].statusListening;
+                if (mic) { mic.classList.add('bg-slate-300', 'animate-pulse'); mic.classList.remove('bg-slate-100'); }
+            };
+            rec.onend = function() {
+                if (txt) txt.innerText = translations[uiLanguage].statusIdle;
+                if (mic) { mic.classList.remove('bg-slate-300', 'animate-pulse'); mic.classList.add('bg-slate-100'); }
+            };
+            rec.onresult = function(event) {
+                var textResult = event.results[0][0].transcript;
+                processVoiceText(textResult);
+            };
+            rec.start();
+        }
+
+        function processVoiceText(text) {
+            var amount = "", qty = 1, item = text;
+            var numMatches = text.match(/\d+/g);
+            if (numMatches) {
+                if (numMatches.length === 1) {
+                    amount = numMatches[0]; item = text.replace(amount, "").trim();
+                } else if (numMatches.length >= 2) {
                     var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
-                    var unitMatch = text.match(rx);
-                    if (unitMatch) {
-                        qty = parseInt(unitMatch[1]);
-                        for (var i = 0; i < numberMatches.length; i++) {
-                            if (parseInt(numberMatches[i]) !== qty) {
-                                amount = numberMatches[i];
-                                break;
-                            }
+                    var uMatch = text.match(rx);
+                    if (uMatch) {
+                        qty = parseInt(uMatch[1]);
+                        for (var i = 0; i < numMatches.length; i++) {
+                            if (parseInt(numMatches[i]) !== qty) { amount = numMatches[i]; break; }
                         }
-                        if (!amount) {
-                            amount = Math.max(parseInt(numberMatches[0]), parseInt(numberMatches[1]));
-                        }
-                        item = text.replace(unitMatch[0], "").replace(amount, "").trim();
+                        if (!amount) amount = Math.max(parseInt(numMatches[0]), parseInt(numMatches[1]));
+                        item = text.replace(uMatch[0], "").replace(amount, "").trim();
                     } else {
-                        var num1 = parseInt(numberMatches[0]);
-                        var num2 = parseInt(numberMatches[1]);
-                        amount = Math.max(num1, num2);
-                        qty = Math.min(num1, num2);
-                        item = text.replace(num1.toString(), "").replace(num2.toString(), "").trim();
+                        var n1 = parseInt(numMatches[0]), n2 = parseInt(numMatches[1]);
+                        amount = Math.max(n1, n2); qty = Math.min(n1, n2);
+                        item = text.replace(n1.toString(), "").replace(n2.toString(), "").trim();
                     }
                 }
             }
-
             item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
-
-            var nameInput = document.getElementById('itemName');
-            var amtInput = document.getElementById('itemAmount');
-            var qtyInput = document.getElementById('itemQty');
-
-            if (nameInput) nameInput.value = item;
-            if (amtInput) amtInput.value = amount;
-            if (qtyInput) qtyInput.value = qty;
+            var elN = document.getElementById('itemName'), elA = document.getElementById('itemAmount'), elQ = document.getElementById('itemQty');
+            if (elN) elN.value = item; if (elA) elA.value = amount; if (elQ) elQ.value = qty;
         }
 
-        // ==================== AUTO-RECOVERY DB LOADING ====================
+        // ==================== CALCS AND DATA INTERFACE ====================
         function loadExpenses() {
             var stored = safeStorage.getItem('family_expenses_data');
-            
-            if (!stored) {
-                var recovery1 = safeStorage.getItem('family_expenses_local');
-                if (recovery1) {
-                    stored = recovery1;
-                    safeStorage.setItem('family_expenses_data', recovery1);
-                }
-            }
-
-            var syncUrl = safeStorage.getItem('sync_url');
-            var syncKey = safeStorage.getItem('sync_key');
-            if (syncUrl && syncKey) {
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("GET", syncUrl + '/rest/v1/expenses?select=*&order=created_at.desc', true);
-                xhr.setRequestHeader("apikey", syncKey);
-                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.open("GET", url + '/rest/v1/expenses?select=*&order=created_at.desc', true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         try {
                             expenses = JSON.parse(xhr.responseText);
                             safeStorage.setItem('family_expenses_data', xhr.responseText);
-                            renderExpenses();
-                            calculateSummaryData();
-                            renderComparisonTab();
+                            renderExpenses(); calculateSummaryData(); renderComparisonTab();
                         } catch(e) {}
                     }
                 };
                 xhr.send();
             }
-
-            try {
-                expenses = stored ? JSON.parse(stored) : [];
-            } catch(e) {
-                expenses = [];
-            }
-            renderExpenses();
-            calculateSummaryData();
-            renderComparisonTab();
+            try { expenses = stored ? JSON.parse(stored) : []; } catch(e) { expenses = []; }
+            renderExpenses(); calculateSummaryData(); renderComparisonTab();
         }
 
         function saveExpenseLocal() {
-            var nameEl = document.getElementById('itemName');
-            var amtEl = document.getElementById('itemAmount');
-            var qtyEl = document.getElementById('itemQty');
-            var paidEl = document.getElementById('paidBy');
-
+            var nameEl = document.getElementById('itemName'), amtEl = document.getElementById('itemAmount'), qtyEl = document.getElementById('itemQty'), paidEl = document.getElementById('paidBy');
             if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
-
-            var name = nameEl.value.trim();
-            var amount = parseFloat(amtEl.value);
-            var qty = parseFloat(qtyEl.value) || 1;
-            var paidBy = paidEl.value;
-            
-            var category = detectCategory(name);
-            var dateVal = new Date().toISOString(); 
-
-            if (!name || isNaN(amount)) {
-                alert("Enter valid details.");
-                return;
-            }
-
+            var name = nameEl.value.trim(), amount = parseFloat(amtEl.value), qty = parseFloat(qtyEl.value) || 1, paidBy = paidEl.value;
+            var category = detectCategory(name), dateVal = new Date().toISOString(); 
+            if (!name || isNaN(amount)) { alert("Enter valid details."); return; }
             var creatorName = appUser || "Guest";
 
             if (editingExpenseId !== null) {
                 expenses = expenses.map(function(exp) {
                     if (exp.id === editingExpenseId) {
-                        return {
-                            id: exp.id,
-                            created_at: dateVal,
-                            name: name,
-                            amount: amount,
-                            qty: qty,
-                            paid_by: paidBy,
-                            category: category,
-                            photo: tempCompressedPhoto || exp.photo || "", 
-                            recorded_by: exp.recorded_by || creatorName,
-                            edited_by: creatorName 
-                        };
+                        return { id: exp.id, created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || exp.photo || "", recorded_by: exp.recorded_by || creatorName, edited_by: creatorName };
                     }
                     return exp;
                 });
-                editingExpenseId = null;
-                alert("Item updated!");
+                editingExpenseId = null; alert("Item updated!");
             } else {
-                var newExpense = {
-                    id: Date.now(),
-                    created_at: dateVal,
-                    name: name,
-                    amount: amount,
-                    qty: qty,
-                    paid_by: paidBy,
-                    category: category,
-                    photo: tempCompressedPhoto || "", 
-                    recorded_by: creatorName,
-                    edited_by: ""
-                };
-                expenses.push(newExpense);
+                expenses.push({ id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || "", recorded_by: creatorName, edited_by: "" });
             }
-
-            saveToLocalAndCloud(expenses);
-            clearAttachedPhoto();
-            cancelEditingMode();
-            loadExpenses();
-            navigateTo('pageReports');
+            saveToLocalAndCloud(expenses); clearAttachedPhoto(); cancelEditingMode(); loadExpenses(); navigateTo('pageReports');
         }
 
         function enterEditingMode(id) {
-            editingExpenseId = id;
-            var target = null;
-            for (var i = 0; i < expenses.length; i++) {
-                if (expenses[i].id === id) {
-                    target = expenses[i];
-                    break;
-                }
-            }
-
+            editingExpenseId = id; var target = null;
+            for (var i = 0; i < expenses.length; i++) { if (expenses[i].id === id) { target = expenses[i]; break; } }
             if (!target) return;
-
             document.getElementById('itemName').value = target.name;
             document.getElementById('itemAmount').value = target.amount;
             document.getElementById('itemQty').value = target.qty;
             document.getElementById('paidBy').value = target.paid_by;
-
             if (target.photo) {
                 tempCompressedPhoto = target.photo;
-                var preview = document.getElementById('imagePreview');
-                if (preview) preview.src = tempCompressedPhoto;
+                var pr = document.getElementById('imagePreview');
+                if (pr) pr.src = tempCompressedPhoto;
                 safeClass('imageStatusArea', 'remove', 'hidden');
-            } else {
-                clearAttachedPhoto();
-            }
-
-            safeClass('editBadge', 'remove', 'hidden');
-            safeClass('cancelEditBtn', 'remove', 'hidden');
-            document.getElementById('saveBtn').innerText = "Update Expense";
-
-            navigateTo('pageAdd');
+            } else { clearAttachedPhoto(); }
+            safeClass('editBadge', 'remove', 'hidden'); safeClass('cancelEditBtn', 'remove', 'hidden');
+            document.getElementById('saveBtn').innerText = "Update Expense"; navigateTo('pageAdd');
         }
 
         function cancelEditingMode() {
-            editingExpenseId = null;
-            safeClass('editBadge', 'add', 'hidden');
-            safeClass('cancelEditBtn', 'add', 'hidden');
+            editingExpenseId = null; safeClass('editBadge', 'add', 'hidden'); safeClass('cancelEditBtn', 'add', 'hidden');
             document.getElementById('saveBtn').innerText = translations[uiLanguage].saveBtn;
-
-            document.getElementById('itemName').value = "";
-            document.getElementById('itemAmount').value = "";
-            document.getElementById('itemQty').value = "1";
-            document.getElementById('paidBy').value = "Unpaid";
-            clearAttachedPhoto();
+            document.getElementById('itemName').value = ""; document.getElementById('itemAmount').value = ""; document.getElementById('itemQty').value = "1";
+            document.getElementById('paidBy').value = "Unpaid"; clearAttachedPhoto();
         }
 
         function deleteExpenseLocal(id) {
             if (!confirm("Delete this expense?")) return;
-            
-            var syncUrl = safeStorage.getItem('sync_url');
-            var syncKey = safeStorage.getItem('sync_key');
-            if (syncUrl && syncKey) {
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("DELETE", syncUrl + '/rest/v1/expenses?id=eq.' + id, true);
-                xhr.setRequestHeader("apikey", syncKey);
-                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
                 xhr.send();
             }
-
             expenses = expenses.filter(function(exp) { return exp.id !== id; });
-            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
-            loadExpenses();
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
         }
 
-        // ==================== CLEAR MEMBERS DUELS DYNAMIC ====================
+        // ==================== CLEAR MEMBERS DUELS (SECURED FOR SUJATHA AND HARI ONLY) ====================
         function clearUnpaidExpenses() {
-            if (!confirm("Clear/settle all unpaid Credit Tab balance to ₹0?")) return;
-            expenses.forEach(function(exp) {
-                if (exp.paid_by === 'Unpaid') {
-                    exp.paid_by = 'Cleared'; 
-                    saveToLocalAndCloud(expenses);
-                }
-            });
-            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
-            loadExpenses();
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
+            if (unpaidTotal <= 0) { alert("No unpaid dues!"); return; }
+
+            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now:", unpaidTotal);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Unpaid Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Other expenses", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + "! Remaining: ₹" + (unpaidTotal - amtToClear));
         }
 
         function clearMemberDues(member) {
-            if (!confirm("Settle/clear payments made by " + member + "?")) return;
-            expenses.forEach(function(exp) {
-                if (exp.paid_by === member) {
-                    exp.paid_by = member + ' (Setted)';
-                    saveToLocalAndCloud(expenses);
-                }
-            });
-            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
-            loadExpenses();
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
+            if (currentSpent <= 0) { alert("No dues for " + member); return; }
+
+            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now:", currentSpent);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amtToClear, qty: 1, paid_by: member, category: "Other expenses", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear));
         }
 
-        // ==================== STATS AND COMPARATIVE METRICS ====================
-        function calculateSummaryData() {
-            var totalDaily = 0; var totalWeekly = 0; var totalMonthly = 0; var totalYearly = 0;
-            var spentGanesh = 0; var spentSujatha = 0; var spentHari = 0; var spentOthers = 0; var spentUnpaid = 0;
+        function clearMilkCurdEggsUnpaid() {
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var currentSpent = 0;
+            expenses.forEach(function(exp) {
+                var isTarget = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                if (exp.paid_by === 'Unpaid' && isTarget) { currentSpent += exp.amount; }
+            });
+            if (currentSpent <= 0) { alert("No unpaid dues for Milk, Curd or Eggs!"); return; }
 
-            var now = new Date();
-            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now:", currentSpent);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Milk", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
+        }
+
+        // ==================== STATS AND BALANCES ====================
+        function calculateSummaryData() {
+            var dSum=0, wSum=0, mSum=0, ySum=0, spentG=0, spentS=0, spentH=0, spentO=0, spentU=0, spentMCE=0;
+            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
 
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
-                if (isNaN(expDate.getTime())) {
-                    expDate = new Date(); 
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var itemTotalPrice = exp.amount; 
+
+                if (expDate >= startOfToday) dSum += itemTotalPrice;
+                if (expDate >= lastWeek) wSum += itemTotalPrice;
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) mSum += itemTotalPrice;
+                if (expDate.getFullYear() === now.getFullYear()) ySum += itemTotalPrice;
+
+                if (exp.paid_by === 'Ganesh') spentG += itemTotalPrice;
+                else if (exp.paid_by === 'Sujatha') spentS += itemTotalPrice;
+                else if (exp.paid_by === 'Hari') spentH += itemTotalPrice;
+                else if (exp.paid_by === 'Other') spentO += itemTotalPrice;
+                else if (exp.paid_by === 'Unpaid') {
+                    spentU += itemTotalPrice;
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (isGrocery) spentMCE += itemTotalPrice;
                 }
-                var totalItemPrice = exp.amount; 
-
-                if (expDate >= startOfToday) totalDaily += totalItemPrice;
-                if (expDate >= lastWeek) totalWeekly += totalItemPrice;
-                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) totalMonthly += totalItemPrice;
-                if (expDate.getFullYear() === now.getFullYear()) totalYearly += totalItemPrice;
-
-                if (exp.paid_by === 'Ganesh') spentGanesh += totalItemPrice;
-                else if (exp.paid_by === 'Sujatha') spentSujatha += totalItemPrice;
-                else if (exp.paid_by === 'Hari') spentHari += totalItemPrice;
-                else if (exp.paid_by === 'Other') spentOthers += totalItemPrice;
-                else if (exp.paid_by === 'Unpaid') spentUnpaid += totalItemPrice;
             });
 
-            safeSetText('cardDailyAmt', '₹' + totalDaily);
-            safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
-            safeSetText('cardMonthlyAmt', '₹' + totalMonthly);
-            safeSetText('cardYearlyAmt', '₹' + totalYearly);
-
-            safeSetText('totalGanesh', '₹' + spentGanesh);
-            safeSetText('totalSujatha', '₹' + spentSujatha);
-            safeSetText('totalHari', '₹' + spentHari);
-            safeSetText('totalOthers', '₹' + spentOthers);
-            safeSetText('totalUnpaid', '₹' + spentUnpaid);
+            safeSetText('cardDailyAmt', '₹' + dSum); safeSetText('cardWeeklyAmt', '₹' + wSum); safeSetText('cardMonthlyAmt', '₹' + mSum); safeSetText('cardYearlyAmt', '₹' + ySum);
+            safeSetText('totalGanesh', '₹' + spentG); safeSetText('totalSujatha', '₹' + spentS); safeSetText('totalHari', '₹' + spentH); safeSetText('totalOthers', '₹' + spentO);
+            safeSetText('totalUnpaid', '₹' + spentU); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
             
-            // Render Budgets Progress
-            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500");
-            var budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000");
-            var budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+            safeSetText('budgetDailyProgress', '₹' + dSum + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + wSum + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + mSum + ' / ₹' + budM);
 
-            safeSetText('budgetDailyProgress', '₹' + totalDaily + ' / ₹' + budD);
-            safeSetText('budgetWeeklyProgress', '₹' + totalWeekly + ' / ₹' + budW);
-            safeSetText('budgetMonthlyProgress', '₹' + totalMonthly + ' / ₹' + budM);
-
-            var pctD = Math.min((totalDaily / budD) * 100, 100);
-            var pctW = Math.min((totalWeekly / budW) * 100, 100);
-            var pctM = Math.min((totalMonthly / budM) * 100, 100);
-
-            var barD = document.getElementById('budgetDailyBar');
-            var barW = document.getElementById('budgetWeeklyBar');
-            var barM = document.getElementById('budgetMonthlyBar');
-
-            if (barD) barD.style.width = pctD + '%';
-            if (barW) barW.style.width = pctW + '%';
-            if (barM) barM.style.width = pctM + '%';
+            var bD = document.getElementById('budgetDailyBar'), bW = document.getElementById('budgetWeeklyBar'), bM = document.getElementById('budgetMonthlyBar');
+            if (bD) bD.style.width = Math.min((dSum / budD) * 100, 100) + '%';
+            if (bW) bW.style.width = Math.min((wSum / budW) * 100, 100) + '%';
+            if (bM) bM.style.width = Math.min((mSum / budM) * 100, 100) + '%';
 
             calculateCategoryGrid();
         }
 
         function calculateCategoryGrid() {
-            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Other expenses'];
+            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
             var gridData = {};
-            for (var i = 0; i < categories.length; i++) {
-                gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 };
-            }
+            for (var i = 0; i < categories.length; i++) { gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 }; }
 
             expenses.forEach(function(exp) {
                 var cat = exp.category || 'Other expenses';
@@ -1278,78 +1054,49 @@
             });
 
             var tbody = document.getElementById('categoryTableBody');
-            if (!tbody) return;
-            tbody.innerHTML = "";
+            if (!tbody) return; tbody.innerHTML = "";
 
             for (var j = 0; j < categories.length; j++) {
-                var c = categories[j];
-                var data = gridData[c];
-                var rowHTML = 
-                    '<tr class="border-b border-slate-100">' +
-                        '<td class="py-3 text-slate-800">' + c + '</td>' +
-                        '<td class="py-3 text-right text-slate-500">₹' + data.paid + '</td>' +
-                        '<td class="py-3 text-right text-slate-500 font-medium">₹' + data.unpaid + '</td>' +
-                        '<td class="py-3 text-right font-black text-slate-900">₹' + data.total + '</td>' +
-                    '</tr>';
-                tbody.insertAdjacentHTML('beforeend', rowHTML);
+                var c = categories[j]; var d = gridData[c];
+                tbody.insertAdjacentHTML('beforeend', '<tr class="border-b border-slate-100"><td class="py-3 text-slate-800">' + c + '</td><td class="py-3 text-right text-slate-500">₹' + d.paid + '</td><td class="py-3 text-right text-slate-500 font-medium">₹' + d.unpaid + '</td><td class="py-3 text-right font-black text-slate-900">₹' + d.total + '</td></tr>');
             }
         }
 
         function renderComparisonTab() {
-            var now = new Date();
-            var monthsMap = {};
+            var now = new Date(), monthsMap = {};
             expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at);
-                if (isNaN(expDate.getTime())) expDate = new Date();
+                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
                 var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
                 monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
             });
 
             var listContainer = document.getElementById('comparisonList');
-            if (!listContainer) return;
-            listContainer.innerHTML = "";
+            if (!listContainer) return; listContainer.innerHTML = "";
 
             var keys = Object.keys(monthsMap);
-            if (keys.length === 0) {
-                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
-                return;
-            }
+            if (keys.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>'; return; }
 
             keys.forEach(function(mName) {
-                var rowHTML = 
-                    '<div class="flex justify-between items-center py-2.5">' +
-                        '<span class="font-bold text-slate-700">' + mName + '</span>' +
-                        '<span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span>' +
-                    '</div>';
-                listContainer.insertAdjacentHTML('beforeend', rowHTML);
+                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
             });
 
             var alertDetails = document.getElementById('overspentDetails');
-            if (!alertDetails) return;
-            alertDetails.innerHTML = "";
+            if (!alertDetails) return; alertDetails.innerHTML = "";
 
-            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear();
-            var lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
+            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear(), lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
             var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
 
-            var curTotal = monthsMap[currentMonthName] || 0;
-            var prevTotal = monthsMap[lastMonthName] || 0;
-
+            var curTotal = monthsMap[currentMonthName] || 0, prevTotal = monthsMap[lastMonthName] || 0;
             if (prevTotal > 0) {
-                if (curTotal > prevTotal) {
-                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
-                } else {
-                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
-                }
+                if (curTotal > prevTotal) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
+                else alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
             }
 
             var tiffinSum = 0;
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
-                if (!isNaN(expDate.getTime())) {
-                    if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
-                        tiffinSum += exp.amount;
-                    }
+                if (!isNaN(expDate.getTime()) && expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                    tiffinSum += exp.amount;
                 }
             });
 
@@ -1360,29 +1107,21 @@
             }
         }
 
-        // ==================== INTERACTIVE PAGE UPDATES ====================
+        // NAVIGATION & TOGGLES
         function navigateTo(pageId) {
             var containers = document.querySelectorAll('.page-container');
-            for (var i = 0; i < containers.length; i++) {
-                containers[i].classList.add('hidden');
-            }
+            for (var i = 0; i < containers.length; i++) containers[i].classList.add('hidden');
             document.getElementById(pageId).classList.remove('hidden');
 
             var navs = ['navAdd', 'navReports', 'navCompare', 'navPeople'];
             for (var j = 0; j < navs.length; j++) {
                 var el = document.getElementById(navs[j]);
-                if (el) {
-                    el.classList.remove('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800');
-                    el.classList.add('text-slate-400', 'font-bold');
-                }
+                if (el) { el.classList.remove('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800'); el.classList.add('text-slate-400', 'font-bold'); }
             }
 
             var map = { 'pageAdd': 'navAdd', 'pageReports': 'navReports', 'pageCompare': 'navCompare', 'pagePeople': 'navPeople' };
             var activeNav = document.getElementById(map[pageId]);
-            if (activeNav) {
-                activeNav.classList.remove('text-slate-400', 'font-bold');
-                activeNav.classList.add('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800');
-            }
+            if (activeNav) { activeNav.classList.remove('text-slate-400', 'font-bold'); activeNav.classList.add('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800'); }
         }
 
         function toggleUILanguage() {
@@ -1390,48 +1129,22 @@
             updateUI();
         }
 
-        // COGNIZANT CORRECTED: Autocomplete-Safe UI Engine Name
         function updateUI() {
             var t = translations[uiLanguage];
+            safeSetText('appTitle', t.title); safeSetText('uiLangBtn', t.uiBtn); safeSetText('speechHeading', t.speechHeading); safeSetText('voiceLabel', t.voiceLabel);
+            safeSetText('cameraLabel', t.cameraLabel); safeSetText('photoLabel', t.photoLabel); safeSetText('statusText', t.statusIdle); safeSetText('formHeading', t.formHeading);
+            safeSetText('lblItem', t.lblItem); safeSetText('lblAmount', t.lblAmount); safeSetText('lblQty', t.lblQty); safeSetText('lblPaidBy', t.lblPaidBy);
+            safeSetText('saveBtn', editingExpenseId ? "Update Expense" : t.saveBtn); safeSetText('reportHeader', t.reportHeader); safeSetText('peopleHeader', t.peopleHeader);
+            safeSetText('lblOthersName', t.lblOthersName); safeSetText('lblUnpaidTab', t.lblUnpaidTab); safeSetText('compareHeader', t.compareHeader); safeSetText('overspentTitle', t.overspentTitle);
+            safeSetText('histMonthsTitle', t.histMonthsTitle); safeSetText('catTotalsTitle', t.catTotalsTitle); safeSetText('cardDayTitle', t.cardDayTitle);
+            safeSetText('cardWeekTitle', t.cardWeekTitle); safeSetText('cardMonthTitle', t.cardMonthTitle); safeSetText('cardYearTitle', t.cardYearTitle); safeSetText('lblCalendar', t.lblCalendar);
             
-            safeSetText('appTitle', t.title);
-            safeSetText('uiLangBtn', t.uiBtn);
-            safeSetText('speechHeading', t.speechHeading);
-            safeSetText('voiceLabel', t.voiceLabel);
-            safeSetText('cameraLabel', t.cameraLabel);
-            safeSetText('photoLabel', t.photoLabel);
-            safeSetText('statusText', t.statusIdle);
-            safeSetText('formHeading', t.formHeading);
-            safeSetText('lblItem', t.lblItem);
-            safeSetText('lblAmount', t.lblAmount);
-            safeSetText('lblQty', t.lblQty);
-            safeSetText('lblPaidBy', t.lblPaidBy);
-            safeSetText('saveBtn', editingExpenseId ? "Update Expense" : t.saveBtn);
-            safeSetText('reportHeader', t.reportHeader);
-            safeSetText('peopleHeader', t.peopleHeader);
-            safeSetText('lblOthersName', t.lblOthersName);
-            safeSetText('lblUnpaidTab', t.lblUnpaidTab);
-            safeSetText('compareHeader', t.compareHeader);
-            safeSetText('overspentTitle', t.overspentTitle);
-            safeSetText('histMonthsTitle', t.histMonthsTitle);
-            safeSetText('catTotalsTitle', t.catTotalsTitle);
-            safeSetText('cardDayTitle', t.cardDayTitle);
-            safeSetText('cardWeekTitle', t.cardWeekTitle);
-            safeSetText('cardMonthTitle', t.cardMonthTitle);
-            safeSetText('cardYearTitle', t.cardYearTitle);
-            safeSetText('lblCalendar', t.lblCalendar);
-            
-            safeSetText('navTextAdd', t.navAdd);
-            safeSetText('navTextRep', t.navReports);
-            safeSetText('navTextComp', t.navCompare);
-            safeSetText('navTextPeo', t.navPeople);
-            
+            safeSetText('navTextAdd', t.navAdd); safeSetText('navTextRep', t.navReports); safeSetText('navTextComp', t.navCompare); safeSetText('navTextPeo', t.navPeople);
             renderExpenses();
         }
 
         function filterReport(type) {
-            activeFilter = type;
-            var titleEl = document.getElementById('reportListTitle');
+            activeFilter = type; var titleEl = document.getElementById('reportListTitle');
             if (titleEl) {
                 var titles = { all: "All Expenses", daily: "Today's Expenses", weekly: "Weekly Expenses", monthly: "Monthly Expenses", yearly: "Yearly Expenses" };
                 titleEl.innerText = titles[type] || "Expenses Log";
@@ -1441,80 +1154,37 @@
 
         function renderExpenses() {
             var listContainer = document.getElementById('expenseList');
-            if (!listContainer) return;
-            listContainer.innerHTML = "";
-
-            var now = new Date();
-            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+            if (!listContainer) return; listContainer.innerHTML = "";
+            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
 
             var filtered = expenses.filter(function(exp) {
-                var expDate = new Date(exp.created_at);
-                if (isNaN(expDate.getTime())) expDate = new Date();
-
+                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
                 if (activeFilter === 'daily') return expDate >= startOfToday;
                 if (activeFilter === 'weekly') return expDate >= lastWeek;
                 if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
                 if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
-                
                 if (activeFilter === 'calendar') {
-                    var yyyy = expDate.getFullYear();
-                    var mm = String(expDate.getMonth() + 1).padStart(2, '0');
-                    var dd = String(expDate.getDate()).padStart(2, '0');
+                    var yyyy = expDate.getFullYear(), mm = String(expDate.getMonth() + 1).padStart(2, '0'), dd = String(expDate.getDate()).padStart(2, '0');
                     return (yyyy + '-' + mm + '-' + dd) === selectedCalendarDate;
                 }
-
                 return true;
             });
 
-            if (filtered.length === 0) {
-                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>';
-                return;
-            }
+            if (filtered.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>'; return; }
 
             filtered.forEach(function(exp) {
-                var itemTotalPrice = exp.amount; 
-                var expDate = new Date(exp.created_at);
+                var itemTotalPrice = exp.amount, expDate = new Date(exp.created_at);
                 if (isNaN(expDate.getTime())) expDate = new Date();
-                
                 var displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
 
                 var isUnpaid = exp.paid_by === 'Unpaid';
-                var badgeColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
-                var badgeLabel = isUnpaid ? 'Unpaid' : 'Paid: ' + exp.paid_by;
+                var bColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
+                var bLabel = isUnpaid ? 'Unpaid' : 'Paid: ' + exp.paid_by;
+                var stamp = exp.edited_by ? "Edited by " + exp.edited_by : "Recorded by " + (exp.recorded_by || "Guest");
 
-                var stampText = "Recorded by " + (exp.recorded_by || "Guest");
-                if (exp.edited_by) {
-                    stampText = "Edited by " + exp.edited_by;
-                }
+                var photoIconHTML = exp.photo ? '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>' : '';
 
-                var photoIconHTML = "";
-                if (exp.photo) {
-                    photoIconHTML = '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>';
-                }
-
-                var itemHTML = 
-                    '<div class="flex justify-between items-center py-3">' +
-                        '<div class="flex-1">' +
-                            '<div class="flex items-center gap-2">' +
-                                '<span class="font-bold text-gray-800">' + exp.name + '</span>' +
-                                '<span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' +
-                                photoIconHTML +
-                            '</div>' +
-                            '<div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]">' +
-                                '<span class="text-slate-400 font-semibold">' + displayDate + '</span>' +
-                                '<span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span>' +
-                                '<span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' + badgeLabel + '</span>' +
-                                '<span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stampText + '</span>' +
-                            '</div>' +
-                        '</div>' +
-                        '<div class="flex items-center gap-2">' +
-                            '<span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span>' +
-                            '<button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button>' +
-                            '<button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button>' +
-                        '</div>' +
-                    '</div>';
-                listContainer.insertAdjacentHTML('beforeend', itemHTML);
+                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-3"><div class="flex-1"><div class="flex items-center gap-2"><span class="font-bold text-gray-800">' + exp.name + '</span><span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' + photoIconHTML + '</div><div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]"><span class="text-slate-400 font-semibold">' + displayDate + '</span><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span><span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + bColor + '">' + bLabel + '</span><span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stamp + '</span></div></div><div class="flex items-center gap-2"><span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span><button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button><button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button></div></div>');
             });
         }
     </script>
