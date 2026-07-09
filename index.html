@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
+                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-850 font-semibold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
@@ -109,13 +109,13 @@
     </div>
 
     <!-- PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
-        <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-[0.95] flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
+        <img id="viewerImage" src="" alt="Receipt" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
+        <p class="text-white mt-4 text-xs font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
             <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
@@ -126,15 +126,17 @@
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
         
-        <!-- Choose Action Card with Compact Direct Listening Layout -->
+        <!-- Action Card (Bilingual Direct Speak) -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
             
             <div class="grid grid-cols-3 gap-2 py-1">
+                <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
                     <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
                     <span id="voiceLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Speak</span>
                 </div>
+                <!-- Camera Snap Button -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📷
@@ -142,6 +144,7 @@
                     </label>
                     <span id="cameraLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Bill Camera</span>
                 </div>
+                <!-- Attach Image Button -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📎
@@ -159,12 +162,12 @@
             <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
         </div>
 
-        <!-- NEW FAVORITES / QUICK LOG EXPENSE BUTTONS -->
+        <!-- QUICK FAVORITES PANEL -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
-            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Daily Common Items</h3>
+            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Daily Favorites</h3>
             <div class="grid grid-cols-2 gap-2 text-left">
                 <button onclick="quickLogExpense('Milk', 58, 2, 'Milk')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
-                    <span>🥛 Milk (2 packets)</span>
+                    <span>🥛 Milk (2 packs)</span>
                     <span class="text-slate-500">₹58</span>
                 </button>
                 <button onclick="quickLogExpense('Eggs', 92, 12, 'Eggs')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
@@ -172,7 +175,7 @@
                     <span class="text-slate-500">₹92</span>
                 </button>
                 <button onclick="quickLogExpense('Curd Big', 30, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
-                    <span>🥣 Curd Big (1 cap)</span>
+                    <span>🥣 Curd Big</span>
                     <span class="text-slate-500">₹30</span>
                 </button>
                 <button onclick="quickLogExpense('Curd Small', 15, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
@@ -213,13 +216,14 @@
                 </select>
             </div>
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-200 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-slate-200 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
+        
         <div class="grid grid-cols-2 gap-3">
             <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
@@ -239,6 +243,7 @@
             </button>
         </div>
 
+        <!-- Custom Calendar selector -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <label id="lblCalendar" class="block text-xs font-bold text-slate-500 uppercase">Select Date to view logs</label>
             <div class="flex gap-2">
@@ -259,8 +264,7 @@
                             <th class="py-2 text-right font-black text-slate-900">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold">
-                    </tbody>
+                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold"></tbody>
                 </table>
             </div>
         </div>
@@ -279,7 +283,6 @@
     <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
-        
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -287,8 +290,8 @@
                     <span>Daily Budget</span>
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -296,8 +299,8 @@
                     <span>Weekly Budget</span>
                     <span id="budgetWeeklyProgress">₹0 / ₹3000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetWeeklyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetWeeklyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -305,28 +308,25 @@
                     <span>Monthly Budget</span>
                     <span id="budgetMonthlyProgress">₹0 / ₹12000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetMonthlyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetMonthlyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
         </div>
 
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
-            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1">
-            </div>
+            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
         </div>
 
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 id="histMonthsTitle" class="text-sm font-bold text-slate-800 uppercase">Month Spending History</h3>
-            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100">
-            </div>
+            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100"></div>
         </div>
     </div>
 
     <!-- ==================== PAGE 4: PROFILE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
-        
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
@@ -337,7 +337,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -347,7 +347,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -357,7 +357,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -367,7 +367,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm flex justify-between items-center">
@@ -377,7 +377,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalMilkCurdEggsUnpaid" class="text-md font-black text-amber-950">₹0</span>
-                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex justify-between items-center">
@@ -387,7 +387,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded">Clear All Dues</button>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-850">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -444,7 +444,7 @@
                 </div>
                 <div class="flex gap-2">
                     <button onclick="updateProfileDetails()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold">Save Settings</button>
-                    <button onclick="logoutProfile()" class="w-full border border-slate-200 text-red-500 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Logout / Reset</button>
+                    <button onclick="logoutProfile()" class="w-full border border-slate-200 text-red-500 p-2 bg-slate-50 text-xs font-bold rounded">Logout / Reset</button>
                 </div>
             </div>
         </div>
@@ -636,10 +636,14 @@
             }
         }
 
+        function promptUserChange() {
+            logoutProfile();
+        }
+
         // ROLE PERMISSIONS
         function hasPermission() {
             var u = (appUser || "").toLowerCase().trim();
-            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari
+            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari [1]
         }
 
         // COMPRESSION ENGINE
@@ -687,7 +691,7 @@
             document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
-        // DIRECT CAMERA CAPTURE
+        // DIRECT CAMERA CAPTURE [5]
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -723,7 +727,7 @@
             input.value = ""; 
         }
 
-        // FILTER CALENDAR
+        // FILTER
         function filterLogBySpecificDate(dateString) {
             if (!dateString) return;
             selectedCalendarDate = dateString; activeFilter = 'calendar';
@@ -738,7 +742,7 @@
             filterReport('all');
         }
 
-        // DYNAMIC CLOUD SYNC
+        // SYNC ENGINE [2]
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
@@ -770,7 +774,7 @@
             }
         }
 
-        // BUDGET CONTROLS
+        // BUDGETS
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
@@ -1033,7 +1037,7 @@
 
             expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Milk", recorded_by: appUser, edited_by: "" });
             saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
+            alert("Cleared ₹" + amtToClear + from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
         }
 
         // ==================== STATS AND BALANCES ====================
@@ -1229,3 +1233,5 @@
     </script>
 </body>
 </html>
+
+--- END OF FILE index (1).html ---
