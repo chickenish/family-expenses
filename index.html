@@ -6,7 +6,7 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase CDN (Standard global variable package) -->
+    <!-- Supabase CDN (Standard connection library) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-100 min-h-screen pb-24">
@@ -203,7 +203,6 @@
                 lblQty: "పరిమాణం (Qty)",
                 lblPaidBy: "ఎవరు చెల్లించారు?",
                 saveBtn: "సేవ్ చేయండి",
-                lblPendingBal: "మిగిలిన బ్యాలెన్స్:",
                 noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
                 uiBtn: "English UI",
                 reportHeader: "కాలాల వారీగా ఖర్చులు",
@@ -225,7 +224,6 @@
                 lblQty: "Quantity",
                 lblPaidBy: "Who Paid?",
                 saveBtn: "Save Expense",
-                lblPendingBal: "Pending Balance to Clear:",
                 noExpenses: "No expenses logged yet",
                 uiBtn: "తెలుగు UI",
                 reportHeader: "Time-Period Expenses",
@@ -251,17 +249,14 @@
                 document.getElementById('setupScreen').classList.remove('hidden');
             } else {
                 try {
-                    // Check if library loaded successfully
                     if (typeof supabase === 'undefined') {
                         throw new Error("Supabase script blocked or not loaded.");
                     }
-                    // Attempt connection
                     supabaseClient = supabase.createClient(savedUrl, savedKey);
                     document.getElementById('setupScreen').classList.add('hidden');
                     loadExpenses();
                 } catch (err) {
                     console.error("Database connection failed:", err);
-                    // Clear bad data from memory to unfreeze the page
                     localStorage.removeItem('family_sb_url');
                     localStorage.removeItem('family_sb_key');
                     document.getElementById('setupScreen').classList.remove('hidden');
@@ -299,13 +294,17 @@
             const navs = ['navAdd', 'navReports', 'navPeople'];
             navs.forEach(nav => {
                 const el = document.getElementById(nav);
-                el.classList.remove('text-blue-600', 'font-bold');
-                el.classList.add('text-gray-400', 'font-medium');
+                if (el) {
+                    el.classList.remove('text-blue-600', 'font-bold');
+                    el.classList.add('text-gray-400', 'font-medium');
+                }
             });
 
             const activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
-            activeNav.classList.remove('text-gray-400', 'font-medium');
-            activeNav.classList.add('text-blue-600', 'font-bold');
+            if (activeNav) {
+                activeNav.classList.remove('text-gray-400', 'font-medium');
+                activeNav.classList.add('text-blue-600', 'font-bold');
+            }
         }
 
         function toggleUILanguage() {
@@ -313,28 +312,37 @@
             applyUILanguageText();
         }
 
+        // CRASH-PROOF SAFE BINDING FUNCTION
+        function safeSetText(id, text) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.innerText = text;
+            } else {
+                console.warn(`Element with ID "${id}" was skipped because it's not present on this page.`);
+            }
+        }
+
         function applyUILanguageText() {
             const t = translations[uiLanguage];
             
-            document.getElementById('appTitle').innerText = t.title;
-            document.getElementById('uiLangBtn').innerText = t.uiBtn;
-            document.getElementById('speechHeading').innerText = t.speechHeading;
-            document.getElementById('statusText').innerText = t.statusIdle;
-            document.getElementById('formHeading').innerText = t.formHeading;
-            document.getElementById('lblItem').innerText = t.lblItem;
-            document.getElementById('lblAmount').innerText = t.lblAmount;
-            document.getElementById('lblQty').innerText = t.lblQty;
-            document.getElementById('lblPaidBy').innerText = t.lblPaidBy;
-            document.getElementById('saveBtn').innerText = t.saveBtn;
-            document.getElementById('lblPendingBal').innerText = t.lblPendingBal;
-            document.getElementById('reportHeader').innerText = t.reportHeader;
-            document.getElementById('peopleHeader').innerText = t.peopleHeader;
-            document.getElementById('lblOthersName').innerText = t.lblOthersName;
-            document.getElementById('lblUnpaidTab').innerText = t.lblUnpaidTab;
+            safeSetText('appTitle', t.title);
+            safeSetText('uiLangBtn', t.uiBtn);
+            safeSetText('speechHeading', t.speechHeading);
+            safeSetText('statusText', t.statusIdle);
+            safeSetText('formHeading', t.formHeading);
+            safeSetText('lblItem', t.lblItem);
+            safeSetText('lblAmount', t.lblAmount);
+            safeSetText('lblQty', t.lblQty);
+            safeSetText('lblPaidBy', t.lblPaidBy);
+            safeSetText('saveBtn', t.saveBtn);
+            safeSetText('reportHeader', t.reportHeader);
+            safeSetText('peopleHeader', t.peopleHeader);
+            safeSetText('lblOthersName', t.lblOthersName);
+            safeSetText('lblUnpaidTab', t.lblUnpaidTab);
             
-            document.getElementById('navTextAdd').innerText = t.navAdd;
-            document.getElementById('navTextRep').innerText = t.navReports;
-            document.getElementById('navTextPeo').innerText = t.navPeople;
+            safeSetText('navTextAdd', t.navAdd);
+            safeSetText('navTextRep', t.navReports);
+            safeSetText('navTextPeo', t.navPeople);
             
             renderExpenses();
         }
@@ -345,11 +353,11 @@
             const btnEn = document.getElementById('btnEn');
             
             if (lang === 'te-IN') {
-                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
-                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+                if (btnTe) btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+                if (btnEn) btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
             } else {
-                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
-                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+                if (btnTe) btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+                if (btnEn) btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
             }
         }
 
@@ -369,6 +377,13 @@
             const micBtn = document.getElementById('micBtn');
 
             recognition.onstart = () => {
-                statusText.innerText = translations[uiLanguage].statusListening;
-                micBtn.classList.add('bg-red-500', 'animate-pulse');
-                
+                if (statusText) statusText.innerText = translations[uiLanguage].statusListening;
+                if (micBtn) {
+                    micBtn.classList.add('bg-red-500', 'animate-pulse');
+                    micBtn.classList.remove('bg-green-600');
+                }
+            };
+
+            recognition.onend = () => {
+                if (statusText) statusText.innerText = translations[uiLanguage].statusIdle;
+      
