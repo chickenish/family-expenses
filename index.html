@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Expense Tracker</title>
+    <!-- Tailwind CSS (Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase CDN (Database Connection) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 min-h-screen pb-10">
+
+    <!-- 1. DATABASE SETUP CONFIGURATION SCREEN -->
+    <div id="setupScreen" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full space-y-4">
+            <h2 class="text-xl font-bold text-gray-800">డేటాబేస్ సెటప్ (Database Setup)</h2>
+            <p class="text-sm text-gray-600">Please paste your Supabase keys to connect your shared family database. These keys are saved safely on your device.</p>
+            
+            <div>
+                <label class="block text-xs font-semibold text-gray-600">Supabase Project URL</label>
+                <input type="text" id="setupUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600">Supabase Anon/Public Key</label>
+                <textarea id="setupKey" placeholder="eyJhbGciOi..." rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm"></textarea>
+            </div>
+            
+            <button onclick="saveSetupKeys()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+                కనెక్ట్ చేయండి (Connect Database)
+            </button>
+        </div>
+    </div>
+
+    <!-- 2. MAIN APPLICATION SCREEN -->
+    <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-xl font-bold">ఇంటి ఖర్చులు (Family Expenses)</h1>
+        <div class="flex gap-2">
+            <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
+                English UI
+            </button>
+            <button onclick="clearKeys()" class="bg-red-800 px-2 py-1 rounded text-xs font-semibold" title="Reset Database Keys">
+                ⚙️ Setup
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-md mx-auto p-4 mt-4 space-y-6">
+
+        <!-- Speech Input Section -->
+        <div class="bg-white p-6 rounded-xl shadow-md text-center space-y-4">
+            <h2 id="speechHeading" class="text-lg font-medium text-gray-700">మాట్లాడి ఎంటర్ చేయండి (Speak to Enter)</h2>
+            <div class="flex justify-center gap-2">
+                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm">
+                    తెలుగు (Telugu)
+                </button>
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700">
+                    English
+                </button>
+            </div>
+            <div class="flex justify-center py-2">
+                <button id="micBtn" onclick="startListening()" class="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center text-white text-3xl shadow-lg active:scale-95 transition">
+                    🎙️
+                </button>
+            </div>
+            <p id="statusText" class="text-sm text-gray-500">మైక్ బటన్ నొక్కి మాట్లాడండి (Tap mic and speak)</p>
+        </div>
+
+        <!-- Expense Form -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h2 id="formHeading" class="text-lg font-medium text-gray-700">ఖర్చు వివరాలు (Expense Details)</h2>
+            
+            <div>
+                <label id="lblItem" class="block text-sm font-medium text-gray-600">వస్తువు పేరు (Item Name)</label>
+                <input type="text" id="itemName" placeholder="e.g., పాలు / Milk" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label id="lblAmount" class="block text-sm font-medium text-gray-600">ధర (Amount ₹)</label>
+                    <input type="number" id="itemAmount" placeholder="0" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label id="lblQty" class="block text-sm font-medium text-gray-600">పరిమాణం (Qty)</label>
+                    <input type="text" id="itemQty" value="1" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+
+            <div>
+                <label id="lblPaidBy" class="block text-sm font-medium text-gray-600">ఎవరు చెల్లించారు? (Who Paid?)</label>
+                <select id="paidBy" class="mt-1 block w-full p-3 border border-gray-300 rounded-lg">
+                    <option value="Unpaid">ఉంచాము (Unpaid / Credit Tab)</option>
+                    <option value="Ganesh">Ganesh</option>
+                    <option value="Sujatha">Sujatha</option>
+                    <option value="Hari">Hari</option>
+                    <option value="Other">ఇతరులు (Other)</option>
+                </select>
+            </div>
+
+            <button onclick="saveExpense()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
+                సేవ్ చేయండి (Save Expense)
+            </button>
+        </div>
+
+        <!-- Expense List -->
+        <div class="bg-white p-6 rounded-xl shadow-md space-y-4">
+            <h2 id="listHeading" class="text-lg font-medium text-gray-700">ఖర్చులు (Expenses List)</h2>
+            <div id="expenseList" class="space-y-2 divide-y divide-gray-100">
+                <p id="noExpensesText" class="text-gray-400 text-center py-4">డేటా లోడ్ అవుతోంది... (Loading database...)</p>
+            </div>
+            
+            <div class="pt-4 border-t border-gray-200 flex justify-between items-center font-bold text-gray-800">
+                <span id="lblPendingBal">మిగిలిన బ్యాలెన్స్ (Pending Balance):</span>
+                <span id="pendingTotal" class="text-red-600 text-lg">₹0</span>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        let supabaseClient = null;
+        let speechLanguage = 'te-IN';
+        let uiLanguage = 'te';
+        let expenses = [];
+
+        const translations = {
+            te: {
+                title: "ఇంటి ఖర్చులు",
+                speechHeading: "మాట్లాడి ఎంటర్ చేయండి",
+                statusIdle: "మైక్ బటన్ నొక్కి మాట్లాడండి",
+                statusListening: "వింటున్నాను... మాట్లాడండి (Listening...)",
+                formHeading: "ఖర్చు వివరాలు",
+                lblItem: "వస్తువు పేరు",
+                lblAmount: "ధర (Amount ₹)",
+                lblQty: "పరిమాణం (Qty)",
+                lblPaidBy: "ఎవరు చెల్లించారు?",
+                saveBtn: "సేవ్ చేయండి",
+                listHeading: "ఖర్చులు",
+                lblPendingBal: "మిగిలిన బ్యాలెన్స్ (Pending Balance):",
+                noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
+                uiBtn: "English UI"
+            },
+            en: {
+                title: "Family Expenses",
+                speechHeading: "Speak to Enter",
+                statusIdle: "Tap microphone button to speak",
+                statusListening: "Listening... speak now",
+                formHeading: "Expense Details",
+                lblItem: "Item Name",
+                lblAmount: "Amount (₹)",
+                lblQty: "Quantity",
+                lblPaidBy: "Who Paid?",
+                saveBtn: "Save Expense",
+                listHeading: "Expenses List",
+                lblPendingBal: "Pending Balance to Clear:",
+                noExpenses: "No expenses logged yet",
+                uiBtn: "తెలుగు UI"
+            }
+        };
+
+        // Initialize Database Client on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkDatabaseSetup();
+        });
+
+        function checkDatabaseSetup() {
+            const savedUrl = localStorage.getItem('family_sb_url');
+            const savedKey = localStorage.getItem('family_sb_key');
+
+            if (!savedUrl || !savedKey) {
+                document.getElementById('setupScreen').classList.remove('hidden');
+            } else {
+                document.getElementById('setupScreen').classList.add('hidden');
+                // Create Supabase Client
+                supabaseClient = supabase.createClient(savedUrl, savedKey);
+                loadExpenses();
+            }
+        }
+
+        function saveSetupKeys() {
+            const url = document.getElementById('setupUrl').value.trim();
+            const key = document.getElementById('setupKey').value.trim();
+
+            if (!url || !key) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            localStorage.setItem('family_sb_url', url);
+            localStorage.setItem('family_sb_key', key);
+            checkDatabaseSetup();
+        }
+
+        function clearKeys() {
+            if(confirm("Do you want to reset your database connection configuration?")) {
+                localStorage.removeItem('family_sb_url');
+                localStorage.removeItem('family_sb_key');
+                location.reload();
+            }
+        }
+
+        function toggleUILanguage() {
+            uiLanguage = (uiLanguage === 'te') ? 'en' : 'te';
+            const t = translations[uiLanguage];
+            
+            document.getElementById('uiLangBtn').innerText = t.uiBtn;
+            document.getElementById('speechHeading').innerText = t.speechHeading;
+            document.getElementById('statusText').innerText = t.statusIdle;
+            document.getElementById('formHeading').innerText = t.formHeading;
+            document.getElementById('lblItem').innerText = t.lblItem;
+            document.getElementById('lblAmount').innerText = t.lblAmount;
+            document.getElementById('lblQty').innerText = t.lblQty;
+            document.getElementById('lblPaidBy').innerText = t.lblPaidBy;
+            document.getElementById('saveBtn').innerText = t.saveBtn;
+            document.getElementById('listHeading').innerText = t.listHeading;
+            document.getElementById('lblPendingBal').innerText = t.lblPendingBal;
+            
+            renderExpenses();
+        }
+
+        function setSpeechLanguage(lang) {
+            speechLanguage = lang;
+            const btnTe = document.getElementById('btnTe');
+            const btnEn = document.getElementById('btnEn');
+            
+            if (lang === 'te-IN') {
+                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+            } else {
+                btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-200 text-gray-700";
+                btnEn.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
+            }
+        }
+
+        function startListening() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("Speech recognition is not supported on this browser. Please use Chrome on Android, or Safari on iPad/iPhone.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = speechLanguage;
+
+            const statusText = document.getElementById('statusText');
+            const micBtn = document.getElementById('micBtn');
+
+            recognition.onstart = () => {
+                statusText.innerText = translations[uiLanguage].statusListening;
+                micBtn.classList.add('bg-red-500', 'animate-pulse');
+                micBtn.classList.remove('bg-green-600');
+            };
+
+            recognition.onend = () => {
+                statusText.innerText = translations[uiLanguage].statusIdle;
+                micBtn.classList.remove('bg-red-500', 'animate-pulse');
+                micBtn.classList.add('bg-green-600');
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                processVoiceText(transcript);
+            };
+
+            recognition.onerror = (e) => {
+                console.error(e);
+                statusText.innerText = "Error capturing voice input. Try again.";
+            };
+
+            recognition.start();
+        }
+
+        function processVoiceText(text) {
+            let amount = "";
+            let item = text;
+
+            const numberMatch = text.match(/\d+/);
+            if (numberMatch) {
+                amount = numberMatch[0];
+                item = text.replace(amount, "").trim();
+            }
+
+            item = item.replace(/రూపాయలు|rupees|rupee/gi, "").trim();
+
+            document.getElementById('itemName').value = item;
+            document.getElementById('itemAmount').value = amount;
+        }
+
+        // DATABASE OPERATIONS
+
+        async function loadExpenses() {
+            try {
+                // Fetch latest expenses from Supabase
+                const { data, error } = await supabaseClient
+                    .from('expenses')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (error) throw error;
+                expenses = data;
+                renderExpenses();
+            } catch (err) {
+                console.error("Fetch error:", err);
+                alert("Failed to load data. Please check your network connection.");
+            }
+        }
+
+        async function saveExpense() {
+            const name = document.getElementById('itemName').value.trim();
+            const amount = parseFloat(document.getElementById('itemAmount').value);
+            const qty = document.getElementById('itemQty').value.trim();
+            const paidBy = document.getElementById('paidBy').value;
+
+            if (!name || isNaN(amount)) {
+                alert("Enter valid item details.");
+                return;
+            }
+
+            try {
+                // Insert into Supabase
+                const { error } = await supabaseClient
+                    .from('expenses')
+                    .insert([{ name, amount, qty, paid_by: paidBy }]);
+
+                if (error) throw error;
+
+                // Reload and clear form inputs
+                loadExpenses();
+                document.getElementById('itemName').value = "";
+                document.getElementById('itemAmount').value = "";
+                document.getElementById('itemQty').value = "1";
+                document.getElementById('paidBy').value = "Unpaid";
+            } catch (err) {
+                console.error("Save error:", err);
+                alert("Could not save to database.");
+            }
+        }
+
+        async function deleteExpense(id) {
+            if (!confirm("Are you sure you want to delete this item?")) return;
+
+            try {
+                // Delete from Supabase
+                const { error } = await supabaseClient
+                    .from('expenses')
+                    .delete()
+                    .eq('id', id);
+
+                if (error) throw error;
+                loadExpenses();
+            } catch (err) {
+                console.error("Delete error:", err);
+                alert("Could not delete item.");
+            }
+        }
+
+        function renderExpenses() {
+            const listContainer = document.getElementById('expenseList');
+            listContainer.innerHTML = "";
+
+            if (expenses.length === 0) {
+                listContainer.innerHTML = `<p id="noExpensesText" class="text-gray-400 text-center py-4">${translations[uiLanguage].noExpenses}</p>`;
+                document.getElementById('pendingTotal').innerText = "₹0";
+                return;
+            }
+
+            let pendingTotal = 0;
+
+            expenses.forEach(exp => {
+                if (exp.paid_by === 'Unpaid') {
+                    pendingTotal += exp.amount;
+                }
+
+                const isUnpaid = exp.paid_by === 'Unpaid';
+                const badgeColor = isUnpaid ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800';
+                const badgeLabel = isUnpaid ? 'Unpaid' : `Paid by ${exp.paid_by}`;
+
+                const itemHTML = `
+                    <div class="flex justify-between items-center py-3">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-medium text-gray-800">${exp.name}</span>
+                                <span class="text-xs text-gray-400">(Qty: ${exp.qty})</span>
+                            </div>
+                            <span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ${badgeColor}">
+                                ${badgeLabel}
+                            </span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-bold text-gray-800">₹${exp.amount}</span>
+                            <button onclick="deleteExpense(${exp.id})" class="text-red-500 hover:text-red-700 text-sm">❌</button>
+                        </div>
+                    </div>
+                `;
+                listContainer.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            document.getElementById('pendingTotal').innerText = `₹${pendingTotal}`;
+        }
+    </script>
+</body>
+</html>
