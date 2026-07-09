@@ -9,6 +9,7 @@
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
 
+    <!-- TABLET REMOTE TROUBLESHOOTER -->
     <script>
         window.onerror = function(msg, url, line) {
             alert("Tablet Error: " + msg + "\nLine: " + line);
@@ -18,57 +19,96 @@
 
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <h2 class="text-xl font-black text-slate-900 text-center">Create Profile</h2>
-            <div class="space-y-3">
-                <input type="text" id="regUser" placeholder="Username (e.g. Sujatha)" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <input type="password" id="regPass" placeholder="Password" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <select id="regQuestion" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs bg-white">
-                    <option value="1">What is your mother's maiden name?</option>
-                    <option value="2">What was the name of your first pet?</option>
-                    <option value="3">What city were you born in?</option>
-                </select>
-                <input type="text" id="regAnswer" placeholder="Answer" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-800 transition">Create Profile</button>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
+                <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold bg-slate-50 focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
+                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
+                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                </div>
+                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">Create Profile</button>
             </div>
         </div>
     </div>
 
     <!-- ==================== 2. LOGIN SCREEN ==================== -->
     <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <h2 class="text-xl font-black text-slate-900 text-center">Sign In</h2>
-            <div class="space-y-3">
-                <input type="text" id="loginUser" placeholder="Enter Username" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <input type="password" id="loginPass" placeholder="Enter Password" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <div class="flex items-center justify-between text-xs">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
-                        <span class="font-bold text-slate-600">Remember Me</span>
-                    </label>
-                    <button onclick="showForgotPassword()" class="font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-center space-y-2">
+                <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
+                <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
+                </div>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
+                        <span class="text-xs font-bold text-slate-600">Remember Me</span>
+                    </label>
+                    <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
+                </div>
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
             </div>
         </div>
     </div>
 
     <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
     <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-            <h2 class="text-xl font-black text-slate-950 text-center">Reset Password</h2>
-            <div class="space-y-3">
-                <input type="text" id="forgotUser" placeholder="Type Username" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <select id="forgotQuestion" class="w-full p-2.5 border border-slate-200 rounded-lg text-xs bg-white">
-                    <option value="1">What is your mother's maiden name?</option>
-                    <option value="2">What was the name of your first pet?</option>
-                    <option value="3">What city were you born in?</option>
-                </select>
-                <input type="text" id="forgotAnswer" placeholder="Type Answer" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <input type="password" id="forgotNewPass" placeholder="Type New Password" class="w-full p-2.5 border border-slate-200 rounded-lg text-sm">
-                <div class="grid grid-cols-2 gap-2 pt-1">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2 rounded-lg font-bold text-xs">Back</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2 rounded-lg font-bold text-xs">Update</button>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-center space-y-2">
+                <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
+                <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
+                </div>
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update</button>
                 </div>
             </div>
         </div>
@@ -77,7 +117,7 @@
     <!-- PHOTO VIEWER MODAL -->
     <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
         <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-xs font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
@@ -86,20 +126,17 @@
             <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
         </div>
-        <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white px-3 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
+        <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-3 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
     </header>
 
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
-        
-        <!-- Action Card -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
             <div class="flex justify-center gap-2">
                 <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white">English</button>
                 <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
             </div>
-            
             <div class="grid grid-cols-3 gap-2 py-1">
                 <div class="flex flex-col items-center">
                     <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
@@ -120,7 +157,6 @@
                     <span id="photoLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Photo</span>
                 </div>
             </div>
-            
             <div id="imageStatusArea" class="hidden flex items-center justify-center gap-2 p-1.5 bg-slate-100 border border-slate-200 rounded-lg max-w-[200px] mx-auto">
                 <img id="imagePreview" src="" class="w-6 h-6 object-cover rounded border border-slate-300">
                 <span class="text-[10px] text-slate-800 font-bold">Attached!</span>
@@ -129,7 +165,6 @@
             <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
         </div>
 
-        <!-- Form -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
@@ -411,36 +446,115 @@
         </button>
     </nav>
 
-    <!-- ==================== IMMUTABLE COMPRESSED HIGH-PERFORMANCE JS ENGINE ==================== -->
     <script>
+        // IMMUTABLE CRASH PREVENTING MEMORY PROXY (100% immune to storage restrictions)
         var safeStorage = {
-            getItem: function(k) { try { return localStorage.getItem(k); } catch(e) { return this[k] || null; } },
-            setItem: function(k, v) { try { localStorage.setItem(k, v); } catch(e) { this[k] = v; } },
-            removeItem: function(k) { try { localStorage.removeItem(k); } catch(e) { delete this[k]; } }
+            getItem: function(key) {
+                try { return localStorage.getItem(key); } catch(e) { return this[key] || null; }
+            },
+            setItem: function(key, val) {
+                try { localStorage.setItem(key, val); } catch(e) { this[key] = val; }
+            },
+            removeItem: function(key) {
+                try { localStorage.removeItem(key); } catch(e) { delete this[key]; }
+            }
         };
 
-        var speechLanguage = 'en-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
+        var speechLanguage = 'en-IN';
+        var uiLanguage = 'en'; 
+        var expenses = [];
+        var activeFilter = 'all';
+        var selectedCalendarDate = ""; 
+        var appUser = "";
+        var tempCompressedPhoto = ""; 
+        var editingExpenseId = null;
 
         var translations = {
             te: {
-                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను...", formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (₹)", lblQty: "పరిమాణం", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI", reportHeader: "కాలాల వారీగా ఖర్చులు", peopleHeader: "బకాయిలు", lblOthersName: "ఇతరులు", lblUnpaidTab: "మిగిలిన బకాయిలు", navAdd: "చేర్చండి", navReports: "రిపోర్టులు", navPeople: "బకాయిలు & ప్రొఫైల్", compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "⚠️ విశ్లేషణ", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
+                title: "ఇంటి ఖర్చులు",
+                speechHeading: "మార్గాలు ఎంచుకోండి",
+                voiceLabel: "మాట్లాడండి",
+                cameraLabel: "బిల్ కెమెరా",
+                photoLabel: "ఫోటో జత",
+                statusIdle: "పై వాటిని ఎంచుకోండి",
+                statusListening: "వింటున్నాను... మాట్లాడండి",
+                formHeading: "ఖర్చు వివరాలు",
+                lblItem: "వస్తువు పేరు",
+                lblAmount: "ధర (Amount ₹)",
+                lblQty: "పరిమాణం (Qty)",
+                lblPaidBy: "ఎవరు చెల్లించారు?",
+                saveBtn: "సేవ్ చేయండి",
+                noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
+                uiBtn: "English UI",
+                reportHeader: "కాలాల వారీగా ఖర్చులు",
+                peopleHeader: "బకాయిలు",
+                lblOthersName: "ఇతరులు",
+                lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)",
+                navAdd: "చేర్చండి",
+                navReports: "రిపోర్టులు",
+                navPeople: "ప్రొఫైల్ & బకాయిలు",
+                compareHeader: "నెలవారీ సరిపోలికలు",
+                overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ",
+                histMonthsTitle: "నెలవారీ ఖర్చులు",
+                catTotalsTitle: "విభాగాల వారీగా ఖర్చులు",
+                navCompare: "పోలికలు",
+                cardDayTitle: "ఈరోజు",
+                cardWeekTitle: "వారం",
+                cardMonthTitle: "నెల",
+                cardYearTitle: "సంవత్సరం",
+                lblCalendar: "తేదీ ఎంచుకోండి"
             },
             en: {
-                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening...", formHeading: "Expense Details", lblItem: "Item Name", lblAmount: "Amount (₹)", lblQty: "Quantity", lblPaidBy: "Who Paid?", saveBtn: "Save Expense", noExpenses: "No expenses logged yet", uiBtn: "తెలుగు UI", reportHeader: "Time-Period Expenses", peopleHeader: "Ledger Dues", lblOthersName: "Others", lblUnpaidTab: "Pending Dues", navAdd: "Add Expense", navReports: "Reports", navPeople: "Dues & Profile", compareHeader: "Monthly Comparisons", overspentTitle: "⚠️ Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
+                title: "Family Expenses",
+                speechHeading: "Choose Action",
+                voiceLabel: "Speak",
+                cameraLabel: "Bill Camera",
+                photoLabel: "Photo",
+                statusIdle: "Select action above",
+                statusListening: "Listening... speak now",
+                formHeading: "Expense Details",
+                lblItem: "Item Name",
+                lblAmount: "Amount (₹)",
+                lblQty: "Quantity",
+                lblPaidBy: "Who Paid?",
+                saveBtn: "Save Expense",
+                noExpenses: "No expenses logged yet",
+                uiBtn: "తెలుగు UI",
+                reportHeader: "Time-Period Expenses",
+                peopleHeader: "Ledger Dues",
+                lblOthersName: "Others",
+                lblUnpaidTab: "Pending Dues",
+                navAdd: "Add Expense",
+                navReports: "Reports",
+                navPeople: "Dues & Profile",
+                compareHeader: "Monthly Comparisons",
+                overspentTitle: "⚠️ Spending Analysis",
+                histMonthsTitle: "Month Spending History",
+                catTotalsTitle: "Category Totals",
+                navCompare: "Compare",
+                cardDayTitle: "Today",
+                cardWeekTitle: "Weekly",
+                cardMonthTitle: "Monthly",
+                cardYearTitle: "Yearly",
+                lblCalendar: "Select Date to view logs"
             }
         };
 
-        function safeClass(id, act, cls) {
+        // ==================== BASE CRASH GUARDS DEFINITIONS ====================
+        function safeClass(id, action, className) {
             var el = document.getElementById(id);
             if (el) {
-                if (act === 'add') el.classList.add(cls);
-                else el.classList.remove(cls);
+                if (action === 'add') {
+                    el.classList.add(className);
+                } else if (action === 'remove') {
+                    el.classList.remove(className);
+                }
             }
         }
 
-        function safeSetText(id, txt) {
+        function safeSetText(id, text) {
             var el = document.getElementById(id);
-            if (el) el.innerText = txt;
+            if (el) el.innerText = text;
         }
 
         window.addEventListener('DOMContentLoaded', function() {
@@ -450,21 +564,28 @@
             loadSavedBudgets();
         });
 
+        // ==================== SECURITY & LOG IN ====================
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
             var isLogged = safeStorage.getItem('is_logged_in');
+
             if (!profileStr) {
                 safeClass('registerScreen', 'remove', 'hidden');
                 safeClass('loginScreen', 'add', 'hidden');
             } else {
                 safeClass('registerScreen', 'add', 'hidden');
                 if (isLogged === 'true') {
-                    var p = { username: "User" };
-                    try { p = JSON.parse(profileStr); } catch(e) {}
+                    var p;
+                    try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User" }; }
                     appUser = p.username;
-                    st('currentUserDisplay', "User: " + p.username);
+                    var displayEl = document.getElementById('currentUserDisplay');
+                    if (displayEl) {
+                        displayEl.innerText = "User: " + p.username;
+                    }
                     var editEl = document.getElementById('editUsername');
-                    if (editEl) editEl.value = p.username;
+                    if (editEl) {
+                        editEl.value = p.username;
+                    }
                     safeClass('loginScreen', 'add', 'hidden');
                 } else {
                     safeClass('loginScreen', 'remove', 'hidden');
@@ -477,11 +598,19 @@
             var pass = document.getElementById('regPass').value.trim();
             var q = document.getElementById('regQuestion').value;
             var ans = document.getElementById('regAnswer').value.trim().toLowerCase();
+
             if (!user || !pass || !ans) {
                 alert("Please fill in all fields.");
                 return;
             }
-            var profile = { username: user, password: pass, question: q, answer: ans };
+
+            var profile = {
+                username: user,
+                password: pass,
+                question: q,
+                answer: ans
+            };
+
             safeStorage.setItem('family_profile', JSON.stringify(profile));
             safeStorage.setItem('is_logged_in', 'true');
             checkUser();
@@ -492,18 +621,29 @@
             var user = document.getElementById('loginUser').value.trim();
             var pass = document.getElementById('loginPass').value.trim();
             var remember = document.getElementById('rememberMe').checked;
+
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) return;
-            var p = JSON.parse(profileStr);
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) {
+                alert("Profile corrupted.");
+                safeStorage.removeItem('family_profile');
+                checkUser();
+                return;
+            }
+
             if (p.username === user && p.password === pass) {
-                if (remember) safeStorage.setItem('is_logged_in', 'true');
-                else safeStorage.setItem('is_logged_in', 'true');
+                if (remember) {
+                    safeStorage.setItem('is_logged_in', 'true');
+                } else {
+                    safeStorage.setItem('is_logged_in', 'true');
+                }
                 document.getElementById('loginUser').value = "";
                 document.getElementById('loginPass').value = "";
                 checkUser();
                 loadExpenses();
             } else {
-                alert("Incorrect details.");
+                alert("Incorrect username or password.");
             }
         }
 
@@ -511,19 +651,31 @@
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
             var profileStr = safeStorage.getItem('family_profile');
-            if (!profileStr) return;
-            var p = JSON.parse(profileStr);
-            var qMap = { "1": "What is your mother's maiden name?", "2": "What was the name of your first pet?", "3": "What city were you born in?" };
-            var ans = prompt("Security Verification:\nQuestion: " + qMap[p.question]);
-            if (ans && ans.trim().toLowerCase() === p.answer) {
-                var newPass = prompt("Verified! Type new password:");
-                if (newPass) {
-                    p.password = newPass;
-                    safeStorage.setItem('family_profile', JSON.stringify(p));
-                    alert("Password updated! Sign in now.");
+            if (!profileStr) {
+                alert("No profile configured.");
+                return;
+            }
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
+            var qMap = {
+                "1": "What is your mother's maiden name?",
+                "2": "What was the name of your first pet?",
+                "3": "What city were you born in?"
+            };
+
+            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
+            if (ans) {
+                ans = ans.trim().toLowerCase();
+                if (ans === p.answer) {
+                    var newPass = prompt("Identity verified! Enter new password:");
+                    if (newPass) {
+                        p.password = newPass;
+                        safeStorage.setItem('family_profile', JSON.stringify(p));
+                        alert("Password updated! Log in now.");
+                    }
+                } else {
+                    alert("Incorrect answer.");
                 }
-            } else {
-                alert("Answer incorrect.");
             }
             checkUser();
         }
@@ -531,12 +683,22 @@
         function updateProfileDetails() {
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) return;
-            var p = JSON.parse(profileStr);
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User", password: "" }; }
+
             var newUser = document.getElementById('editUsername').value.trim();
             var newPass = document.getElementById('editPassword').value.trim();
-            if (!newUser) return;
+
+            if (!newUser) {
+                alert("Username cannot be empty.");
+                return;
+            }
+
             p.username = newUser;
-            if (newPass) p.password = newPass;
+            if (newPass) {
+                p.password = newPass;
+            }
+
             safeStorage.setItem('family_profile', JSON.stringify(p));
             document.getElementById('editPassword').value = "";
             alert("Settings updated!");
@@ -544,31 +706,42 @@
         }
 
         function logoutProfile() {
-            if (confirm("Logout from this device?")) {
+            if (confirm("Reset login credentials or Logout from this device?")) {
                 safeStorage.removeItem('is_logged_in');
                 checkUser();
             }
         }
 
-        function hasPermission() {
-            var u = (appUser || "").toLowerCase().trim();
-            return (u === "sujatha" || u === "hari");
+        function promptUserChange() {
+            logoutProfile();
         }
 
+        // ==================== COGNIZANT DEFENSIVE SECURE ROLE AUDITING ====================
+        function hasPermission() {
+            var u = (appUser || "").toLowerCase().trim();
+            return (u === "sujatha" || u === "hari"); // Strictly checks username [1]
+        }
+
+        // ==================== STORAGE & COMPRESSION ====================
         function compressAttachmentPhoto(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0];
             var reader = new FileReader();
+
             reader.onload = function(e) {
                 var img = new Image();
                 img.onload = function() {
                     var canvas = document.createElement('canvas');
                     var max_width = 300;
                     var scale = max_width / img.width;
-                    canvas.width = max_width; canvas.height = img.height * scale;
+                    canvas.width = max_width;
+                    canvas.height = img.height * scale;
+
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
                     tempCompressedPhoto = canvas.toDataURL('image/jpeg', 0.6);
+
                     var preview = document.getElementById('imagePreview');
                     if (preview) preview.src = tempCompressedPhoto;
                     safeClass('imageStatusArea', 'remove', 'hidden');
@@ -586,61 +759,93 @@
         }
 
         function viewPhotoById(id) {
-            var pData = "";
+            var photoData = "";
             for (var i = 0; i < expenses.length; i++) {
-                if (expenses[i].id === id) { pData = expenses[i].photo; break; }
+                if (expenses[i].id === id) {
+                    photoData = expenses[i].photo;
+                    break;
+                }
             }
+
+            if (!photoData) return;
             var viewer = document.getElementById('photoViewerModal');
             var img = document.getElementById('viewerImage');
-            if (viewer && img && pData) {
-                img.src = pData;
-                safeClass('photoViewerModal', 'remove', 'hidden');
+            if (viewer && img) {
+                img.src = photoData;
+                viewer.classList.remove('hidden');
             }
         }
 
         function closePhotoViewer() {
-            safeClass('photoViewerModal', 'add', 'hidden');
+            document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
+        // ==================== DIRECT BILL CAMERA CAPTURE ====================
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0];
             var reader = new FileReader();
+
             reader.onload = function(e) {
                 var img = new Image();
                 img.onload = function() {
                     var canvas = document.createElement('canvas');
                     var max_width = 300;
                     var scale = max_width / img.width;
-                    canvas.width = max_width; canvas.height = img.height * scale;
+                    canvas.width = max_width;
+                    canvas.height = img.height * scale;
+
                     var ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    var compressed = canvas.toDataURL('image/jpeg', 0.6);
-                    
-                    var bName = prompt("Bill Photo Captured successfully!\nPlease enter a Description Name for this bill:");
-                    if (!bName) return;
-                    var bAmount = prompt("Enter Total Bill Amount (₹) for \"" + bName + "\":");
-                    if (bAmount && !isNaN(parseFloat(bAmount))) {
-                        var cat = detectCategory(bName);
-                        var item = { id: Date.now(), created_at: new Date().toISOString(), name: bName, amount: parseFloat(bAmount), qty: 1, paid_by: "Unpaid", category: cat, photo: compressed, recorded_by: appUser||"Guest", edited_by: "" };
-                        expenses.push(item);
+
+                    var compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+                    var billName = prompt("Bill Photo Captured successfully!\nPlease enter a Name or Item Description for this bill:");
+                    if (!billName || billName.trim() === "") {
+                        alert("Cancelled. Bill name is required.");
+                        return;
+                    }
+
+                    var billAmount = prompt("Enter the Total Bill Amount (₹) for \"" + billName + "\":");
+                    if (billAmount && !isNaN(parseFloat(billAmount))) {
+                        var detectedCategory = detectCategory(billName); 
+                        
+                        var newExpense = {
+                            id: Date.now(),
+                            created_at: new Date().toISOString(), 
+                            name: billName,
+                            amount: parseFloat(billAmount),
+                            qty: 1,
+                            paid_by: "Unpaid", 
+                            category: detectedCategory, 
+                            photo: compressedBase64,
+                            recorded_by: appUser || "Guest",
+                            edited_by: ""
+                        };
+                        
+                        expenses.push(newExpense);
                         saveToLocalAndCloud(expenses);
-                        alert("Saved!");
+                        alert("Logged under Category: " + detectedCategory + "\nAmount: ₹" + parseFloat(billAmount));
                         navigateTo('pageReports');
+                    } else {
+                        alert("Cancelled or invalid amount entered.");
                     }
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
-            input.value = "";
+            input.value = ""; 
         }
 
+        // ==================== DATE SELECTOR FILTER ====================
         function filterLogBySpecificDate(dateString) {
             if (!dateString) return;
-            selectedCalendarDate = dateString;
+            selectedCalendarDate = dateString; // YYYY-MM-DD
             activeFilter = 'calendar';
-            var p = dateString.split('-');
-            st('reportListTitle', 'Date: ' + p[2] + '/' + p[1] + '/' + p[0]);
+            
+            var parts = dateString.split('-');
+            var displayDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+            safeSetText('reportListTitle', 'Date: ' + displayDate);
             renderExpenses();
         }
 
@@ -650,265 +855,553 @@
             filterReport('all');
         }
 
+        // ==================== DYNAMIC REST CLOUD SHARE SYNC ====================
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
-            if (!url || !key) return;
-            if (url.substring(url.length - 1) === '/') url = url.substring(0, url.length - 1);
+
+            if (!url || !key) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            if (url.substring(url.length - 1) === '/') {
+                url = url.substring(0, url.length - 1);
+            }
+
             safeStorage.setItem('sync_url', url);
             safeStorage.setItem('sync_key', key);
-            alert("Sync configuration saved!");
+            
+            alert("Database linked! Syncing current records...");
             loadExpenses();
         }
 
         function disableCloudSync() {
-            safeStorage.removeItem('sync_url'); safeStorage.removeItem('sync_key');
-            document.getElementById('syncUrl').value = ""; document.getElementById('syncKey').value = "";
-            alert("Offline Only Mode Activated!"); loadExpenses();
+            safeStorage.removeItem('sync_url');
+            safeStorage.removeItem('sync_key');
+            document.getElementById('syncUrl').value = "";
+            document.getElementById('syncKey').value = "";
+            alert("Switched to Local Offline Mode!");
+            loadExpenses();
         }
 
-        function saveToLocalAndCloud(arr) {
-            safeStorage.setItem('family_expenses_data', JSON.stringify(arr));
-            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
-            if (url && key && arr.length > 0) {
+        function saveToLocalAndCloud(expensesArray) {
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expensesArray));
+
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+
+            if (syncUrl && syncKey) {
+                var targetUrl = syncUrl + '/rest/v1/expenses';
+                var lastItem = expensesArray[expensesArray.length - 1];
+                if (!lastItem) return;
+
                 var xhr = new XMLHttpRequest();
-                xhr.open("POST", url + '/rest/v1/expenses', true);
-                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
-                xhr.setRequestHeader("Content-Type", "application/json"); xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
-                xhr.send(JSON.stringify(arr[arr.length - 1]));
+                xhr.open("POST", targetUrl, true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            console.log("Cloud synced successfully!");
+                        } else {
+                            console.warn("Sync delay. Saved locally.", xhr.responseText);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify(lastItem));
             }
         }
 
+        // ==================== BUDGET STORAGE ====================
         function loadSavedBudgets() {
-            var d = safeStorage.getItem('budget_daily') || "500", w = safeStorage.getItem('budget_weekly') || "3000", m = safeStorage.getItem('budget_monthly') || "12000";
-            var elD = document.getElementById('budgetDailyInput'), elW = document.getElementById('budgetWeeklyInput'), elM = document.getElementById('budgetMonthlyInput');
-            if (elD) elD.value = d; if (elW) elW.value = w; if (elM) elM.value = m;
+            var d = safeStorage.getItem('budget_daily') || "500";
+            var w = safeStorage.getItem('budget_weekly') || "3000";
+            var m = safeStorage.getItem('budget_monthly') || "12000";
+
+            var elD = document.getElementById('budgetDailyInput');
+            var elW = document.getElementById('budgetWeeklyInput');
+            var elM = document.getElementById('budgetMonthlyInput');
+
+            if (elD) elD.value = d;
+            if (elW) elW.value = w;
+            if (elM) elM.value = m;
         }
 
         function saveBudgets() {
-            safeStorage.setItem('budget_daily', document.getElementById('budgetDailyInput').value);
-            safeStorage.setItem('budget_weekly', document.getElementById('budgetWeeklyInput').value);
-            safeStorage.setItem('budget_monthly', document.getElementById('budgetMonthlyInput').value);
-            alert("Budgets updated!");
+            var d = document.getElementById('budgetDailyInput').value;
+            var w = document.getElementById('budgetWeeklyInput').value;
+            var m = document.getElementById('budgetMonthlyInput').value;
+
+            safeStorage.setItem('budget_daily', d);
+            safeStorage.setItem('budget_weekly', w);
+            safeStorage.setItem('budget_monthly', m);
+
+            alert("Budgets updated successfully!");
             calculateSummaryData();
         }
 
+        // ==================== RECOGNITION AND SYNONYMS ====================
         function detectCategory(itemName) {
-            var n = itemName.toLowerCase();
-            if (n.indexOf('milk') !== -1 || n.indexOf('పాలు') !== -1 || n.indexOf('packet') !== -1 || n.indexOf('ప్యాకెట్') !== -1) return 'Milk';
-            if (n.indexOf('curd') !== -1 || n.indexOf('పెరుగు') !== -1) return 'Curd';
-            if (n.indexOf('egg') !== -1 || n.indexOf('guddu') !== -1 || n.indexOf('gudlu') !== -1 || n.indexOf('గుడ్లు') !== -1) return 'Eggs';
-            if (n.indexOf('chicken') !== -1 || n.indexOf('chiken') !== -1 || n.indexOf('చికెన్') !== -1) return 'Chicken';
-            if (n.indexOf('mutton') !== -1 || n.indexOf('మటన్') !== -1 || n.indexOf('goat') !== -1) return 'Mutton';
-            if (n.indexOf('fish') !== -1 || n.indexOf('చేప') !== -1 || n.indexOf('prawns') !== -1) return 'Fish';
+            var name = itemName.toLowerCase();
+            if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
+            if (name.indexOf('curd') !== -1 || name.indexOf('పెరుగు') !== -1) return 'Curd';
+            if (name.indexOf('egg') !== -1 || name.indexOf('guddu') !== -1 || name.indexOf('gudlu') !== -1 || name.indexOf('గుడ్లు') !== -1 || name.indexOf('గుడ్డు') !== -1) return 'Eggs';
+            if (name.indexOf('chicken') !== -1 || name.indexOf('chiken') !== -1 || name.indexOf('చికెన్') !== -1) return 'Chicken';
+            if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
+            if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
             
-            var veg = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'క్యారెట్', 'carrot'];
-            for (var i = 0; i < veg.length; i++) { if (n.indexOf(veg[i]) !== -1) return 'Vegetables'; }
+            // Vegetables recognition
+            var vegKeywords = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'gourd'];
+            for (var i = 0; i < vegKeywords.length; i++) {
+                if (name.indexOf(vegKeywords[i]) !== -1) return 'Vegetables';
+            }
 
-            var kir = ['kirana', 'provisions', 'dmart', 'grocery', 'supermarket', 'సామాన్లు', 'కిరాణా', 'సరుకులు'];
-            for (var k = 0; k < kir.length; k++) { if (n.indexOf(kir[k]) !== -1) return 'Monthly Kirana'; }
+            var kiranaKeywords = ['kirana', 'provisions', 'dmart', 'grocery', 'groceries', 'supermarket', 'సామాన్లు', 'కిరాణా', 'సరుకులు', 'నెల సామాన్లు'];
+            for (var k = 0; k < kiranaKeywords.length; k++) {
+                if (name.indexOf(kiranaKeywords[k]) !== -1) return 'Monthly Kirana';
+            }
 
-            var oil = ['oil', 'nune', 'నూనె', 'ఆయిల్'];
-            for (var o = 0; o < oil.length; o++) { if (n.indexOf(oil[o]) !== -1) return 'Oil'; }
+            var oilKeywords = ['oil', 'cooking oil', 'sunflower oil', 'nune', 'నూనె', 'ఆయిల్'];
+            for (var o = 0; o < oilKeywords.length; o++) {
+                if (name.indexOf(oilKeywords[o]) !== -1) return 'Oil';
+            }
 
-            if (n.indexOf('tiffin') !== -1 || n.indexOf('breakfast') !== -1 || n.indexOf('టిఫిన్') !== -1 || n.indexOf('ఇడ్లీ') !== -1 || n.indexOf('దోస') !== -1) return 'Tiffins';
+            if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1 || name.indexOf('poori') !== -1) return 'Tiffins';
+            
             return 'Other expenses';
         }
 
-        function setSpeechLanguage(lang) {
-            speechLanguage = lang;
-            var btnTe = document.getElementById('btnTe'), btnEn = document.getElementById('btnEn');
-            if (lang === 'te-IN') {
-                if (btnTe) btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm";
-                if (btnEn) btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600";
-            } else {
-                if (btnTe) btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600";
-                if (btnEn) btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm";
-            }
-        }
+        function processVoiceText(text) {
+            var amount = "";
+            var qty = 1;
+            var item = text;
 
-        function startListening() {
-            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) { alert("Mic transcription is blocked or unsupported."); return; }
-            var rec = new SpeechRecognition();
-            rec.continuous = false; rec.interimResults = false; rec.lang = speechLanguage;
-            var sText = document.getElementById('statusText'), mic = document.getElementById('micBtn');
-
-            rec.onstart = function() {
-                if (sText) sText.innerText = translations[uiLanguage].statusListening;
-                if (mic) { mic.classList.add('bg-slate-300', 'animate-pulse'); mic.classList.remove('bg-slate-100'); }
-            };
-            rec.onend = function() {
-                if (sText) sText.innerText = translations[uiLanguage].statusIdle;
-                if (mic) { mic.classList.remove('bg-slate-300', 'animate-pulse'); mic.classList.add('bg-slate-100'); }
-            };
-            rec.onresult = function(e) {
-                var txt = e.results[0][0].transcript;
-                var amt = "", qty = 1, item = txt;
-                var num = txt.match(/\d+/g);
-                if (num) {
-                    if (num.length === 1) { amt = num[0]; item = txt.replace(amt, "").trim(); }
-                    else if (num.length >= 2) {
-                        var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
-                        var m = txt.match(rx);
-                        if (m) {
-                            qty = parseInt(m[1]);
-                            for (var i = 0; i < num.length; i++) { if (parseInt(num[i]) !== qty) { amt = num[i]; break; } }
-                            if (!amt) amt = Math.max(parseInt(num[0]), parseInt(num[1]));
-                            item = txt.replace(m[0], "").replace(amt, "").trim();
-                        } else {
-                            var n1 = parseInt(num[0]), n2 = parseInt(num[1]);
-                            amt = Math.max(n1, n2); qty = Math.min(n1, n2);
-                            item = txt.replace(n1.toString(), "").replace(n2.toString(), "").trim();
+            var numberMatches = text.match(/\d+/g);
+            
+            if (numberMatches) {
+                if (numberMatches.length === 1) {
+                    amount = numberMatches[0];
+                    item = text.replace(amount, "").trim();
+                } else if (numberMatches.length >= 2) {
+                    var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
+                    var unitMatch = text.match(rx);
+                    if (unitMatch) {
+                        qty = parseInt(unitMatch[1]);
+                        for (var i = 0; i < numberMatches.length; i++) {
+                            if (parseInt(numberMatches[i]) !== qty) {
+                                amount = numberMatches[i];
+                                break;
+                            }
                         }
+                        if (!amount) {
+                            amount = Math.max(parseInt(numberMatches[0]), parseInt(numberMatches[1]));
+                        }
+                        item = text.replace(unitMatch[0], "").replace(amount, "").trim();
+                    } else {
+                        var num1 = parseInt(numberMatches[0]);
+                        var num2 = parseInt(numberMatches[1]);
+                        amount = Math.max(num1, num2);
+                        qty = Math.min(num1, num2);
+                        item = text.replace(num1.toString(), "").replace(num2.toString(), "").trim();
                     }
                 }
-                item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
-                var nameEl = document.getElementById('itemName'), amtEl = document.getElementById('itemAmount'), qtyEl = document.getElementById('itemQty');
-                if (nameEl) nameEl.value = item; if (amtEl) amtEl.value = amt; if (qtyEl) qtyEl.value = qty;
-            };
-            rec.start();
+            }
+
+            item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
+
+            var nameInput = document.getElementById('itemName');
+            var amtInput = document.getElementById('itemAmount');
+            var qtyInput = document.getElementById('itemQty');
+
+            if (nameInput) nameInput.value = item;
+            if (amtInput) amtInput.value = amount;
+            if (qtyInput) qtyInput.value = qty;
+        }
+
+        // ==================== AUTO-RECOVERY DB LOADING ====================
+        function loadExpenses() {
+            var stored = safeStorage.getItem('family_expenses_data');
+            
+            if (!stored) {
+                var recovery1 = safeStorage.getItem('family_expenses_local');
+                if (recovery1) {
+                    stored = recovery1;
+                    safeStorage.setItem('family_expenses_data', recovery1);
+                }
+            }
+
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+            if (syncUrl && syncKey) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", syncUrl + '/rest/v1/expenses?select=*&order=created_at.desc', true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        try {
+                            expenses = JSON.parse(xhr.responseText);
+                            safeStorage.setItem('family_expenses_data', xhr.responseText);
+                            renderExpenses();
+                            calculateSummaryData();
+                            renderComparisonTab();
+                        } catch(e) {}
+                    }
+                };
+                xhr.send();
+            }
+
+            try {
+                expenses = stored ? JSON.parse(stored) : [];
+            } catch(e) {
+                expenses = [];
+            }
+            renderExpenses();
+            calculateSummaryData();
+            renderComparisonTab();
         }
 
         function saveExpenseLocal() {
-            var nEl = document.getElementById('itemName'), aEl = document.getElementById('itemAmount'), qEl = document.getElementById('itemQty'), pEl = document.getElementById('paidBy');
-            if (!nEl || !aEl || !qEl || !pEl) return;
-            var name = nEl.value.trim(), amount = parseFloat(aEl.value), qty = parseFloat(qEl.value) || 1, paid = pEl.value;
-            if (!name || isNaN(amount)) { alert("Enter valid details."); return; }
-            var creator = appUser || "Guest", date = new Date().toISOString(), cat = detectCategory(name);
+            var nameEl = document.getElementById('itemName');
+            var amtEl = document.getElementById('itemAmount');
+            var qtyEl = document.getElementById('itemQty');
+            var paidEl = document.getElementById('paidBy');
+
+            if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
+
+            var name = nameEl.value.trim();
+            var amount = parseFloat(amtEl.value);
+            var qty = parseFloat(qtyEl.value) || 1;
+            var paidBy = paidEl.value;
+            
+            var category = detectCategory(name);
+            var dateVal = new Date().toISOString(); 
+
+            if (!name || isNaN(amount)) {
+                alert("Enter valid details.");
+                return;
+            }
+
+            var creatorName = appUser || "Guest";
 
             if (editingExpenseId !== null) {
                 expenses = expenses.map(function(exp) {
                     if (exp.id === editingExpenseId) {
-                        return { id: exp.id, created_at: date, name: name, amount: amount, qty: qty, paid_by: paid, category: cat, photo: tempCompressedPhoto || exp.photo || "", recorded_by: exp.recorded_by || creator, edited_by: creator };
+                        return {
+                            id: exp.id,
+                            created_at: dateVal,
+                            name: name,
+                            amount: amount,
+                            qty: qty,
+                            paid_by: paidBy,
+                            category: category,
+                            photo: tempCompressedPhoto || exp.photo || "", 
+                            recorded_by: exp.recorded_by || creatorName,
+                            edited_by: creatorName 
+                        };
                     }
                     return exp;
                 });
-                editingExpenseId = null; alert("Updated!");
+                editingExpenseId = null;
+                alert("Item updated!");
             } else {
-                expenses.push({ id: Date.now(), created_at: date, name: name, amount: amount, qty: qty, paid_by: paid, category: cat, photo: tempCompressedPhoto || "", recorded_by: creator, edited_by: "" });
+                var newExpense = {
+                    id: Date.now(),
+                    created_at: dateVal,
+                    name: name,
+                    amount: amount,
+                    qty: qty,
+                    paid_by: paidBy,
+                    category: category,
+                    photo: tempCompressedPhoto || "", 
+                    recorded_by: creatorName,
+                    edited_by: ""
+                };
+                expenses.push(newExpense);
             }
-            saveToLocalAndCloud(expenses); clearAttachedPhoto(); cancelEditingMode(); loadExpenses(); navigateTo('pageReports');
+
+            saveToLocalAndCloud(expenses);
+            clearAttachedPhoto();
+            cancelEditingMode();
+            loadExpenses();
+            navigateTo('pageReports');
         }
 
         function enterEditingMode(id) {
-            editingExpenseId = id; var target = null;
-            for (var i = 0; i < expenses.length; i++) { if (expenses[i].id === id) { target = expenses[i]; break; } }
+            editingExpenseId = id;
+            var target = null;
+            for (var i = 0; i < expenses.length; i++) {
+                if (expenses[i].id === id) {
+                    target = expenses[i];
+                    break;
+                }
+            }
+
             if (!target) return;
+
             document.getElementById('itemName').value = target.name;
             document.getElementById('itemAmount').value = target.amount;
             document.getElementById('itemQty').value = target.qty;
             document.getElementById('paidBy').value = target.paid_by;
+
             if (target.photo) {
                 tempCompressedPhoto = target.photo;
-                var p = document.getElementById('imagePreview'); if (p) p.src = tempCompressedPhoto;
+                var preview = document.getElementById('imagePreview');
+                if (preview) preview.src = tempCompressedPhoto;
                 safeClass('imageStatusArea', 'remove', 'hidden');
-            } else { clearAttachedPhoto(); }
-            safeClass('editBadge', 'remove', 'hidden'); safeClass('cancelEditBtn', 'remove', 'hidden');
+            } else {
+                clearAttachedPhoto();
+            }
+
+            safeClass('editBadge', 'remove', 'hidden');
+            safeClass('cancelEditBtn', 'remove', 'hidden');
             document.getElementById('saveBtn').innerText = "Update Expense";
+
             navigateTo('pageAdd');
         }
 
         function cancelEditingMode() {
             editingExpenseId = null;
-            safeClass('editBadge', 'add', 'hidden'); safeClass('cancelEditBtn', 'add', 'hidden');
+            safeClass('editBadge', 'add', 'hidden');
+            safeClass('cancelEditBtn', 'add', 'hidden');
             document.getElementById('saveBtn').innerText = translations[uiLanguage].saveBtn;
-            document.getElementById('itemName').value = ""; document.getElementById('itemAmount').value = "";
-            document.getElementById('itemQty').value = "1"; document.getElementById('paidBy').value = "Unpaid";
+
+            document.getElementById('itemName').value = "";
+            document.getElementById('itemAmount').value = "";
+            document.getElementById('itemQty').value = "1";
+            document.getElementById('paidBy').value = "Unpaid";
             clearAttachedPhoto();
         }
 
         function deleteExpenseLocal(id) {
-            if (!confirm("Delete?")) return;
-            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
-            if (url && key) {
+            if (!confirm("Delete this expense?")) return;
+            
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+            if (syncUrl && syncKey) {
                 var xhr = new XMLHttpRequest();
-                xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
-                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key); xhr.send();
+                xhr.open("DELETE", syncUrl + '/rest/v1/expenses?id=eq.' + id, true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.send();
             }
-            expenses = expenses.filter(function(e) { return e.id !== id; });
+
+            expenses = expenses.filter(function(exp) { return exp.id !== id; });
             safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
             loadExpenses();
         }
 
+        // ==================== CLEAR DUELS DYNAMICS (SECURED FOR SUJATHA AND HARI ONLY) ====================
         function clearUnpaidExpenses() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission."); return; }
-            var tot = 0; expenses.forEach(function(e){ if(e.paid_by==='Unpaid') tot+=e.amount; });
-            if (tot <= 0) return;
-            var input = prompt("Unpaid balance ₹" + tot + ". Enter cleared amount:", tot);
-            if (input === null) return;
-            var amt = parseFloat(input); if (isNaN(amt) || amt <= 0) return;
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
 
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Unpaid Dues Cleared", amount: -amt, qty: 1, paid_by: "Unpaid", category: "Other expenses", photo: "", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-        }
-
-        function clearMemberDues(member) {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission."); return; }
-            var tot = 0; expenses.forEach(function(e){ if(e.paid_by===member) tot+=e.amount; });
-            if (tot <= 0) return;
-            var input = prompt(member + " spent total ₹" + tot + ". Enter paid back amount:", tot);
-            if (input === null) return;
-            var amt = parseFloat(input); if (isNaN(amt) || amt <= 0) return;
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amt, qty: 1, paid_by: member, category: "Other expenses", photo: "", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-        }
-
-        function clearMilkCurdEggsUnpaid() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission."); return; }
-            var tot = 0;
-            expenses.forEach(function(e) {
-                var isGrocery = (e.category === 'Milk' || e.category === 'Curd' || e.category === 'Eggs');
-                if (e.paid_by === 'Unpaid' && isGrocery) tot += e.amount;
-            });
-            if (tot <= 0) return;
-            var input = prompt("Total Milk, Curd & Eggs dues ₹" + tot + ". Enter paid back amount:", tot);
-            if (input === null) return;
-            var amt = parseFloat(input); if (isNaN(amt) || amt <= 0) return;
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amt, qty: 1, paid_by: "Unpaid", category: "Milk", photo: "", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-        }
-
-        function calculateSummaryData() {
-            var totalDaily = 0, totalWeekly = 0, totalMonthly = 0, totalYearly = 0;
-            var spentGanesh = 0, spentSujatha = 0, spentHari = 0, spentOthers = 0, spentUnpaid = 0, spentMCE = 0;
-            var now = new Date(), startToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
-
+            var unpaidTotal = 0;
             expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at);
-                if (isNaN(expDate.getTime())) expDate = new Date();
-                var price = exp.amount;
-
-                if (expDate >= startToday) totalDaily += price;
-                if (expDate >= lastWeek) totalWeekly += price;
-                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) totalMonthly += price;
-                if (expDate.getFullYear() === now.getFullYear()) totalYearly += price;
-
-                if (exp.paid_by === 'Ganesh') spentGanesh += price;
-                else if (exp.paid_by === 'Sujatha') spentSujatha += price;
-                else if (exp.paid_by === 'Hari') spentHari += price;
-                else if (exp.paid_by === 'Other') spentOthers += price;
-                else if (exp.paid_by === 'Unpaid') {
-                    spentUnpaid += price;
-                    if (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs') spentMCE += price;
+                if (exp.paid_by === 'Unpaid') {
+                    unpaidTotal += exp.amount;
                 }
             });
 
-            safeSetText('cardDailyAmt', '₹' + totalDaily); safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
-            safeSetText('cardMonthlyAmt', '₹' + totalMonthly); safeSetText('cardYearlyAmt', '₹' + totalYearly);
-            safeSetText('totalGanesh', '₹' + spentGanesh); safeSetText('totalSujatha', '₹' + spentSujatha);
-            safeSetText('totalHari', '₹' + spentHari); safeSetText('totalOthers', '₹' + spentOthers);
-            safeSetText('totalUnpaid', '₹' + spentUnpaid); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
+            if (unpaidTotal <= 0) {
+                alert("No unpaid credit dues to settle!");
+                return;
+            }
 
-            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
-            safeSetText('budgetDailyProgress', '₹' + totalDaily + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + totalWeekly + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + totalMonthly + ' / ₹' + budM);
+            var amountInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter the amount to clear/pay back now (Press OK to clear full balance):", unpaidTotal);
+            if (amountInput === null) return; 
 
-            var bD = document.getElementById('budgetDailyBar'), bW = document.getElementById('budgetWeeklyBar'), bM = document.getElementById('budgetMonthlyBar');
-            if (bD) bD.style.width = Math.min((totalDaily/budD)*100, 100) + '%';
-            if (bW) bW.style.width = Math.min((totalWeekly/budW)*100, 100) + '%';
-            if (bM) bM.style.width = Math.min((totalMonthly/budM)*100, 100) + '%';
+            var amtToClear = parseFloat(amountInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) {
+                alert("Invalid amount entered.");
+                return;
+            }
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: "Unpaid Dues Cleared",
+                amount: -amtToClear, 
+                qty: 1,
+                paid_by: "Unpaid", 
+                category: "Other expenses",
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            alert("Cleared ₹" + amtToClear + "! Remaining dues: ₹" + (unpaidTotal - amtToClear));
+        }
+
+        function clearMemberDues(member) {
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
+
+            var currentSpent = 0;
+            expenses.forEach(function(exp) {
+                if (exp.paid_by === member) {
+                    currentSpent += exp.amount;
+                }
+            });
+
+            if (currentSpent <= 0) {
+                alert("No dues to clear for " + member + "!");
+                return;
+            }
+
+            var amountInput = prompt(member + " spent a total of ₹" + currentSpent + " out-of-pocket.\nEnter the amount to clear/pay back now (Press OK to clear full amount):", currentSpent);
+            if (amountInput === null) return; 
+
+            var amtToClear = parseFloat(amountInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) {
+                alert("Invalid amount entered.");
+                return;
+            }
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: "Payback to " + member,
+                amount: -amtToClear, 
+                qty: 1,
+                paid_by: member,
+                category: "Other expenses",
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining Balance: ₹" + (currentSpent - amtToClear));
+        }
+
+        function clearMilkCurdEggsUnpaid() {
+            // ROLE CONTROL ENFORCEMENT [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle remaining balances.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది.");
+                return;
+            }
+
+            var spentMilkCurdEggsUnpaid = 0;
+            expenses.forEach(function(exp) {
+                var isTargetCategory = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                if (exp.paid_by === 'Unpaid' && isTargetCategory) {
+                    spentMilkCurdEggsUnpaid += exp.amount;
+                }
+            });
+
+            if (spentMilkCurdEggsUnpaid <= 0) {
+                alert("No unpaid dues for Milk, Curd or Eggs!");
+                return;
+            }
+
+            var amountInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + spentMilkCurdEggsUnpaid + ".\nEnter the amount to clear/pay back now (Press OK to clear full amount):", spentMilkCurdEggsUnpaid);
+            if (amountInput === null) return; 
+
+            var amtToClear = parseFloat(amountInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) {
+                alert("Invalid amount entered.");
+                return;
+            }
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: "Milk/Curd/Eggs Dues Settle",
+                amount: -amtToClear, 
+                qty: 1,
+                paid_by: "Unpaid",
+                category: "Milk", 
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (spentMilkCurdEggsUnpaid - amtToClear));
+        }
+
+        // ==================== STATS AND COMPARATIVE METRICS ====================
+        function calculateSummaryData() {
+            var totalDaily = 0; var totalWeekly = 0; var totalMonthly = 0; var totalYearly = 0;
+            var spentGanesh = 0; var spentSujatha = 0; var spentHari = 0; var spentOthers = 0; var spentUnpaid = 0;
+            var spentMilkCurdEggsUnpaid = 0;
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) {
+                    expDate = new Date(); 
+                }
+                var totalItemPrice = exp.amount; 
+
+                if (expDate >= startOfToday) totalDaily += totalItemPrice;
+                if (expDate >= lastWeek) totalWeekly += totalItemPrice;
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) totalMonthly += totalItemPrice;
+                if (expDate.getFullYear() === now.getFullYear()) totalYearly += totalItemPrice;
+
+                if (exp.paid_by === 'Ganesh') spentGanesh += totalItemPrice;
+                else if (exp.paid_by === 'Sujatha') spentSujatha += totalItemPrice;
+                else if (exp.paid_by === 'Hari') spentHari += totalItemPrice;
+                else if (exp.paid_by === 'Other') spentOthers += totalItemPrice;
+                else if (exp.paid_by === 'Unpaid') {
+                    spentUnpaid += totalItemPrice;
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (isGrocery) {
+                        spentMilkCurdEggsUnpaid += totalItemPrice;
+                    }
+                }
+            });
+
+            safeSetText('cardDailyAmt', '₹' + totalDaily);
+            safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
+            safeSetText('cardMonthlyAmt', '₹' + totalMonthly);
+            safeSetText('cardYearlyAmt', '₹' + totalYearly);
+
+            safeSetText('totalGanesh', '₹' + spentGanesh);
+            safeSetText('totalSujatha', '₹' + spentSujatha);
+            safeSetText('totalHari', '₹' + spentHari);
+            safeSetText('totalOthers', '₹' + spentOthers);
+            safeSetText('totalUnpaid', '₹' + spentUnpaid);
+            
+            safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMilkCurdEggsUnpaid);
+            
+            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500");
+            var budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000");
+            var budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+
+            safeSetText('budgetDailyProgress', '₹' + totalDaily + ' / ₹' + budD);
+            safeSetText('budgetWeeklyProgress', '₹' + totalWeekly + ' / ₹' + budW);
+            safeSetText('budgetMonthlyProgress', '₹' + totalMonthly + ' / ₹' + budM);
+
+            var pctD = Math.min((totalDaily / budD) * 100, 100);
+            var pctW = Math.min((totalWeekly / budW) * 100, 100);
+            var pctM = Math.min((totalMonthly / budM) * 100, 100);
+
+            var barD = document.getElementById('budgetDailyBar');
+            var barW = document.getElementById('budgetWeeklyBar');
+            var barM = document.getElementById('budgetMonthlyBar');
+
+            if (barD) barD.style.width = pctD + '%';
+            if (barW) barW.style.width = pctW + '%';
+            if (barM) barM.style.width = pctM + '%';
 
             calculateCategoryGrid();
         }
@@ -916,11 +1409,13 @@
         function calculateCategoryGrid() {
             var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
             var gridData = {};
-            for (var i = 0; i < categories.length; i++) { gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 }; }
+            for (var i = 0; i < categories.length; i++) {
+                gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 };
+            }
 
             expenses.forEach(function(exp) {
                 var cat = exp.category || 'Other expenses';
-                var price = exp.amount;
+                var price = exp.amount; 
                 if (!gridData[cat]) gridData[cat] = { paid: 0, unpaid: 0, total: 0 };
                 gridData[cat].total += price;
                 if (exp.paid_by === 'Unpaid') gridData[cat].unpaid += price;
@@ -928,58 +1423,159 @@
             });
 
             var tbody = document.getElementById('categoryTableBody');
-            if (!tbody) return; tbody.innerHTML = "";
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
             for (var j = 0; j < categories.length; j++) {
-                var c = categories[j], d = gridData[c];
-                tbody.insertAdjacentHTML('beforeend', '<tr class="border-b border-slate-100"><td class="py-3 text-slate-800">' + c + '</td><td class="py-3 text-right text-slate-500">₹' + d.paid + '</td><td class="py-3 text-right text-slate-500 font-medium">₹' + d.unpaid + '</td><td class="py-3 text-right font-black text-slate-900">₹' + d.total + '</td></tr>');
+                var c = categories[j];
+                var data = gridData[c];
+                var rowHTML = 
+                    '<tr class="border-b border-slate-100">' +
+                        '<td class="py-3 text-slate-800">' + c + '</td>' +
+                        '<td class="py-3 text-right text-slate-500">₹' + data.paid + '</td>' +
+                        '<td class="py-3 text-right text-slate-500 font-medium">₹' + data.unpaid + '</td>' +
+                        '<td class="py-3 text-right font-black text-slate-900">₹' + data.total + '</td>' +
+                    '</tr>';
+                tbody.insertAdjacentHTML('beforeend', rowHTML);
             }
         }
 
         function renderComparisonTab() {
-            var now = new Date(), monthsMap = {};
+            var now = new Date();
+            var monthsMap = {};
             expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
                 var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
                 monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
             });
 
             var listContainer = document.getElementById('comparisonList');
-            if (!listContainer) return; listContainer.innerHTML = "";
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
             var keys = Object.keys(monthsMap);
-            if (keys.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>'; return; }
+            if (keys.length === 0) {
+                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
+                return;
+            }
 
             keys.forEach(function(mName) {
-                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
+                var rowHTML = 
+                    '<div class="flex justify-between items-center py-2.5">' +
+                        '<span class="font-bold text-slate-700">' + mName + '</span>' +
+                        '<span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span>' +
+                    '</div>';
+                listContainer.insertAdjacentHTML('beforeend', rowHTML);
             });
 
             var alertDetails = document.getElementById('overspentDetails');
-            if (!alertDetails) return; alertDetails.innerHTML = "";
+            if (!alertDetails) return;
+            alertDetails.innerHTML = "";
+
             var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear();
             var lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
             var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
 
-            var curTotal = monthsMap[currentMonthName] || 0, prevTotal = monthsMap[lastMonthName] || 0;
+            var curTotal = monthsMap[currentMonthName] || 0;
+            var prevTotal = monthsMap[lastMonthName] || 0;
+
             if (prevTotal > 0) {
-                if (curTotal > prevTotal) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ Spent ₹' + (curTotal - prevTotal) + ' more this month than last (' + lastMonthName + ').</p>');
-                else alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! Spent ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
+                if (curTotal > prevTotal) {
+                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
+                } else {
+                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
+                }
             }
 
             var tiffinSum = 0;
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
-                if (!isNaN(expDate.getTime()) && expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') tiffinSum += exp.amount;
+                if (!isNaN(expDate.getTime())) {
+                    if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                        tiffinSum += exp.amount;
+                    }
+                }
             });
-            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of spending! Try cooking breakfast to save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+
+            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+            } else {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
+            }
+        }
+
+        // ==================== INTERACTIVE PAGE UPDATES ====================
+        function navigateTo(pageId) {
+            var containers = document.querySelectorAll('.page-container');
+            for (var i = 0; i < containers.length; i++) {
+                containers[i].classList.add('hidden');
+            }
+            document.getElementById(pageId).classList.remove('hidden');
+
+            var navs = ['navAdd', 'navReports', 'navCompare', 'navPeople'];
+            for (var j = 0; j < navs.length; j++) {
+                var el = document.getElementById(navs[j]);
+                if (el) {
+                    el.classList.remove('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800');
+                    el.classList.add('text-slate-400', 'font-bold');
+                }
+            }
+
+            var map = { 'pageAdd': 'navAdd', 'pageReports': 'navReports', 'pageCompare': 'navCompare', 'pagePeople': 'navPeople' };
+            var activeNav = document.getElementById(map[pageId]);
+            if (activeNav) {
+                activeNav.classList.remove('text-slate-400', 'font-bold');
+                activeNav.classList.add('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800');
+            }
+        }
+
+        function toggleUILanguage() {
+            uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
+            updateUI();
         }
 
         function updateUI() {
             var t = translations[uiLanguage];
-            st('appTitle', t.title); st('uiLangBtn', t.uiBtn); st('speechHeading', t.speechHeading); st('voiceLabel', t.voiceLabel); st('cameraLabel', t.cameraLabel); st('photoLabel', t.photoLabel); st('statusText', t.statusIdle); st('formHeading', t.formHeading); st('lblItem', t.lblItem); st('lblAmount', t.lblAmount); st('lblQty', t.lblQty); st('lblPaidBy', t.lblPaidBy); st('saveBtn', editingExpenseId ? "Update Expense" : t.saveBtn); st('reportHeader', t.reportHeader); st('peopleHeader', t.peopleHeader); st('lblOthersName', t.lblOthersName); st('lblUnpaidTab', t.lblUnpaidTab); st('compareHeader', t.compareHeader); st('overspentTitle', t.overspentTitle); st('histMonthsTitle', t.histMonthsTitle); st('catTotalsTitle', t.catTotalsTitle); st('cardDayTitle', t.cardDayTitle); st('cardWeekTitle', t.cardWeekTitle); st('cardMonthTitle', t.cardMonthTitle); st('cardYearTitle', t.cardYearTitle); st('lblCalendar', t.lblCalendar); st('navTextAdd', t.navAdd); st('navTextRep', t.navReports); st('navTextComp', t.navCompare); st('navTextPeo', t.navPeople);
+            
+            safeSetText('appTitle', t.title);
+            safeSetText('uiLangBtn', t.uiBtn);
+            safeSetText('speechHeading', t.speechHeading);
+            safeSetText('voiceLabel', t.voiceLabel);
+            safeSetText('cameraLabel', t.cameraLabel);
+            safeSetText('photoLabel', t.photoLabel);
+            safeSetText('statusText', t.statusIdle);
+            safeSetText('formHeading', t.formHeading);
+            safeSetText('lblItem', t.lblItem);
+            safeSetText('lblAmount', t.lblAmount);
+            safeSetText('lblQty', t.lblQty);
+            safeSetText('lblPaidBy', t.lblPaidBy);
+            safeSetText('saveBtn', editingExpenseId ? "Update Expense" : t.saveBtn);
+            safeSetText('reportHeader', t.reportHeader);
+            safeSetText('peopleHeader', t.peopleHeader);
+            safeSetText('lblOthersName', t.lblOthersName);
+            safeSetText('lblUnpaidTab', t.lblUnpaidTab);
+            safeSetText('compareHeader', t.compareHeader);
+            safeSetText('overspentTitle', t.overspentTitle);
+            safeSetText('histMonthsTitle', t.histMonthsTitle);
+            safeSetText('catTotalsTitle', t.catTotalsTitle);
+            safeSetText('cardDayTitle', t.cardDayTitle);
+            safeSetText('cardWeekTitle', t.cardWeekTitle);
+            safeSetText('cardMonthTitle', t.cardMonthTitle);
+            safeSetText('cardYearTitle', t.cardYearTitle);
+            safeSetText('lblCalendar', t.lblCalendar);
+            
+            safeSetText('navTextAdd', t.navAdd);
+            safeSetText('navTextRep', t.navReports);
+            safeSetText('navTextComp', t.navCompare);
+            safeSetText('navTextPeo', t.navPeople);
+            
             renderExpenses();
         }
 
         function filterReport(type) {
-            activeFilter = type; var titleEl = document.getElementById('reportListTitle');
+            activeFilter = type;
+            var titleEl = document.getElementById('reportListTitle');
             if (titleEl) {
                 var titles = { all: "All Expenses", daily: "Today's Expenses", weekly: "Weekly Expenses", monthly: "Monthly Expenses", yearly: "Yearly Expenses" };
                 titleEl.innerText = titles[type] || "Expenses Log";
@@ -989,34 +1585,79 @@
 
         function renderExpenses() {
             var listContainer = document.getElementById('expenseList');
-            if (!listContainer) return; listContainer.innerHTML = "";
-            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
 
             var filtered = expenses.filter(function(exp) {
-                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+
                 if (activeFilter === 'daily') return expDate >= startOfToday;
                 if (activeFilter === 'weekly') return expDate >= lastWeek;
                 if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
                 if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
+                
                 if (activeFilter === 'calendar') {
-                    var yyyy = expDate.getFullYear(), mm = String(expDate.getMonth() + 1).padStart(2, '0'), dd = String(expDate.getDate()).padStart(2, '0');
+                    var yyyy = expDate.getFullYear();
+                    var mm = String(expDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(expDate.getDate()).padStart(2, '0');
                     return (yyyy + '-' + mm + '-' + dd) === selectedCalendarDate;
                 }
+
                 return true;
             });
 
-            if (filtered.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>'; return; }
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>';
+                return;
+            }
 
             filtered.forEach(function(exp) {
-                var price = exp.amount, expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                var itemTotalPrice = exp.amount; 
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                
                 var displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
+
                 var isUnpaid = exp.paid_by === 'Unpaid';
                 var badgeColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
                 var badgeLabel = isUnpaid ? 'Unpaid' : 'Paid: ' + exp.paid_by;
-                var stampText = exp.edited_by ? "Edited by " + exp.edited_by : "Recorded by " + (exp.recorded_by || "Guest");
-                var photoIconHTML = exp.photo ? '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>' : '';
 
-                var itemHTML = '<div class="flex justify-between items-center py-3"><div class="flex-1"><div class="flex items-center gap-2"><span class="font-bold text-gray-800">' + exp.name + '</span><span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' + photoIconHTML + '</div><div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]"><span class="text-slate-400 font-semibold">' + displayDate + '</span><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span><span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' + badgeLabel + '</span><span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stampText + '</span></div></div><div class="flex items-center gap-2"><span class="font-bold text-slate-900 mr-2">₹' + price + '</span><button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button><button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button></div></div>';
+                var stampText = "Recorded by " + (exp.recorded_by || "Guest");
+                if (exp.edited_by) {
+                    stampText = "Edited by " + exp.edited_by;
+                }
+
+                var photoIconHTML = "";
+                if (exp.photo) {
+                    photoIconHTML = '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>';
+                }
+
+                var itemHTML = 
+                    '<div class="flex justify-between items-center py-3">' +
+                        '<div class="flex-1">' +
+                            '<div class="flex items-center gap-2">' +
+                                '<span class="font-bold text-gray-800">' + exp.name + '</span>' +
+                                '<span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' +
+                                photoIconHTML +
+                            '</div>' +
+                            '<div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]">' +
+                                '<span class="text-slate-400 font-semibold">' + displayDate + '</span>' +
+                                '<span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span>' +
+                                '<span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' + badgeLabel + '</span>' +
+                                '<span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stampText + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-2">' +
+                            '<span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span>' +
+                            '<button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button>' +
+                            '<button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button>' +
+                        '</div>' +
+                    '</div>';
                 listContainer.insertAdjacentHTML('beforeend', itemHTML);
             });
         }
