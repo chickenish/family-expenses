@@ -86,7 +86,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
@@ -111,7 +111,7 @@
     <!-- PHOTO VIEWER MODAL -->
     <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-90 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
         <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-xs font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
+        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
     </div>
 
     <!-- MAIN HEADER -->
@@ -126,13 +126,9 @@
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
     <div id="pageAdd" class="page-container max-w-md mx-auto p-4 space-y-4">
         
-        <!-- Action Card -->
+        <!-- Choose Action Card with Compact Direct Listening Layout -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
-            <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm">English</button>
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
-            </div>
             
             <div class="grid grid-cols-3 gap-2 py-1">
                 <div class="flex flex-col items-center">
@@ -163,7 +159,30 @@
             <p id="statusText" class="text-xs text-slate-400 font-bold">Select action above</p>
         </div>
 
-        <!-- Form Details -->
+        <!-- NEW FAVORITES / QUICK LOG EXPENSE BUTTONS -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Daily Common Items</h3>
+            <div class="grid grid-cols-2 gap-2 text-left">
+                <button onclick="quickLogExpense('Milk', 58, 2, 'Milk')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
+                    <span>🥛 Milk (2 packets)</span>
+                    <span class="text-slate-500">₹58</span>
+                </button>
+                <button onclick="quickLogExpense('Eggs', 92, 12, 'Eggs')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
+                    <span>🥚 Eggs (1 Dozen)</span>
+                    <span class="text-slate-500">₹92</span>
+                </button>
+                <button onclick="quickLogExpense('Curd Big', 30, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
+                    <span>🥣 Curd Big (1 cap)</span>
+                    <span class="text-slate-500">₹30</span>
+                </button>
+                <button onclick="quickLogExpense('Curd Small', 15, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs font-bold text-slate-800 transition">
+                    <span>🥣 Curd Small</span>
+                    <span class="text-slate-500">₹15</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Form -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
@@ -198,10 +217,9 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
-        
         <div class="grid grid-cols-2 gap-3">
             <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
@@ -241,7 +259,8 @@
                             <th class="py-2 text-right font-black text-slate-900">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold"></tbody>
+                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold">
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -260,6 +279,7 @@
     <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
+        
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -267,8 +287,8 @@
                     <span>Daily Budget</span>
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetDailyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -276,8 +296,8 @@
                     <span>Weekly Budget</span>
                     <span id="budgetWeeklyProgress">₹0 / ₹3000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetWeeklyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetWeeklyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -285,25 +305,28 @@
                     <span>Monthly Budget</span>
                     <span id="budgetMonthlyProgress">₹0 / ₹12000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetMonthlyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetMonthlyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
         </div>
 
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
-            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
+            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1">
+            </div>
         </div>
 
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 id="histMonthsTitle" class="text-sm font-bold text-slate-800 uppercase">Month Spending History</h3>
-            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100"></div>
+            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100">
+            </div>
         </div>
     </div>
 
     <!-- ==================== PAGE 4: PROFILE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
+        
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
@@ -364,7 +387,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-850">Clear All Dues</button>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -447,7 +470,7 @@
         </button>
     </nav>
 
-    <!-- ==================== CONDENSED CRASH-PROOF CLIENT ENGINE ==================== -->
+    <!-- ==================== IMMUTABLE SECURED ENGINE ==================== -->
     <script>
         var safeStorage = {
             getItem: function(k) { try { return localStorage.getItem(k); } catch(e) { return this[k] || null; } },
@@ -455,7 +478,7 @@
             removeItem: function(k) { try { localStorage.removeItem(k); } catch(e) { delete this[k]; } }
         };
 
-        var speechLanguage = 'en-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
+        var speechLanguage = 'te-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
 
         var translations = {
             te: {
@@ -472,7 +495,7 @@
             }
         };
 
-        // DOM UTILS
+        // DOM CONTROL BINDINGS (CRASH PREVENTING SYSTEM)
         function safeClass(id, action, className) {
             var el = document.getElementById(id);
             if (el) {
@@ -493,7 +516,7 @@
             loadSavedBudgets();
         });
 
-        // IDENTITY
+        // IDENTITY SECURITY ENGINE
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
             var isLogged = safeStorage.getItem('is_logged_in');
@@ -551,13 +574,17 @@
             }
 
             if (p.username === user && p.password === pass) {
-                safeStorage.setItem('is_logged_in', 'true');
+                if (remember) {
+                    safeStorage.setItem('is_logged_in', 'true');
+                } else {
+                    safeStorage.setItem('is_logged_in', 'true');
+                }
                 document.getElementById('loginUser').value = "";
                 document.getElementById('loginPass').value = "";
                 checkUser();
                 loadExpenses();
             } else {
-                alert("Incorrect credentials.");
+                alert("Incorrect username or password.");
             }
         }
 
@@ -570,7 +597,7 @@
             try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
             var qMap = {"1":"What is your mother's maiden name?","2":"What was the name of your first pet?","3":"What city were you born in?"};
 
-            var ans = prompt("Password Recovery Answer:\nQuestion: " + qMap[p.question]);
+            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
             if (ans) {
                 ans = ans.trim().toLowerCase();
                 if (ans === p.answer) {
@@ -580,7 +607,9 @@
                         safeStorage.setItem('family_profile', JSON.stringify(p));
                         alert("Password updated! Log in now.");
                     }
-                } else { alert("Incorrect answer."); }
+                } else {
+                    alert("Incorrect answer.");
+                }
             }
             checkUser();
         }
@@ -601,19 +630,19 @@
         }
 
         function logoutProfile() {
-            if (confirm("Reset connection or Logout?")) {
+            if (confirm("Reset login credentials or Logout from this device?")) {
                 safeStorage.removeItem('is_logged_in');
                 checkUser();
             }
         }
 
-        // PERMISSIONS ROLE GUARD
+        // ROLE PERMISSIONS
         function hasPermission() {
             var u = (appUser || "").toLowerCase().trim();
-            return (u === "sujatha" || u === "hari"); // Only Sujatha or Hari can clear [1]
+            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari
         }
 
-        // COMPRESSION
+        // COMPRESSION ENGINE
         function compressAttachmentPhoto(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -638,8 +667,8 @@
         function clearAttachedPhoto() {
             tempCompressedPhoto = "";
             document.getElementById('expensePhotoField').value = "";
-            var prv = document.getElementById('imagePreview');
-            if (prv) prv.src = "";
+            var preview = document.getElementById('imagePreview');
+            if (preview) preview.src = "";
             safeClass('imageStatusArea', 'add', 'hidden');
         }
 
@@ -658,7 +687,7 @@
             document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
-        // CAMERA BILL ACTION [5]
+        // DIRECT CAMERA CAPTURE
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -694,7 +723,7 @@
             input.value = ""; 
         }
 
-        // FILTER
+        // FILTER CALENDAR
         function filterLogBySpecificDate(dateString) {
             if (!dateString) return;
             selectedCalendarDate = dateString; activeFilter = 'calendar';
@@ -709,11 +738,11 @@
             filterReport('all');
         }
 
-        // SYNC ENGINE [2]
+        // DYNAMIC CLOUD SYNC
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
-            if (!url || !key) { alert("Please fill in both fields."); return; }
+            if (!url || !key) { alert("Please fill in all fields."); return; }
             if (url.substring(url.length - 1) === '/') { url = url.substring(0, url.length - 1); }
             safeStorage.setItem('sync_url', url); safeStorage.setItem('sync_key', key);
             alert("Database linked! Syncing current records...");
@@ -741,7 +770,7 @@
             }
         }
 
-        // BUDGETS
+        // BUDGET CONTROLS
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
@@ -781,7 +810,7 @@
             return 'Other expenses';
         }
 
-        // MIC INPUT
+        // MIC INPUT & LANGUAGE INDEPENDENT PARSING Engine
         function setSpeechLanguage(lang) {
             speechLanguage = lang;
             var btnTe = document.getElementById('btnTe');
@@ -793,6 +822,19 @@
                 if (btnTe) { btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600"; }
                 if (btnEn) { btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm"; }
             }
+        }
+
+        // BILINGUAL TELUGU-ENGLISH QUANTITY AND AMOUNT RECOGNITION TRANSLATOR
+        function convertWordsToNumbers(text) {
+            var t = text.toLowerCase();
+            var words = {
+                "సగం": 0.5, "అర": 0.5, "ఒకటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9, "పది": 10,
+                "ఇరవై": 20, "ముప్పై": 30, "నలభై": 40, "యాభై": 50, "అరవై": 60, "డెబ్బై": 70, "エనభై": 80, "తొంభై": 90, "వంద": 100
+            };
+            for (var key in words) {
+                t = t.replace(new RegExp(key, 'g'), words[key]);
+            }
+            return t;
         }
 
         function startListening() {
@@ -816,32 +858,49 @@
             rec.start();
         }
 
-        function processVoiceText(text) {
-            var amount = "", qty = 1, item = text;
-            var numMatches = text.match(/\d+/g);
+        function processVoiceText(rawText) {
+            var text = convertWordsToNumbers(rawText);
+            var amount = "", qty = 1, item = rawText;
+            var numMatches = text.match(/\d+(\.\d+)?/g);
             if (numMatches) {
                 if (numMatches.length === 1) {
-                    amount = numMatches[0]; item = text.replace(amount, "").trim();
+                    amount = numMatches[0];
+                    item = rawText.replace(new RegExp(amount, 'g'), "").trim();
                 } else if (numMatches.length >= 2) {
                     var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
                     var uMatch = text.match(rx);
                     if (uMatch) {
-                        qty = parseInt(uMatch[1]);
+                        qty = parseFloat(uMatch[1]);
                         for (var i = 0; i < numMatches.length; i++) {
-                            if (parseInt(numMatches[i]) !== qty) { amount = numMatches[i]; break; }
+                            var parsedNum = parseFloat(numMatches[i]);
+                            if (parsedNum !== qty) { amount = parsedNum; break; }
                         }
-                        if (!amount) amount = Math.max(parseInt(numMatches[0]), parseInt(numMatches[1]));
-                        item = text.replace(uMatch[0], "").replace(amount, "").trim();
+                        if (!amount) amount = Math.max(parseFloat(numMatches[0]), parseFloat(numMatches[1]));
+                        item = rawText.replace(new RegExp(qty, 'g'), "").replace(new RegExp(amount, 'g'), "").trim();
                     } else {
-                        var n1 = parseInt(numMatches[0]), n2 = parseInt(numMatches[1]);
+                        var n1 = parseFloat(numMatches[0]), n2 = parseFloat(numMatches[1]);
                         amount = Math.max(n1, n2); qty = Math.min(n1, n2);
-                        item = text.replace(n1.toString(), "").replace(n2.toString(), "").trim();
+                        item = rawText.replace(new RegExp(n1, 'g'), "").replace(new RegExp(n2, 'g'), "").trim();
                     }
                 }
             }
-            item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
+            item = item.replace(/రూపాయలు|రూపాయల|rupees|rupee|rs|packets|packet|packs|pack|ప్యాకెట్|ప్యాకెట్లు/gi, "").trim();
             var elN = document.getElementById('itemName'), elA = document.getElementById('itemAmount'), elQ = document.getElementById('itemQty');
             if (elN) elN.value = item; if (elA) elA.value = amount; if (elQ) elQ.value = qty;
+        }
+
+        // ONE-TAP FAVORITES QUICK LOG ENGINE
+        function quickLogExpense(name, amount, qty, category) {
+            var dateVal = new Date().toISOString();
+            var creatorName = appUser || "Guest";
+            var newExpense = {
+                id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: "Unpaid", category: category, photo: "", recorded_by: creatorName, edited_by: ""
+            };
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            alert("Instant Settle Saved: " + name + " (₹" + amount + ") successfully logged!");
+            navigateTo('pageReports');
         }
 
         // ==================== CALCS AND DATA INTERFACE ====================
@@ -933,7 +992,7 @@
             var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
             if (unpaidTotal <= 0) { alert("No unpaid dues!"); return; }
 
-            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now:", unpaidTotal);
+            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now (Press OK to clear full amount):", unpaidTotal);
             if (amtInput === null) return;
             var amtToClear = parseFloat(amtInput);
             if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
@@ -948,7 +1007,7 @@
             var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
             if (currentSpent <= 0) { alert("No dues for " + member); return; }
 
-            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now:", currentSpent);
+            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
             if (amtInput === null) return;
             var amtToClear = parseFloat(amtInput);
             if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
@@ -967,7 +1026,7 @@
             });
             if (currentSpent <= 0) { alert("No unpaid dues for Milk, Curd or Eggs!"); return; }
 
-            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now:", currentSpent);
+            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
             if (amtInput === null) return;
             var amtToClear = parseFloat(amtInput);
             if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
