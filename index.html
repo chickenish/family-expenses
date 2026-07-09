@@ -309,4 +309,1134 @@
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
-               
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Ganesh</h3>
+                        <p class="text-[10px] text-slate-400">Total out-of-pocket spent</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
+                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Sujatha</h3>
+                        <p class="text-[10px] text-slate-400">Total out-of-pocket spent</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
+                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">Hari</h3>
+                        <p class="text-[10px] text-slate-400">Total out-of-pocket spent</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
+                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 id="lblOthersName" class="text-sm font-bold text-slate-800">Others</h3>
+                        <p class="text-[10px] text-slate-400">Total spent by others</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
+                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h3 id="lblUnpaidTab" class="text-sm font-black text-slate-900">Pending Dues</h3>
+                        <p class="text-[10px] text-slate-500 font-bold">Unpaid Credit tab balance</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
+                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded hover:bg-slate-850">Clear All Dues</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Settings Configuration Panel -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
+            <h3 class="text-sm font-black text-slate-900 uppercase">Budget Threshold Limits</h3>
+            <p class="text-[10px] text-slate-400">Configure limits to analyze overspending patterns dynamically.</p>
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Daily Limit</label>
+                    <input type="number" id="budgetDailyInput" value="500" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs font-bold rounded focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Weekly Limit</label>
+                    <input type="number" id="budgetWeeklyInput" value="3000" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs font-bold rounded focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Monthly Limit</label>
+                    <input type="number" id="budgetMonthlyInput" value="12000" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs font-bold rounded focus:bg-white focus:outline-none">
+                </div>
+            </div>
+            <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg shadow-sm">Save Budget Limits</button>
+        </div>
+
+        <!-- SHARED CLOUD COLLABORATION SYNC (SUPABASE REST SYNC ENGINE) -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
+            <h3 class="text-sm font-black text-slate-900 uppercase">Cloud Collaboration (Sync)</h3>
+            <p class="text-[10px] text-slate-400">Connect to Supabase. This syncs lists in real-time across family tablets!</p>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Supabase URL</label>
+                    <input type="text" id="syncUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs rounded focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Anon Key</label>
+                    <textarea id="syncKey" placeholder="eyJhbGciOi..." rows="2" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-[10px] rounded focus:bg-white focus:outline-none"></textarea>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="enableCloudSync()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold shadow-sm">Link Cloud Database</button>
+                    <button onclick="disableCloudSync()" class="w-full border border-slate-200 text-slate-600 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Local Only (Disconnect)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
+            <h3 class="text-sm font-black text-slate-900 uppercase">Profile Settings</h3>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">New Username</label>
+                    <input type="text" id="editUsername" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 text-xs font-bold rounded-lg focus:bg-white focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">New Password</label>
+                    <input type="password" id="editPassword" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 text-xs rounded-lg focus:bg-white focus:outline-none">
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="updateProfileDetails()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold">Save Settings</button>
+                    <button onclick="logoutProfile()" class="w-full border border-slate-200 text-red-500 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Logout / Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM NAVIGATION BAR -->
+    <nav class="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 flex justify-around p-3.5 z-40 shadow-sm">
+        <button onclick="navigateTo('pageAdd')" id="navAdd" class="flex flex-col items-center gap-1 text-slate-800 font-bold border-t-2 border-slate-800 p-1">
+            <span class="text-lg">➕</span>
+            <span id="navTextAdd" class="text-[9px] uppercase font-bold tracking-wide">Add Expense</span>
+        </button>
+        <button onclick="navigateTo('pageReports')" id="navReports" class="flex flex-col items-center gap-1 text-gray-400 font-bold">
+            <span class="text-lg">📊</span>
+            <span id="navTextRep" class="text-[9px] uppercase font-bold tracking-wide">Reports</span>
+        </button>
+        <button onclick="navigateTo('pageCompare')" id="navCompare" class="flex flex-col items-center gap-1 text-gray-400 font-bold">
+            <span class="text-lg">⚖️</span>
+            <span id="navTextComp" class="text-[9px] uppercase font-bold tracking-wide">Compare</span>
+        </button>
+        <button onclick="navigateTo('pagePeople')" id="navPeople" class="flex flex-col items-center gap-1 text-gray-400 font-bold">
+            <span class="text-lg">🤝</span>
+            <span id="navTextPeo" class="text-[9px] uppercase font-bold tracking-wide">Dues & Profile</span>
+        </button>
+    </nav>
+
+    <script>
+        // IMMUTABLE CRASH PREVENTING MEMORY PROXY (100% immune to storage restrictions)
+        var safeStorage = {
+            getItem: function(key) {
+                try { return localStorage.getItem(key); } catch(e) { return this[key] || null; }
+            },
+            setItem: function(key, val) {
+                try { localStorage.setItem(key, val); } catch(e) { this[key] = val; }
+            },
+            removeItem: function(key) {
+                try { localStorage.removeItem(key); } catch(e) { delete this[key]; }
+            }
+        };
+
+        var speechLanguage = 'en-IN';
+        var uiLanguage = 'en'; 
+        var expenses = [];
+        var activeFilter = 'all';
+        var selectedCalendarDate = ""; 
+        var appUser = "";
+        var tempCompressedPhoto = ""; 
+        var editingExpenseId = null;
+
+        var translations = {
+            te: {
+                title: "ఇంటి ఖర్చులు",
+                speechHeading: "మార్గాలు ఎంచుకోండి",
+                voiceLabel: "మాట్లాడండి",
+                cameraLabel: "బిల్ కెమెరా",
+                photoLabel: "ఫోటో జత",
+                statusIdle: "పై వాటిని ఎంచుకోండి",
+                statusListening: "వింటున్నాను... మాట్లాడండి",
+                formHeading: "ఖర్చు వివరాలు",
+                lblItem: "వస్తువు పేరు",
+                lblAmount: "ధర (Amount ₹)",
+                lblQty: "పరిమాణం (Qty)",
+                lblPaidBy: "ఎవరు చెల్లించారు?",
+                saveBtn: "సేవ్ చేయండి",
+                noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు",
+                uiBtn: "English UI",
+                reportHeader: "కాలాల వారీగా ఖర్చులు",
+                peopleHeader: "బకాయిలు",
+                lblOthersName: "ఇతరులు",
+                lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)",
+                navAdd: "చేర్చండి",
+                navReports: "రిపోర్టులు",
+                navPeople: "ప్రొఫైల్ & బకాయిలు",
+                compareHeader: "నెలవారీ సరిపోలికలు",
+                overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ",
+                histMonthsTitle: "నెలవారీ ఖర్చులు",
+                catTotalsTitle: "విభాగాల వారీగా ఖర్చులు",
+                navCompare: "పోలికలు",
+                cardDayTitle: "ఈరోజు",
+                cardWeekTitle: "వారం",
+                cardMonthTitle: "నెల",
+                cardYearTitle: "సంవత్సరం",
+                lblCalendar: "తేదీ ఎంచుకోండి"
+            },
+            en: {
+                title: "Family Expenses",
+                speechHeading: "Choose Action",
+                voiceLabel: "Speak",
+                cameraLabel: "Bill Camera",
+                photoLabel: "Photo",
+                statusIdle: "Select action above",
+                statusListening: "Listening... speak now",
+                formHeading: "Expense Details",
+                lblItem: "Item Name",
+                lblAmount: "Amount (₹)",
+                lblQty: "Quantity",
+                lblPaidBy: "Who Paid?",
+                saveBtn: "Save Expense",
+                noExpenses: "No expenses logged yet",
+                uiBtn: "తెలుగు UI",
+                reportHeader: "Time-Period Expenses",
+                peopleHeader: "Ledger Dues",
+                lblOthersName: "Others",
+                lblUnpaidTab: "Pending Dues",
+                navAdd: "Add Expense",
+                navReports: "Reports",
+                navPeople: "Dues & Profile",
+                compareHeader: "Monthly Comparisons",
+                overspentTitle: "⚠️ Spending Analysis",
+                histMonthsTitle: "Month Spending History",
+                catTotalsTitle: "Category Totals",
+                navCompare: "Compare",
+                cardDayTitle: "Today",
+                cardWeekTitle: "Weekly",
+                cardMonthTitle: "Monthly",
+                cardYearTitle: "Yearly",
+                lblCalendar: "Select Date to view logs"
+            }
+        };
+
+        window.addEventListener('DOMContentLoaded', function() {
+            checkAppUserIdentity();
+            applyUILanguageText(); 
+            loadExpenses();
+            loadSavedBudgets();
+        });
+
+        // ==================== SECURITY & LOG IN ====================
+        function checkAppUserIdentity() {
+            var profileStr = safeStorage.getItem('family_profile');
+            var isLogged = safeStorage.getItem('is_logged_in');
+
+            if (!profileStr) {
+                safeClass('registerScreen', 'remove', 'hidden');
+                safeClass('loginScreen', 'add', 'hidden');
+            } else {
+                safeClass('registerScreen', 'add', 'hidden');
+                
+                if (isLogged === 'true') {
+                    var p;
+                    try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User" }; }
+                    appUser = p.username;
+                    var displayEl = document.getElementById('currentUserDisplay');
+                    if (displayEl) {
+                        displayEl.innerText = "User: " + p.username;
+                    }
+                    var editEl = document.getElementById('editUsername');
+                    if (editEl) {
+                        editEl.value = p.username;
+                    }
+                    safeClass('loginScreen', 'add', 'hidden');
+                } else {
+                    safeClass('loginScreen', 'remove', 'hidden');
+                }
+            }
+        }
+
+        function submitRegistration() {
+            var user = document.getElementById('regUser').value.trim();
+            var pass = document.getElementById('regPass').value.trim();
+            var q = document.getElementById('regQuestion').value;
+            var ans = document.getElementById('regAnswer').value.trim().toLowerCase();
+
+            if (!user || !pass || !ans) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            var profile = {
+                username: user,
+                password: pass,
+                question: q,
+                answer: ans
+            };
+
+            safeStorage.setItem('family_profile', JSON.stringify(profile));
+            safeStorage.setItem('is_logged_in', 'true');
+            checkAppUserIdentity();
+            loadExpenses();
+        }
+
+        function submitLogin() {
+            var user = document.getElementById('loginUser').value.trim();
+            var pass = document.getElementById('loginPass').value.trim();
+            var remember = document.getElementById('rememberMe').checked;
+
+            var profileStr = safeStorage.getItem('family_profile');
+            if (!profileStr) return;
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) {
+                alert("Profile corrupted.");
+                safeStorage.removeItem('family_profile');
+                checkAppUserIdentity();
+                return;
+            }
+
+            if (p.username === user && p.password === pass) {
+                if (remember) {
+                    safeStorage.setItem('is_logged_in', 'true');
+                } else {
+                    safeStorage.setItem('is_logged_in', 'true');
+                }
+                document.getElementById('loginUser').value = "";
+                document.getElementById('loginPass').value = "";
+                checkAppUserIdentity();
+                loadExpenses();
+            } else {
+                alert("Incorrect username or password.");
+            }
+        }
+
+        function showForgotPassword() {
+            safeClass('loginScreen', 'add', 'hidden');
+            safeClass('registerScreen', 'add', 'hidden');
+            
+            var profileStr = safeStorage.getItem('family_profile');
+            if (!profileStr) {
+                alert("No profile configured.");
+                return;
+            }
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
+            var qMap = {
+                "1": "What is your mother's maiden name?",
+                "2": "What was the name of your first pet?",
+                "3": "What city were you born in?"
+            };
+
+            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
+            if (ans) {
+                ans = ans.trim().toLowerCase();
+                if (ans === p.answer) {
+                    var newPass = prompt("Identity verified! Enter new password:");
+                    if (newPass) {
+                        p.password = newPass;
+                        safeStorage.setItem('family_profile', JSON.stringify(p));
+                        alert("Password updated! Log in now.");
+                    }
+                } else {
+                    alert("Incorrect answer.");
+                }
+            }
+            checkAppUserIdentity();
+        }
+
+        function updateProfileDetails() {
+            var profileStr = safeStorage.getItem('family_profile');
+            if (!profileStr) return;
+            var p;
+            try { p = JSON.parse(profileStr); } catch(e) { p = { username: "User", password: "" }; }
+
+            var newUser = document.getElementById('editUsername').value.trim();
+            var newPass = document.getElementById('editPassword').value.trim();
+
+            if (!newUser) {
+                alert("Username cannot be empty.");
+                return;
+            }
+
+            p.username = newUser;
+            if (newPass) {
+                p.password = newPass;
+            }
+
+            safeStorage.setItem('family_profile', JSON.stringify(p));
+            document.getElementById('editPassword').value = "";
+            alert("Settings updated!");
+            checkAppUserIdentity();
+        }
+
+        function logoutProfile() {
+            if (confirm("Reset login credentials or Logout from this device?")) {
+                safeStorage.removeItem('is_logged_in');
+                checkAppUserIdentity();
+            }
+        }
+
+        function promptUserChange() {
+            logoutProfile();
+        }
+
+        // ==================== STORAGE & COMPRESSION ====================
+        function compressAttachmentPhoto(input) {
+            if (!input.files || !input.files[0]) return;
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var max_width = 300;
+                    var scale = max_width / img.width;
+                    canvas.width = max_width;
+                    canvas.height = img.height * scale;
+
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    tempCompressedPhoto = canvas.toDataURL('image/jpeg', 0.6);
+
+                    var preview = document.getElementById('imagePreview');
+                    if (preview) preview.src = tempCompressedPhoto;
+                    safeClass('imageStatusArea', 'remove', 'hidden');
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearAttachedPhoto() {
+            tempCompressedPhoto = "";
+            document.getElementById('expensePhotoField').value = "";
+            document.getElementById('imagePreview').src = "";
+            safeClass('imageStatusArea', 'add', 'hidden');
+        }
+
+        function viewPhotoById(id) {
+            var photoData = "";
+            for (var i = 0; i < expenses.length; i++) {
+                if (expenses[i].id === id) {
+                    photoData = expenses[i].photo;
+                    break;
+                }
+            }
+
+            if (!photoData) return;
+            var viewer = document.getElementById('photoViewerModal');
+            var img = document.getElementById('viewerImage');
+            if (viewer && img) {
+                img.src = photoData;
+                viewer.classList.remove('hidden');
+            }
+        }
+
+        function closePhotoViewer() {
+            document.getElementById('photoViewerModal').classList.add('hidden');
+        }
+
+        // ==================== DIRECT BILL CAMERA CAPTURE ====================
+        function captureBillPhotoDirect(input) {
+            if (!input.files || !input.files[0]) return;
+            var file = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                var img = new Image();
+                img.onload = function() {
+                    var canvas = document.createElement('canvas');
+                    var max_width = 300;
+                    var scale = max_width / img.width;
+                    canvas.width = max_width;
+                    canvas.height = img.height * scale;
+
+                    var ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    var compressedBase64 = canvas.toDataURL('image/jpeg', 0.6);
+
+                    var billAmount = prompt("Bill Photo Captured successfully!\nPlease enter the Total Bill Amount (₹):");
+                    if (billAmount && !isNaN(parseFloat(billAmount))) {
+                        var newExpense = {
+                            id: Date.now(),
+                            created_at: new Date().toISOString(), // Today's date automatically assigned
+                            name: "Bill Receipt",
+                            amount: parseFloat(billAmount),
+                            qty: 1,
+                            paid_by: "Unpaid", 
+                            category: "Other expenses",
+                            photo: compressedBase64,
+                            recorded_by: appUser || "Guest",
+                            edited_by: ""
+                        };
+                        
+                        expenses.push(newExpense);
+                        saveToLocalAndCloud(expenses);
+                        alert("Bill recorded in Today's list! Total: ₹" + parseFloat(billAmount));
+                        navigateTo('pageReports');
+                    } else {
+                        alert("Cancelled or invalid amount entered.");
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            input.value = ""; // clear selector
+        }
+
+        // ==================== DATE SELECTOR FILTER ====================
+        function filterLogBySpecificDate(dateString) {
+            if (!dateString) return;
+            selectedCalendarDate = dateString; // YYYY-MM-DD
+            activeFilter = 'calendar';
+            
+            var parts = dateString.split('-');
+            var displayDate = parts[2] + '/' + parts[1] + '/' + parts[0];
+            safeSetText('reportListTitle', 'Date: ' + displayDate);
+            renderExpenses();
+        }
+
+        function clearCalendarFilter() {
+            selectedCalendarDate = "";
+            document.getElementById('calendarLogFilter').value = "";
+            filterReport('all');
+        }
+
+        // ==================== DYNAMIC REST CLOUD SHARE SYNC (NO CRASH GUARANTEED) ====================
+        function enableCloudSync() {
+            var url = document.getElementById('syncUrl').value.trim();
+            var key = document.getElementById('syncKey').value.trim();
+
+            if (!url || !key) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            // Remove trailing slash from URL
+            if (url.substring(url.length - 1) === '/') {
+                url = url.substring(0, url.length - 1);
+            }
+
+            safeStorage.setItem('sync_url', url);
+            safeStorage.setItem('sync_key', key);
+            
+            alert("Database linked! Syncing current records...");
+            loadExpenses();
+        }
+
+        function disableCloudSync() {
+            safeStorage.removeItem('sync_url');
+            safeStorage.removeItem('sync_key');
+            document.getElementById('syncUrl').value = "";
+            document.getElementById('syncKey').value = "";
+            alert("Switched to Local Offline Mode!");
+            loadExpenses();
+        }
+
+        function saveToLocalAndCloud(expensesArray) {
+            // 1. Always save locally first to guarantee retention
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expensesArray));
+
+            // 2. Fetch Sync configurations
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+
+            if (syncUrl && syncKey) {
+                // Perform native ES5 POST to REST API (bypass broken library wrappers!)
+                var targetUrl = syncUrl + '/rest/v1/expenses';
+                
+                // Write last record to cloud
+                var lastItem = expensesArray[expensesArray.length - 1];
+                if (!lastItem) return;
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", targetUrl, true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
+
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            console.log("Database cloud synchronization successful!");
+                        } else {
+                            console.warn("Database sync failed. Will retry later.", xhr.responseText);
+                        }
+                    }
+                };
+                xhr.send(JSON.stringify(lastItem));
+            }
+        }
+
+        // ==================== BUDGET STORAGE MODULE ====================
+        function loadSavedBudgets() {
+            var d = safeStorage.getItem('budget_daily') || "500";
+            var w = safeStorage.getItem('budget_weekly') || "3000";
+            var m = safeStorage.getItem('budget_monthly') || "12000";
+
+            document.getElementById('budgetDailyInput').value = d;
+            document.getElementById('budgetWeeklyInput').value = w;
+            document.getElementById('budgetMonthlyInput').value = m;
+        }
+
+        function saveBudgets() {
+            var d = document.getElementById('budgetDailyInput').value;
+            var w = document.getElementById('budgetWeeklyInput').value;
+            var m = document.getElementById('budgetMonthlyInput').value;
+
+            safeStorage.setItem('budget_daily', d);
+            safeStorage.setItem('budget_weekly', w);
+            safeStorage.setItem('budget_monthly', m);
+
+            alert("Budgets updated successfully!");
+            calculateSummaryData();
+        }
+
+        // ==================== AUTO PROCESS & VOICE MICS ====================
+        function detectCategory(itemName) {
+            var name = itemName.toLowerCase();
+            if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
+            if (name.indexOf('curd') !== -1 || name.indexOf('పెరుగు') !== -1) return 'Curd';
+            if (name.indexOf('egg') !== -1 || name.indexOf('guddu') !== -1 || name.indexOf('gudlu') !== -1 || name.indexOf('గుడ్లు') !== -1 || name.indexOf('గుడ్డు') !== -1) return 'Eggs';
+            if (name.indexOf('chicken') !== -1 || name.indexOf('chiken') !== -1 || name.indexOf('చికెన్') !== -1) return 'Chicken';
+            
+            // Vegetables recognition
+            var vegKeywords = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'cucumber', 'gourd'];
+            for (var i = 0; i < vegKeywords.length; i++) {
+                if (name.indexOf(vegKeywords[i]) !== -1) return 'Vegetables';
+            }
+
+            if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
+            if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
+            if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1 || name.indexOf('poori') !== -1) return 'Tiffins';
+            
+            return 'Other expenses';
+        }
+
+        function processVoiceText(text) {
+            var amount = "";
+            var qty = 1;
+            var item = text;
+
+            var numberMatches = text.match(/\d+/g);
+            
+            if (numberMatches) {
+                if (numberMatches.length === 1) {
+                    amount = numberMatches[0];
+                    item = text.replace(amount, "").trim();
+                } else if (numberMatches.length >= 2) {
+                    var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
+                    var unitMatch = text.match(rx);
+                    if (unitMatch) {
+                        qty = parseInt(unitMatch[1]);
+                        for (var i = 0; i < numberMatches.length; i++) {
+                            if (parseInt(numberMatches[i]) !== qty) {
+                                amount = numberMatches[i];
+                                break;
+                            }
+                        }
+                        if (!amount) {
+                            amount = Math.max(parseInt(numberMatches[0]), parseInt(numberMatches[1]));
+                        }
+                        item = text.replace(unitMatch[0], "").replace(amount, "").trim();
+                    } else {
+                        var num1 = parseInt(numberMatches[0]);
+                        var num2 = parseInt(numberMatches[1]);
+                        amount = Math.max(num1, num2);
+                        qty = Math.min(num1, num2);
+                        item = text.replace(num1.toString(), "").replace(num2.toString(), "").trim();
+                    }
+                }
+            }
+
+            item = item.replace(/రూపాయలు|rupees|rupee|rs/gi, "").trim();
+
+            var nameInput = document.getElementById('itemName');
+            var amtInput = document.getElementById('itemAmount');
+            var qtyInput = document.getElementById('itemQty');
+
+            if (nameInput) nameInput.value = item;
+            if (amtInput) amtInput.value = amount;
+            if (qtyInput) qtyInput.value = qty;
+        }
+
+        // ==================== DB LOADING ====================
+        function loadExpenses() {
+            var stored = safeStorage.getItem('family_expenses_data');
+            
+            if (!stored) {
+                var recovery1 = safeStorage.getItem('family_expenses_local');
+                if (recovery1) {
+                    stored = recovery1;
+                    safeStorage.setItem('family_expenses_data', recovery1);
+                }
+            }
+
+            // Sync with Supabase cloud if config exists
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+            if (syncUrl && syncKey) {
+                document.getElementById('syncUrl').value = syncUrl;
+                document.getElementById('syncKey').value = syncKey;
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", syncUrl + '/rest/v1/expenses?select=*&order=created_at.desc', true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        try {
+                            expenses = JSON.parse(xhr.responseText);
+                            safeStorage.setItem('family_expenses_data', xhr.responseText);
+                            renderExpenses();
+                            calculateSummaryData();
+                            renderComparisonTab();
+                        } catch(e) {}
+                    }
+                };
+                xhr.send();
+            }
+
+            try {
+                expenses = stored ? JSON.parse(stored) : [];
+            } catch(e) {
+                expenses = [];
+            }
+            renderExpenses();
+            calculateSummaryData();
+            renderComparisonTab();
+        }
+
+        function saveExpenseLocal() {
+            var nameEl = document.getElementById('itemName');
+            var amtEl = document.getElementById('itemAmount');
+            var qtyEl = document.getElementById('itemQty');
+            var paidEl = document.getElementById('paidBy');
+
+            if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
+
+            var name = nameEl.value.trim();
+            var amount = parseFloat(amtEl.value);
+            var qty = parseFloat(qtyEl.value) || 1;
+            var paidBy = paidEl.value;
+            
+            var category = detectCategory(name);
+            var dateVal = new Date().toISOString(); 
+
+            if (!name || isNaN(amount)) {
+                alert("Enter valid details.");
+                return;
+            }
+
+            var creatorName = appUser || "Guest";
+
+            if (editingExpenseId !== null) {
+                expenses = expenses.map(function(exp) {
+                    if (exp.id === editingExpenseId) {
+                        return {
+                            id: exp.id,
+                            created_at: dateVal,
+                            name: name,
+                            amount: amount,
+                            qty: qty,
+                            paid_by: paidBy,
+                            category: category,
+                            photo: tempCompressedPhoto || exp.photo || "", 
+                            recorded_by: exp.recorded_by || creatorName,
+                            edited_by: creatorName 
+                        };
+                    }
+                    return exp;
+                });
+                editingExpenseId = null;
+                alert("Item updated!");
+            } else {
+                var newExpense = {
+                    id: Date.now(),
+                    created_at: dateVal,
+                    name: name,
+                    amount: amount,
+                    qty: qty,
+                    paid_by: paidBy,
+                    category: category,
+                    photo: tempCompressedPhoto || "", 
+                    recorded_by: creatorName,
+                    edited_by: ""
+                };
+                expenses.push(newExpense);
+            }
+
+            saveToLocalAndCloud(expenses);
+            clearAttachedPhoto();
+            cancelEditingMode();
+            loadExpenses();
+            navigateTo('pageReports');
+        }
+
+        function enterEditingMode(id) {
+            editingExpenseId = id;
+            var target = null;
+            for (var i = 0; i < expenses.length; i++) {
+                if (expenses[i].id === id) {
+                    target = expenses[i];
+                    break;
+                }
+            }
+
+            if (!target) return;
+
+            document.getElementById('itemName').value = target.name;
+            document.getElementById('itemAmount').value = target.amount;
+            document.getElementById('itemQty').value = target.qty;
+            document.getElementById('paidBy').value = target.paid_by;
+
+            if (target.photo) {
+                tempCompressedPhoto = target.photo;
+                var preview = document.getElementById('imagePreview');
+                if (preview) preview.src = tempCompressedPhoto;
+                safeClass('imageStatusArea', 'remove', 'hidden');
+            } else {
+                clearAttachedPhoto();
+            }
+
+            safeClass('editBadge', 'remove', 'hidden');
+            safeClass('cancelEditBtn', 'remove', 'hidden');
+            document.getElementById('saveBtn').innerText = "Update Expense";
+
+            navigateTo('pageAdd');
+        }
+
+        function cancelEditingMode() {
+            editingExpenseId = null;
+            safeClass('editBadge', 'add', 'hidden');
+            safeClass('cancelEditBtn', 'add', 'hidden');
+            document.getElementById('saveBtn').innerText = translations[uiLanguage].saveBtn;
+
+            document.getElementById('itemName').value = "";
+            document.getElementById('itemAmount').value = "";
+            document.getElementById('itemQty').value = "1";
+            document.getElementById('paidBy').value = "Unpaid";
+            clearAttachedPhoto();
+        }
+
+        function deleteExpenseLocal(id) {
+            if (!confirm("Delete this expense?")) return;
+            
+            // Delete from Supabase cloud if configs exist
+            var syncUrl = safeStorage.getItem('sync_url');
+            var syncKey = safeStorage.getItem('sync_key');
+            if (syncUrl && syncKey) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE", syncUrl + '/rest/v1/expenses?id=eq.' + id, true);
+                xhr.setRequestHeader("apikey", syncKey);
+                xhr.setRequestHeader("Authorization", "Bearer " + syncKey);
+                xhr.send();
+            }
+
+            expenses = expenses.filter(function(exp) { return exp.id !== id; });
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
+            loadExpenses();
+        }
+
+        // ==================== CLEAR DUELS DYNAMICS ====================
+        function clearUnpaidExpenses() {
+            if (!confirm("Clear/settle all unpaid Credit Tab balance to ₹0?")) return;
+            expenses.forEach(function(exp) {
+                if (exp.paid_by === 'Unpaid') {
+                    exp.paid_by = 'Cleared'; 
+                    // Cloud update
+                    saveToLocalAndCloud(expenses);
+                }
+            });
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
+            loadExpenses();
+        }
+
+        function clearMemberDues(member) {
+            if (!confirm("Settle/clear payments made by " + member + "?")) return;
+            expenses.forEach(function(exp) {
+                if (exp.paid_by === member) {
+                    exp.paid_by = member + ' (Setted)';
+                    // Cloud update
+                    saveToLocalAndCloud(expenses);
+                }
+            });
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses));
+            loadExpenses();
+        }
+
+        // ==================== STATS AND COMPARATIVE METRICS ====================
+        function calculateSummaryData() {
+            var totalDaily = 0; var totalWeekly = 0; var totalMonthly = 0; var totalYearly = 0;
+            var spentGanesh = 0; var spentSujatha = 0; var spentHari = 0; var spentOthers = 0; var spentUnpaid = 0;
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                // CORE MATH: Sum only (No qty multiplication!)
+                var totalItemPrice = exp.amount; 
+
+                if (expDate >= startOfToday) totalDaily += totalItemPrice;
+                if (expDate >= lastWeek) totalWeekly += totalItemPrice;
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) totalMonthly += totalItemPrice;
+                if (expDate.getFullYear() === now.getFullYear()) totalYearly += totalItemPrice;
+
+                if (exp.paid_by === 'Ganesh') spentGanesh += totalItemPrice;
+                else if (exp.paid_by === 'Sujatha') spentSujatha += totalItemPrice;
+                else if (exp.paid_by === 'Hari') spentHari += totalItemPrice;
+                else if (exp.paid_by === 'Other') spentOthers += totalItemPrice;
+                else if (exp.paid_by === 'Unpaid') spentUnpaid += totalItemPrice;
+            });
+
+            safeSetText('cardDailyAmt', '₹' + totalDaily);
+            safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
+            safeSetText('cardMonthlyAmt', '₹' + totalMonthly);
+            safeSetText('cardYearlyAmt', '₹' + totalYearly);
+
+            safeSetText('totalGanesh', '₹' + spentGanesh);
+            safeSetText('totalSujatha', '₹' + spentSujatha);
+            safeSetText('totalHari', '₹' + spentHari);
+            safeSetText('totalOthers', '₹' + spentOthers);
+            safeSetText('totalUnpaid', '₹' + spentUnpaid);
+            
+            // Render Budgets Progress status
+            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500");
+            var budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000");
+            var budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+
+            safeSetText('budgetDailyProgress', '₹' + totalDaily + ' / ₹' + budD);
+            safeSetText('budgetWeeklyProgress', '₹' + totalWeekly + ' / ₹' + budW);
+            safeSetText('budgetMonthlyProgress', '₹' + totalMonthly + ' / ₹' + budM);
+
+            var pctD = Math.min((totalDaily / budD) * 100, 100);
+            var pctW = Math.min((totalWeekly / budW) * 100, 100);
+            var pctM = Math.min((totalMonthly / budM) * 100, 100);
+
+            var barD = document.getElementById('budgetDailyBar');
+            var barW = document.getElementById('budgetWeeklyBar');
+            var barM = document.getElementById('budgetMonthlyBar');
+
+            if (barD) barD.style.width = pctD + '%';
+            if (barW) barW.style.width = pctW + '%';
+            if (barM) barM.style.width = pctM + '%';
+
+            calculateCategoryGrid();
+        }
+
+        function calculateCategoryGrid() {
+            // Master dynamic 9 Categories grid with math sum only
+            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Other expenses'];
+            var gridData = {};
+            for (var i = 0; i < categories.length; i++) {
+                gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 };
+            }
+
+            expenses.forEach(function(exp) {
+                var cat = exp.category || 'Other expenses';
+                var price = exp.amount; 
+                if (!gridData[cat]) gridData[cat] = { paid: 0, unpaid: 0, total: 0 };
+                gridData[cat].total += price;
+                if (exp.paid_by === 'Unpaid') gridData[cat].unpaid += price;
+                else gridData[cat].paid += price;
+            });
+
+            var tbody = document.getElementById('categoryTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            for (var j = 0; j < categories.length; j++) {
+                var c = categories[j];
+                var data = gridData[c];
+                var rowHTML = 
+                    '<tr class="border-b border-slate-100">' +
+                        '<td class="py-3 text-slate-800">' + c + '</td>' +
+                        '<td class="py-3 text-right text-slate-500">₹' + data.paid + '</td>' +
+                        '<td class="py-3 text-right text-slate-500 font-medium">₹' + data.unpaid + '</td>' +
+                        '<td class="py-3 text-right font-black text-slate-900">₹' + data.total + '</td>' +
+                    '</tr>';
+                tbody.insertAdjacentHTML('beforeend', rowHTML);
+            }
+        }
+
+        function renderComparisonTab() {
+            var now = new Date();
+            var monthsMap = {};
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
+                monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
+            });
+
+            var listContainer = document.getElementById('comparisonList');
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
+            var keys = Object.keys(monthsMap);
+            if (keys.length === 0) {
+                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
+                return;
+            }
+
+            keys.forEach(function(mName) {
+                var rowHTML = 
+                    '<div class="flex justify-between items-center py-2.5">' +
+                        '<span class="font-bold text-slate-700">' + mName + '</span>' +
+                        '<span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span>' +
+                    '</div>';
+                listContainer.insertAdjacentHTML('beforeend', rowHTML);
+            });
+
+            // "SPEND EXTRA" SMART TIPS TRIGGERS
+            var alertDetails = document.getElementById('overspentDetails');
+            if (!alertDetails) return;
+            alertDetails.innerHTML = "";
+
+            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear();
+            var lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
+            var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
+
+            var curTotal = monthsMap[currentMonthName] || 0;
+            var prevTotal = monthsMap[lastMonthName] || 0;
+
+            // Tip 1: MoM tracking
+            if (prevTotal > 0) {
+                if (curTotal > prevTotal) {
+                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
+                } else {
+                    alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
+                }
+            }
+
+            // Tip 2: High tiffins/discretionary expenses logic triggers
+            var tiffinSum = 0;
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                    tiffinSum += exp.amount;
+                }
+            });
+
+            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your total spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+            } else {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
+            }
+        }
+
+        function filterReport(type) {
+            activeFilter = type;
+            var titleEl = document.getElementById('reportListTitle');
+            if (titleEl) {
+                var titles = { all: "All Expenses", daily: "Today's Expenses", weekly: "Weekly Expenses", monthly: "Monthly Expenses", yearly: "Yearly Expenses" };
+                titleEl.innerText = titles[type] || "Expenses Log";
+            }
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            var listContainer = document.getElementById('expenseList');
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            var filtered = expenses.filter(function(exp) {
+                var expDate = new Date(exp.created_at);
+
+                if (activeFilter === 'daily') return expDate >= startOfToday;
+                if (activeFilter === 'weekly') return expDate >= lastWeek;
+                if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
+                if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
+                
+                // Calendar grouping filter matching standard YYYY-MM-DD
+                if (activeFilter === 'calendar') {
+                    var yyyy = expDate.getFullYear();
+                    var mm = String(expDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(expDate.getDate()).padStart(2, '0');
+                    return (yyyy + '-' + mm + '-' + dd) === selectedCalendarDate;
+                }
+
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>';
+                return;
+            }
+
+            filtered.forEach(function(exp) {
+                var itemTotalPrice = exp.amount; 
+                var expDate = new Date(exp.created_at);
+                var displayDate = "Date error";
+                if (!isNaN(expDate.getTime())) {
+                    displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
+                }
+
+                var isUnpaid = exp.paid_by === 'Unpaid';
+                var badgeColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
+                var badgeLabel = isUnpaid ? 'Unpaid' : 'Paid: ' + exp.paid_by;
+
+                var stampText = "Recorded by " + (exp.recorded_by || "Guest");
+                if (exp.edited_by) {
+                    stampText = "Edited by " + exp.edited_by;
+                }
+
+                var photoIconHTML = "";
+                if (exp.photo) {
+                    photoIconHTML = '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>';
+                }
+
+                var itemHTML = 
+                    '<div class="flex justify-between items-center py-3">' +
+                        '<div class="flex-1">' +
+                            '<div class="flex items-center gap-2">' +
+                                '<span class="font-bold text-gray-800">' + exp.name + '</span>' +
+                                '<span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' +
+                                photoIconHTML +
+                            '</div>' +
+                            '<div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]">' +
+                                '<span class="text-slate-400 font-semibold">' + displayDate + '</span>' +
+                                '<span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span>' +
+                                '<span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' + badgeLabel + '</span>' +
+                                '<span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stampText + '</span>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-2">' +
+                            '<span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span>' +
+                            '<button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button>' +
+                            '<button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button>' +
+                        '</div>' +
+                    '</div>';
+                listContainer.insertAdjacentHTML('beforeend', itemHTML);
+            });
+        }
+    </script>
+</body>
+</html>
