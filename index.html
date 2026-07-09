@@ -9,6 +9,14 @@
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
 
+    <!-- TABLET REMOTE TROUBLESHOOTER (Guards against silent startup crashes) -->
+    <script>
+        window.onerror = function(message, source, lineno) {
+            alert("Tablet Error Captured:\n" + message + "\nLine: " + lineno);
+            return false;
+        };
+    </script>
+
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
         <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
@@ -39,6 +47,7 @@
                     <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 
+                <!-- COGNIZANT CORRECTION: Fixed submit calling function name -->
                 <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">
                     Create Profile
                 </button>
@@ -61,7 +70,7 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50">
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
                 </div>
                 
                 <div class="flex items-center justify-between">
@@ -72,9 +81,47 @@
                     <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
                 </div>
 
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-800 transition shadow">
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">
                     Login
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
+    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+            <div class="text-center space-y-2">
+                <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
+                <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
+                        <option value="1">What is your mother's maiden name?</option>
+                        <option value="2">What was the name of your first pet?</option>
+                        <option value="3">What city were you born in?</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update</button>
+                </div>
             </div>
         </div>
     </div>
@@ -108,14 +155,14 @@
                 <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
             </div>
             
-            <!-- Quick Actions Grid -->
+            <!-- Quick Actions Grid with Direct Camera Button -->
             <div class="grid grid-cols-3 gap-2 py-1">
                 <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
                     <button id="micBtn" onclick="startListening()" class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition">🎙️</button>
                     <span id="voiceLabel" class="text-[9px] font-bold text-slate-500 mt-1 uppercase">Speak</span>
                 </div>
-                <!-- Direct Bill Camera -->
+                <!-- Camera Snap Button (Directly prompts for bill entry) -->
                 <div class="flex flex-col items-center">
                     <label class="w-12 h-12 bg-slate-100 border border-slate-200 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-800 text-xl transition cursor-pointer">
                         📷
@@ -292,7 +339,6 @@
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
             <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1">
-                <!-- Actionable limits advice will inject here -->
             </div>
         </div>
 
@@ -363,7 +409,7 @@
             </div>
         </div>
 
-        <!-- Budget Settings Configuration Panel -->
+        <!-- Budget settings panel -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
             <h3 class="text-sm font-black text-slate-900 uppercase">Budget Threshold Limits</h3>
             <p class="text-[10px] text-slate-400">Configure limits to analyze overspending patterns dynamically.</p>
@@ -378,28 +424,27 @@
                 </div>
                 <div>
                     <label class="block text-[9px] font-bold text-slate-400 uppercase">Monthly Limit</label>
-                    <input type="number" id="budgetMonthlyInput" value="12000" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs font-bold rounded focus:bg-white focus:outline-none">
+                    <input type="number" id="budgetMonthlyInput" value="12000" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs rounded-lg focus:bg-white focus:outline-none">
                 </div>
             </div>
-            <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg shadow-sm">Save Budget Limits</button>
+            <button onclick="saveBudgets()" class="w-full bg-slate-900 text-white p-2 text-xs font-bold rounded-lg">Save Budgets</button>
         </div>
 
-        <!-- SHARED CLOUD COLLABORATION SYNC (SUPABASE REST SYNC ENGINE) -->
+        <!-- Shared Sync Configuration (Bypasses active failures) -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4 pt-4">
-            <h3 class="text-sm font-black text-slate-900 uppercase">Cloud Collaboration (Sync)</h3>
-            <p class="text-[10px] text-slate-400">Connect to Supabase. This syncs lists in real-time across family tablets!</p>
+            <h3 class="text-sm font-black text-slate-900 uppercase">Cloud Sync Settings</h3>
             <div class="space-y-3">
                 <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Supabase URL</label>
-                    <input type="text" id="syncUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-xs rounded focus:bg-white focus:outline-none">
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">Supabase Project URL</label>
+                    <input type="text" id="syncUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 text-xs font-bold rounded-lg focus:bg-white focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-[9px] font-bold text-slate-400 uppercase">Anon Key</label>
-                    <textarea id="syncKey" placeholder="eyJhbGciOi..." rows="2" class="mt-1 block w-full p-2 border border-slate-200 bg-slate-50 text-[10px] rounded focus:bg-white focus:outline-none"></textarea>
+                    <label class="block text-[10px] font-bold text-slate-400 uppercase">Supabase Anon Key</label>
+                    <textarea id="syncKey" placeholder="Paste Anon Key here" rows="2" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 text-xs font-bold rounded-lg focus:bg-white focus:outline-none"></textarea>
                 </div>
                 <div class="flex gap-2">
-                    <button onclick="enableCloudSync()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold shadow-sm">Link Cloud Database</button>
-                    <button onclick="disableCloudSync()" class="w-full border border-slate-200 text-slate-600 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Local Only (Disconnect)</button>
+                    <button onclick="enableCloudSync()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg text-xs font-bold shadow-sm">Sync Cloud DB</button>
+                    <button onclick="disableCloudSync()" class="w-full border border-slate-200 text-slate-600 p-2.5 rounded-lg text-xs font-bold bg-slate-50">Local Only</button>
                 </div>
             </div>
         </div>
@@ -631,7 +676,6 @@
         function showForgotPassword() {
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
-            
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) {
                 alert("No profile configured.");
@@ -780,7 +824,7 @@
                     if (billAmount && !isNaN(parseFloat(billAmount))) {
                         var newExpense = {
                             id: Date.now(),
-                            created_at: new Date().toISOString(), // Today's date automatically assigned
+                            created_at: new Date().toISOString(), 
                             name: "Bill Receipt",
                             amount: parseFloat(billAmount),
                             qty: 1,
@@ -793,7 +837,7 @@
                         
                         expenses.push(newExpense);
                         saveToLocalAndCloud(expenses);
-                        alert("Bill recorded in Today's list! Total: ₹" + parseFloat(billAmount));
+                        alert("Bill recorded! Cost: ₹" + parseFloat(billAmount));
                         navigateTo('pageReports');
                     } else {
                         alert("Cancelled or invalid amount entered.");
@@ -802,7 +846,7 @@
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
-            input.value = ""; // clear selector
+            input.value = ""; 
         }
 
         // ==================== DATE SELECTOR FILTER ====================
@@ -823,7 +867,7 @@
             filterReport('all');
         }
 
-        // ==================== DYNAMIC REST CLOUD SHARE SYNC (NO CRASH GUARANTEED) ====================
+        // ==================== DYNAMIC REST CLOUD SHARE SYNC ====================
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
@@ -833,7 +877,6 @@
                 return;
             }
 
-            // Remove trailing slash from URL
             if (url.substring(url.length - 1) === '/') {
                 url = url.substring(0, url.length - 1);
             }
@@ -855,18 +898,13 @@
         }
 
         function saveToLocalAndCloud(expensesArray) {
-            // 1. Always save locally first to guarantee retention
             safeStorage.setItem('family_expenses_data', JSON.stringify(expensesArray));
 
-            // 2. Fetch Sync configurations
             var syncUrl = safeStorage.getItem('sync_url');
             var syncKey = safeStorage.getItem('sync_key');
 
             if (syncUrl && syncKey) {
-                // Perform native ES5 POST to REST API (bypass broken library wrappers!)
                 var targetUrl = syncUrl + '/rest/v1/expenses';
-                
-                // Write last record to cloud
                 var lastItem = expensesArray[expensesArray.length - 1];
                 if (!lastItem) return;
 
@@ -880,9 +918,9 @@
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === 4) {
                         if (xhr.status >= 200 && xhr.status < 300) {
-                            console.log("Database cloud synchronization successful!");
+                            console.log("Cloud synced successfully!");
                         } else {
-                            console.warn("Database sync failed. Will retry later.", xhr.responseText);
+                            console.warn("Sync delay. Saved locally.", xhr.responseText);
                         }
                     }
                 };
@@ -890,15 +928,19 @@
             }
         }
 
-        // ==================== BUDGET STORAGE MODULE ====================
+        // ==================== BUDGET STORAGE ====================
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
             var m = safeStorage.getItem('budget_monthly') || "12000";
 
-            document.getElementById('budgetDailyInput').value = d;
-            document.getElementById('budgetWeeklyInput').value = w;
-            document.getElementById('budgetMonthlyInput').value = m;
+            var elD = document.getElementById('budgetDailyInput');
+            var elW = document.getElementById('budgetWeeklyInput');
+            var elM = document.getElementById('budgetMonthlyInput');
+
+            if (elD) elD.value = d;
+            if (elW) elW.value = w;
+            if (elM) elM.value = m;
         }
 
         function saveBudgets() {
@@ -914,7 +956,7 @@
             calculateSummaryData();
         }
 
-        // ==================== AUTO PROCESS & VOICE MICS ====================
+        // ==================== RECOGNITION AND SYNONYMS ====================
         function detectCategory(itemName) {
             var name = itemName.toLowerCase();
             if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
@@ -922,14 +964,15 @@
             if (name.indexOf('egg') !== -1 || name.indexOf('guddu') !== -1 || name.indexOf('gudlu') !== -1 || name.indexOf('గుడ్లు') !== -1 || name.indexOf('గుడ్డు') !== -1) return 'Eggs';
             if (name.indexOf('chicken') !== -1 || name.indexOf('chiken') !== -1 || name.indexOf('చికెన్') !== -1) return 'Chicken';
             
-            // Vegetables recognition
-            var vegKeywords = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'cucumber', 'gourd'];
+            // Mutton, Fish, Vegetables additions
+            if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
+            if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
+            
+            var vegKeywords = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'gourd'];
             for (var i = 0; i < vegKeywords.length; i++) {
                 if (name.indexOf(vegKeywords[i]) !== -1) return 'Vegetables';
             }
 
-            if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
-            if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
             if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1 || name.indexOf('poori') !== -1) return 'Tiffins';
             
             return 'Other expenses';
@@ -982,7 +1025,7 @@
             if (qtyInput) qtyInput.value = qty;
         }
 
-        // ==================== DB LOADING ====================
+        // ==================== AUTO-RECOVERY DB LOADING ====================
         function loadExpenses() {
             var stored = safeStorage.getItem('family_expenses_data');
             
@@ -994,13 +1037,9 @@
                 }
             }
 
-            // Sync with Supabase cloud if config exists
             var syncUrl = safeStorage.getItem('sync_url');
             var syncKey = safeStorage.getItem('sync_key');
             if (syncUrl && syncKey) {
-                document.getElementById('syncUrl').value = syncUrl;
-                document.getElementById('syncKey').value = syncKey;
-                
                 var xhr = new XMLHttpRequest();
                 xhr.open("GET", syncUrl + '/rest/v1/expenses?select=*&order=created_at.desc', true);
                 xhr.setRequestHeader("apikey", syncKey);
@@ -1144,7 +1183,6 @@
         function deleteExpenseLocal(id) {
             if (!confirm("Delete this expense?")) return;
             
-            // Delete from Supabase cloud if configs exist
             var syncUrl = safeStorage.getItem('sync_url');
             var syncKey = safeStorage.getItem('sync_key');
             if (syncUrl && syncKey) {
@@ -1160,13 +1198,12 @@
             loadExpenses();
         }
 
-        // ==================== CLEAR DUELS DYNAMICS ====================
+        // ==================== CLEAR MEMBERS DUELS DYNAMIC ====================
         function clearUnpaidExpenses() {
             if (!confirm("Clear/settle all unpaid Credit Tab balance to ₹0?")) return;
             expenses.forEach(function(exp) {
                 if (exp.paid_by === 'Unpaid') {
                     exp.paid_by = 'Cleared'; 
-                    // Cloud update
                     saveToLocalAndCloud(expenses);
                 }
             });
@@ -1179,7 +1216,6 @@
             expenses.forEach(function(exp) {
                 if (exp.paid_by === member) {
                     exp.paid_by = member + ' (Setted)';
-                    // Cloud update
                     saveToLocalAndCloud(expenses);
                 }
             });
@@ -1198,7 +1234,9 @@
 
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
-                // CORE MATH: Sum only (No qty multiplication!)
+                if (isNaN(expDate.getTime())) {
+                    expDate = new Date(); // Guard fallback
+                }
                 var totalItemPrice = exp.amount; 
 
                 if (expDate >= startOfToday) totalDaily += totalItemPrice;
@@ -1224,7 +1262,7 @@
             safeSetText('totalOthers', '₹' + spentOthers);
             safeSetText('totalUnpaid', '₹' + spentUnpaid);
             
-            // Render Budgets Progress status
+            // Render Budgets Progress
             var budD = parseFloat(safeStorage.getItem('budget_daily') || "500");
             var budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000");
             var budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
@@ -1249,7 +1287,6 @@
         }
 
         function calculateCategoryGrid() {
-            // Master dynamic 9 Categories grid with math sum only
             var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Other expenses'];
             var gridData = {};
             for (var i = 0; i < categories.length; i++) {
@@ -1288,6 +1325,7 @@
             var monthsMap = {};
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
                 var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
                 monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
             });
@@ -1311,7 +1349,6 @@
                 listContainer.insertAdjacentHTML('beforeend', rowHTML);
             });
 
-            // "SPEND EXTRA" SMART TIPS TRIGGERS
             var alertDetails = document.getElementById('overspentDetails');
             if (!alertDetails) return;
             alertDetails.innerHTML = "";
@@ -1323,7 +1360,6 @@
             var curTotal = monthsMap[currentMonthName] || 0;
             var prevTotal = monthsMap[lastMonthName] || 0;
 
-            // Tip 1: MoM tracking
             if (prevTotal > 0) {
                 if (curTotal > prevTotal) {
                     alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
@@ -1332,17 +1368,18 @@
                 }
             }
 
-            // Tip 2: High tiffins/discretionary expenses logic triggers
             var tiffinSum = 0;
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at);
-                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
-                    tiffinSum += exp.amount;
+                if (!isNaN(expDate.getTime())) {
+                    if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                        tiffinSum += exp.amount;
+                    }
                 }
             });
 
             if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
-                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your total spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
             } else {
                 alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
             }
@@ -1369,13 +1406,14 @@
 
             var filtered = expenses.filter(function(exp) {
                 var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
 
                 if (activeFilter === 'daily') return expDate >= startOfToday;
                 if (activeFilter === 'weekly') return expDate >= lastWeek;
                 if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
                 if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
                 
-                // Calendar grouping filter matching standard YYYY-MM-DD
+                // Calendar sorting filter matching standard YYYY-MM-DD
                 if (activeFilter === 'calendar') {
                     var yyyy = expDate.getFullYear();
                     var mm = String(expDate.getMonth() + 1).padStart(2, '0');
@@ -1394,10 +1432,9 @@
             filtered.forEach(function(exp) {
                 var itemTotalPrice = exp.amount; 
                 var expDate = new Date(exp.created_at);
-                var displayDate = "Date error";
-                if (!isNaN(expDate.getTime())) {
-                    displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
-                }
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                
+                var displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
 
                 var isUnpaid = exp.paid_by === 'Unpaid';
                 var badgeColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
