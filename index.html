@@ -6,41 +6,15 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase CDN (Standard connection library) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-100 min-h-screen pb-24">
-
-    <!-- DATABASE SETUP SCREEN -->
-    <div id="setupScreen" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
-        <div class="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full space-y-4">
-            <h2 class="text-xl font-bold text-gray-800">Database Setup (డేటాబేస్ సెటప్)</h2>
-            <p class="text-sm text-gray-600">Please paste your Supabase keys to connect your shared family database.</p>
-            <div>
-                <label class="block text-xs font-semibold text-gray-600">Supabase Project URL</label>
-                <input type="text" id="setupUrl" placeholder="https://xxxxxx.supabase.co" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm">
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-gray-600">Supabase Anon/Public Key</label>
-                <textarea id="setupKey" placeholder="eyJhbGciOi..." rows="3" class="mt-1 block w-full p-2 border border-gray-300 rounded text-sm"></textarea>
-            </div>
-            <button onclick="saveSetupKeys()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
-                Connect Database (కనెక్ట్ చేయండి)
-            </button>
-        </div>
-    </div>
 
     <!-- MAIN HEADER -->
     <header class="bg-blue-600 text-white p-4 shadow-md flex justify-between items-center sticky top-0 z-40">
         <h1 id="appTitle" class="text-xl font-bold">Family Expenses</h1>
-        <div class="flex gap-2">
-            <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
-                తెలుగు UI
-            </button>
-            <button onclick="clearKeys()" class="bg-red-800 px-2 py-1 rounded text-xs font-semibold" title="Reset Database Keys">
-                ⚙️ Setup
-            </button>
-        </div>
+        <button id="uiLangBtn" onclick="toggleUILanguage()" class="bg-blue-800 px-3 py-1 rounded text-xs font-semibold">
+            తెలుగు UI
+        </button>
     </header>
 
     <!-- ==================== PAGE 1: ADD EXPENSE ==================== -->
@@ -85,7 +59,7 @@
                     <option value="Other">Other (ఇతరులు)</option>
                 </select>
             </div>
-            <button onclick="saveExpense()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
+            <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-lg font-semibold transition active:scale-95 shadow">
                 Save Expense
             </button>
         </div>
@@ -185,13 +159,13 @@
     </nav>
 
     <script>
-        let supabaseClient = null;
-        let speechLanguage = 'en-IN';
-        let uiLanguage = 'en'; 
-        let expenses = [];
-        let activeFilter = 'all';
+        // Completely ES5-Compatible Javascript (No arrow functions, no const/let, no backticks)
+        var speechLanguage = 'en-IN';
+        var uiLanguage = 'en'; 
+        var expenses = [];
+        var activeFilter = 'all';
 
-        const translations = {
+        var translations = {
             te: {
                 title: "ఇంటి ఖర్చులు",
                 speechHeading: "మాట్లాడి ఎంటర్ చేయండి",
@@ -236,71 +210,28 @@
             }
         };
 
-        window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', function() {
             applyUILanguageText(); 
-            checkDatabaseSetup();
+            loadExpensesLocal();
         });
 
-        function checkDatabaseSetup() {
-            const savedUrl = localStorage.getItem('family_sb_url');
-            const savedKey = localStorage.getItem('family_sb_key');
-
-            if (!savedUrl || !savedKey) {
-                document.getElementById('setupScreen').classList.remove('hidden');
-            } else {
-                try {
-                    if (typeof supabase === 'undefined') {
-                        throw new Error("Supabase script blocked or not loaded.");
-                    }
-                    supabaseClient = supabase.createClient(savedUrl, savedKey);
-                    document.getElementById('setupScreen').classList.add('hidden');
-                    loadExpenses();
-                } catch (err) {
-                    console.error("Database connection failed:", err);
-                    localStorage.removeItem('family_sb_url');
-                    localStorage.removeItem('family_sb_key');
-                    document.getElementById('setupScreen').classList.remove('hidden');
-                    alert("Database connection failed. Please re-enter your keys cleanly.");
-                }
-            }
-        }
-
-        function saveSetupKeys() {
-            const url = document.getElementById('setupUrl').value.trim();
-            const key = document.getElementById('setupKey').value.trim();
-
-            if (!url || !key) {
-                alert("Please fill in both fields.");
-                return;
-            }
-
-            localStorage.setItem('family_sb_url', url);
-            localStorage.setItem('family_sb_key', key);
-            checkDatabaseSetup();
-        }
-
-        function clearKeys() {
-            if(confirm("Do you want to reset your database connection configuration?")) {
-                localStorage.removeItem('family_sb_url');
-                localStorage.removeItem('family_sb_key');
-                location.reload();
-            }
-        }
-
         function navigateTo(pageId) {
-            document.querySelectorAll('.page-container').forEach(el => el.classList.add('hidden'));
+            var containers = document.querySelectorAll('.page-container');
+            for (var i = 0; i < containers.length; i++) {
+                containers[i].classList.add('hidden');
+            }
             document.getElementById(pageId).classList.remove('hidden');
 
-            const navs = ['navAdd', 'navReports', 'navPeople'];
-            navs.forEach(nav => {
-                const el = document.getElementById(nav);
+            var navs = ['navAdd', 'navReports', 'navPeople'];
+            for (var j = 0; j < navs.length; j++) {
+                var el = document.getElementById(navs[j]);
                 if (el) {
                     el.classList.remove('text-blue-600', 'font-bold');
                     el.classList.add('text-gray-400', 'font-medium');
                 }
-            });
+            }
 
-            const activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
+            var activeNav = document.getElementById(pageId === 'pageAdd' ? 'navAdd' : pageId === 'pageReports' ? 'navReports' : 'navPeople');
             if (activeNav) {
                 activeNav.classList.remove('text-gray-400', 'font-medium');
                 activeNav.classList.add('text-blue-600', 'font-bold');
@@ -312,18 +243,15 @@
             applyUILanguageText();
         }
 
-        // CRASH-PROOF SAFE BINDING FUNCTION
         function safeSetText(id, text) {
-            const el = document.getElementById(id);
+            var el = document.getElementById(id);
             if (el) {
                 el.innerText = text;
-            } else {
-                console.warn(`Element with ID "${id}" was skipped because it's not present on this page.`);
             }
         }
 
         function applyUILanguageText() {
-            const t = translations[uiLanguage];
+            var t = translations[uiLanguage];
             
             safeSetText('appTitle', t.title);
             safeSetText('uiLangBtn', t.uiBtn);
@@ -349,8 +277,8 @@
 
         function setSpeechLanguage(lang) {
             speechLanguage = lang;
-            const btnTe = document.getElementById('btnTe');
-            const btnEn = document.getElementById('btnEn');
+            var btnTe = document.getElementById('btnTe');
+            var btnEn = document.getElementById('btnEn');
             
             if (lang === 'te-IN') {
                 if (btnTe) btnTe.className = "px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-600 text-white shadow-sm";
@@ -362,21 +290,21 @@
         }
 
         function startListening() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             if (!SpeechRecognition) {
-                alert("Speech recognition is not supported on this browser.");
+                alert("Speech recognition is not supported on this device's browser.");
                 return;
             }
 
-            const recognition = new SpeechRecognition();
+            var recognition = new SpeechRecognition();
             recognition.continuous = false;
             recognition.interimResults = false;
             recognition.lang = speechLanguage;
 
-            const statusText = document.getElementById('statusText');
-            const micBtn = document.getElementById('micBtn');
+            var statusText = document.getElementById('statusText');
+            var micBtn = document.getElementById('micBtn');
 
-            recognition.onstart = () => {
+            recognition.onstart = function() {
                 if (statusText) statusText.innerText = translations[uiLanguage].statusListening;
                 if (micBtn) {
                     micBtn.classList.add('bg-red-500', 'animate-pulse');
@@ -384,6 +312,254 @@
                 }
             };
 
-            recognition.onend = () => {
+            recognition.onend = function() {
                 if (statusText) statusText.innerText = translations[uiLanguage].statusIdle;
-      
+                if (micBtn) {
+                    micBtn.classList.remove('bg-red-500', 'animate-pulse');
+                    micBtn.classList.add('bg-green-600');
+                }
+            };
+
+            recognition.onresult = function(event) {
+                var transcript = event.results[0][0].transcript;
+                processVoiceText(transcript);
+            };
+
+            recognition.start();
+        }
+
+        function processVoiceText(text) {
+            var amount = "";
+            var qty = 1;
+            var item = text;
+
+            var numbers = text.match(/\d+/g);
+            if (numbers) {
+                if (numbers.length === 1) {
+                    amount = numbers[0];
+                    item = text.replace(amount, "").trim();
+                } else if (numbers.length >= 2) {
+                    var num1 = parseInt(numbers[0]);
+                    var num2 = parseInt(numbers[1]);
+                    amount = Math.max(num1, num2);
+                    qty = Math.min(num1, num2);
+                    item = text.replace(num1.toString(), "").replace(num2.toString(), "").trim();
+                }
+            }
+
+            item = item.replace(/రూపాయలు|rupees|rupee/gi, "").trim();
+
+            var nameInput = document.getElementById('itemName');
+            var amtInput = document.getElementById('itemAmount');
+            var qtyInput = document.getElementById('itemQty');
+
+            if (nameInput) nameInput.value = item;
+            if (amtInput) amtInput.value = amount;
+            if (qtyInput) qtyInput.value = qty;
+        }
+
+        // LOCAL STORAGE OPERATIONS (Instead of Supabase)
+
+        function loadExpensesLocal() {
+            var data = localStorage.getItem('family_expenses_local');
+            if (data) {
+                expenses = JSON.parse(data);
+            } else {
+                expenses = [];
+            }
+            renderExpenses();
+            calculateSummaryData();
+        }
+
+        function saveExpenseLocal() {
+            var nameEl = document.getElementById('itemName');
+            var amtEl = document.getElementById('itemAmount');
+            var qtyEl = document.getElementById('itemQty');
+            var paidEl = document.getElementById('paidBy');
+
+            if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
+
+            var name = nameEl.value.trim();
+            var amount = parseFloat(amtEl.value);
+            var qty = parseFloat(qtyEl.value) || 1;
+            var paidBy = paidEl.value;
+
+            if (!name || isNaN(amount)) {
+                alert("Enter valid details.");
+                return;
+            }
+
+            var expense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: name,
+                amount: amount,
+                qty: qty,
+                paid_by: paidBy
+            };
+
+            expenses.push(expense);
+            localStorage.setItem('family_expenses_local', JSON.stringify(expenses));
+            
+            loadExpensesLocal();
+
+            // Reset Form
+            nameEl.value = "";
+            amtEl.value = "";
+            qtyEl.value = "1";
+            paidEl.value = "Unpaid";
+            
+            navigateTo('pageReports');
+        }
+
+        function deleteExpenseLocal(id) {
+            if (!confirm("Are you sure?")) return;
+
+            expenses = expenses.filter(function(exp) {
+                return exp.id !== id;
+            });
+            localStorage.setItem('family_expenses_local', JSON.stringify(expenses));
+            loadExpensesLocal();
+        }
+
+        function calculateSummaryData() {
+            var totalDaily = 0;
+            var totalWeekly = 0;
+            var totalMonthly = 0;
+            var totalYearly = 0;
+
+            var spentGanesh = 0;
+            var spentSujatha = 0;
+            var spentHari = 0;
+            var spentOthers = 0;
+            var spentUnpaid = 0;
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date();
+            lastWeek.setDate(now.getDate() - 7);
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                var totalItemPrice = exp.amount * exp.qty;
+
+                if (expDate >= startOfToday) {
+                    totalDaily += totalItemPrice;
+                }
+                if (expDate >= lastWeek) {
+                    totalWeekly += totalItemPrice;
+                }
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) {
+                    totalMonthly += totalItemPrice;
+                }
+                if (expDate.getFullYear() === now.getFullYear()) {
+                    totalYearly += totalItemPrice;
+                }
+
+                if (exp.paid_by === 'Ganesh') spentGanesh += totalItemPrice;
+                else if (exp.paid_by === 'Sujatha') spentSujatha += totalItemPrice;
+                else if (exp.paid_by === 'Hari') spentHari += totalItemPrice;
+                else if (exp.paid_by === 'Other') spentOthers += totalItemPrice;
+                else if (exp.paid_by === 'Unpaid') spentUnpaid += totalItemPrice;
+            });
+
+            safeSetText('cardDailyAmt', '₹' + totalDaily);
+            safeSetText('cardWeeklyAmt', '₹' + totalWeekly);
+            safeSetText('cardMonthlyAmt', '₹' + totalMonthly);
+            safeSetText('cardYearlyAmt', '₹' + totalYearly);
+
+            safeSetText('totalGanesh', '₹' + spentGanesh);
+            safeSetText('totalSujatha', '₹' + spentSujatha);
+            safeSetText('totalHari', '₹' + spentHari);
+            safeSetText('totalOthers', '₹' + spentOthers);
+            safeSetText('totalUnpaid', '₹' + spentUnpaid);
+        }
+
+        function filterReport(type) {
+            activeFilter = type;
+            var titleEl = document.getElementById('reportListTitle');
+            if (titleEl) {
+                var titles = {
+                    all: "All Expenses",
+                    daily: "Today's Expenses",
+                    weekly: "Weekly Expenses",
+                    monthly: "Monthly Expenses",
+                    yearly: "Yearly Expenses"
+                };
+                titleEl.innerText = titles[type] || "Expenses Log";
+            }
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            var listContainer = document.getElementById('expenseList');
+            if (!listContainer) return;
+            listContainer.innerHTML = "";
+
+            var now = new Date();
+            var startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            var lastWeek = new Date();
+            lastWeek.setDate(now.getDate() - 7);
+
+            var filtered = expenses.filter(function(exp) {
+                if (activeFilter === 'all') return true;
+                var expDate = new Date(exp.created_at);
+
+                if (activeFilter === 'daily') {
+                    return expDate >= startOfToday;
+                }
+                if (activeFilter === 'weekly') {
+                    return expDate >= lastWeek;
+                }
+                if (activeFilter === 'monthly') {
+                    return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
+                }
+                if (activeFilter === 'yearly') {
+                    return expDate.getFullYear() === now.getFullYear();
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                listContainer.innerHTML = '<p class="text-gray-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>';
+                safeSetText('pendingTotal', "₹0");
+                return;
+            }
+
+            var pendingTotal = 0;
+
+            filtered.forEach(function(exp) {
+                var itemTotalPrice = exp.amount * exp.qty;
+
+                if (exp.paid_by === 'Unpaid') {
+                    pendingTotal += itemTotalPrice;
+                }
+
+                var isUnpaid = exp.paid_by === 'Unpaid';
+                var badgeColor = isUnpaid ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800';
+                var badgeLabel = isUnpaid ? 'Unpaid' : 'Paid by ' + exp.paid_by;
+
+                var itemHTML = 
+                    '<div class="flex justify-between items-center py-3">' +
+                        '<div class="flex-1">' +
+                            '<div class="flex items-center gap-2">' +
+                                '<span class="font-medium text-gray-800">' + exp.name + '</span>' +
+                                '<span class="text-xs text-gray-400">(Qty: ' + exp.qty + ')</span>' +
+                            '</div>' +
+                            '<span class="inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ' + badgeColor + '">' +
+                                badgeLabel +
+                            '</span>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-3">' +
+                            '<span class="font-bold text-gray-800">₹' + itemTotalPrice + '</span>' +
+                            '<button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button>' +
+                        '</div>' +
+                    '</div>';
+                listContainer.insertAdjacentHTML('beforeend', itemHTML);
+            });
+
+            safeSetText('pendingTotal', '₹' + pendingTotal);
+        }
+    </script>
+</body>
+</html>
