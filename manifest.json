@@ -1,0 +1,17 @@
+{
+  "name": "Family Expenses",
+  "short_name": "Expenses",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e293b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%231e293b'/><text x='50%25' y='55%25' font-family='sans-serif' font-size='220' font-weight='bold' fill='white' dominant-baseline='middle' text-anchor='middle'>₹</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
