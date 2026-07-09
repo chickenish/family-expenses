@@ -7,33 +7,36 @@
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 min-h-screen pb-24 text-slate-800">
+<body class="bg-slate-50 min-h-screen pb-24 text-slate-800 select-none">
+
+    <!-- FULLSCREEN CONFETTI CANVAS (Zero dependencies, lightweight) -->
+    <canvas id="confettiCanvas" class="pointer-events-none fixed inset-0 z-50 w-full h-full hidden"></canvas>
 
     <!-- TABLET REMOTE TROUBLESHOOTER -->
     <script>
         window.onerror = function(msg, url, line) {
-            alert("Tablet Error: " + msg + "\nLine: " + line);
+            alert("Tablet Error Captured:\n" + msg + "\nLine: " + line);
             return false;
         };
     </script>
 
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Create Profile</h2>
-            <p class="text-xs text-slate-400">Set up your username and password.</p>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
+            <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
             <div class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
+                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
@@ -41,9 +44,9 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
-                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition shadow">Create Profile</button>
+                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">Create Profile</button>
                 <div class="text-center pt-2">
                     <button onclick="safeClass('registerScreen','add','hidden'); safeClass('loginScreen','remove','hidden');" class="text-xs font-bold text-slate-400 hover:text-slate-800 underline">Already have a profile? Sign In</button>
                 </div>
@@ -53,26 +56,26 @@
 
     <!-- ==================== 2. LOGIN SCREEN ==================== -->
     <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Sign In</h2>
-            <p class="text-xs text-slate-400">Sign in to manage records.</p>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
+            <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
             <div class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm font-semibold focus:bg-white focus:outline-none">
+                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 focus:bg-white focus:outline-none">
                 </div>
-                <div class="flex items-center justify-between text-xs font-bold">
-                    <label class="flex items-center gap-1.5 cursor-pointer">
-                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-900">
-                        <span class="text-slate-500">Remember Me</span>
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="rememberMe" checked class="w-4 h-4 accent-slate-950">
+                        <span class="text-xs font-bold text-slate-600">Remember Me</span>
                     </label>
-                    <button onclick="showForgotPassword()" class="text-slate-400 hover:text-slate-700 underline">Forgot Password?</button>
+                    <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
                 </div>
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition">Login</button>
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
                 <div class="text-center pt-2">
                     <button onclick="safeClass('loginScreen','add','hidden'); safeClass('registerScreen','remove','hidden');" class="text-xs font-bold text-slate-400 hover:text-slate-800 underline">New User? Create Profile (సైన్ అప్)</button>
                 </div>
@@ -80,41 +83,22 @@
         </div>
     </div>
 
-    <!-- ==================== 3. FORGOT PASSWORD SCREEN ==================== -->
-    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
-            <p class="text-xs text-slate-500">Verify answer to recover credentials.</p>
-            <div class="space-y-4 text-left">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
-                        <option value="1">What is your mother's maiden name?</option>
-                        <option value="2">What was the name of your first pet?</option>
-                        <option value="3">What city were you born in?</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Answer</label>
-                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
-                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
-                </div>
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2 rounded-lg font-bold text-xs">Back</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2 rounded-lg font-bold text-xs">Update</button>
-                </div>
+    <!-- ==================== 3. INSTAGRAM STYLE ASK-A-QUESTION MODAL FOR OTHERS ==================== -->
+    <div id="descriptionModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 border border-slate-200">
+            <div class="bg-slate-100 border border-slate-200 p-5 rounded-2xl text-center space-y-3">
+                <span class="px-2 py-0.5 bg-slate-200 text-[10px] font-black uppercase text-slate-500 rounded-full tracking-wider">Item Description</span>
+                <p class="text-sm font-bold text-slate-800">What did you buy today? / ఏమి కొన్నారు?</p>
+                <input type="text" id="descModalInput" placeholder="Write here... (ఎంటర్ చేయండి)" class="w-full p-2.5 bg-white border border-slate-200 text-sm font-bold rounded-xl text-center focus:outline-none focus:border-slate-800">
+            </div>
+            <div class="grid grid-cols-2 gap-2 pt-1">
+                <button onclick="skipDescriptionModal()" class="w-full bg-slate-100 border text-slate-700 p-2.5 rounded-xl font-bold text-xs">Skip (స్కిప్)</button>
+                <button onclick="submitDescriptionModal()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs">Proceed ➔</button>
             </div>
         </div>
     </div>
 
-    <!-- ==================== 4. COMBINED MEAT CHOICE MODAL ==================== -->
+    <!-- ==================== 4. MEAT CHOICE MODAL ==================== -->
     <div id="meatModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
         <div class="bg-white p-5 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
             <h3 class="text-sm font-black text-slate-850 uppercase tracking-wide">Meat Log Details</h3>
@@ -167,7 +151,7 @@
             </div>
             <div class="grid grid-cols-3 gap-1.5 pt-2 border-t">
                 <button onclick="closeNumpad()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-xs uppercase">Cancel</button>
-                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border border-slate-300 text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip (స్కిప్)</button>
+                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border border-slate-300 text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip</button>
                 <button onclick="submitNumpadAmount()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs uppercase">Next ➔</button>
             </div>
         </div>
@@ -185,25 +169,20 @@
                 <button onclick="selectNumpadPayer('Hari')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Hari</button>
                 <button onclick="selectNumpadPayer('Other')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Other (ఇతరులు)</button>
             </div>
+            <!-- COGNIZANT CORRECTED: Defined complete back trigger safely inside JS below -->
             <button onclick="closePaymentModal()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-sm mt-2">Back</button>
         </div>
     </div>
 
-    <!-- PHOTO VIEWER MODAL -->
-    <div id="photoViewerModal" class="hidden fixed inset-0 bg-gray-950 bg-opacity-95 flex flex-col items-center justify-center p-4 z-50" onclick="closePhotoViewer()">
-        <img id="viewerImage" src="" alt="Receipt Photo" class="max-w-full max-h-[80vh] rounded-lg shadow-2xl object-contain">
-        <p class="text-white mt-4 text-sm font-bold bg-gray-900 bg-opacity-50 px-4 py-2 rounded-full cursor-pointer">Tap anywhere to close</p>
-    </div>
-
-    <!-- MAIN HEADER (COGNIZANT CORRECTED: Dynamic Header settings link) -->
-    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <!-- MAIN HEADER -->
+    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
-            <h1 id="appTitle" class="text-sm font-black uppercase text-slate-900">Family Expenses</h1>
+            <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
         </div>
         <div class="flex gap-2">
-            <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white px-2.5 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
-            <button onclick="promptUserChange()" class="bg-slate-800 border border-slate-700 text-white px-2 py-1 rounded-lg text-xs font-bold" title="Reset and Login screen">⚙️ Exit</button>
+            <button id="uiLangBtn" onclick="toggleUILanguage()" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-2.5 py-1 rounded-lg text-xs font-bold transition">తెలుగు UI</button>
+            <button onclick="promptUserChange()" class="bg-slate-800 border border-slate-700 text-white px-2.5 py-1 rounded-lg text-xs font-bold" title="Reset and Login screen">⚙️ Exit</button>
         </div>
     </header>
 
@@ -213,11 +192,6 @@
         <!-- Speak / Image Actions Card -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
-            <div class="flex justify-center gap-2">
-                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm">English</button>
-                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
-            </div>
-            
             <div class="grid grid-cols-3 gap-2 py-1">
                 <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
@@ -254,19 +228,19 @@
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Daily Favorites</h3>
             <div class="grid grid-cols-2 gap-2 text-left font-bold text-slate-800">
-                <button onclick="quickLogExpense('Milk', 58, 2, 'Milk')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                <button onclick="quickLogExpense('Milk', 58, 2, 'Milk')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition font-black text-slate-900 bg-amber-50 bg-opacity-45">
                     <span>🥛 Milk (2 packs)</span>
                     <span class="text-slate-500">₹58</span>
                 </button>
-                <button onclick="quickLogExpense('Eggs', 92, 12, 'Eggs')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                <button onclick="quickLogExpense('Eggs', 92, 12, 'Eggs')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition font-black text-slate-900 bg-amber-50 bg-opacity-45">
                     <span>🥚 Eggs (1 Dozen)</span>
                     <span class="text-slate-500">₹92</span>
                 </button>
-                <button onclick="quickLogExpense('Curd Big', 30, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                <button onclick="quickLogExpense('Curd Big', 30, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition font-black text-slate-900 bg-amber-50 bg-opacity-45">
                     <span>🥣 Curd Big</span>
                     <span class="text-slate-500">₹30</span>
                 </button>
-                <button onclick="quickLogExpense('Curd Small', 15, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition">
+                <button onclick="quickLogExpense('Curd Small', 15, 1, 'Curd')" class="p-2.5 border border-slate-200 hover:bg-slate-50 rounded-lg flex items-center justify-between text-xs transition font-black text-slate-900 bg-amber-50 bg-opacity-45">
                     <span>🥣 Curd Small</span>
                     <span class="text-slate-500">₹15</span>
                 </button>
@@ -351,24 +325,24 @@
         </div>
     </div>
 
-    <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
+    <!-- ==================== PAGE 2: CATEGORY REPORTS & CALENDAR ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
         
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
                 <span id="cardDailyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardWeekTitle" class="block text-[10px] uppercase font-bold text-slate-400">Weekly</span>
                 <span id="cardWeeklyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardMonthTitle" class="block text-[10px] uppercase font-bold text-slate-400">Monthly</span>
-                <span id="cardMonthlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardMonthlyAmt" class="block text-lg font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardYearTitle" class="block text-[10px] uppercase font-bold text-slate-400">Yearly</span>
                 <span id="cardYearlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
@@ -382,21 +356,20 @@
             </div>
         </div>
 
-        <!-- COGNIZANT CORRECTED: Dynamic heatmap category table [1] -->
-        <div class="bg-white p-5 rounded-xl border-2 border-amber-200 bg-amber-50 bg-opacity-35 shadow-sm space-y-4">
-            <h3 id="catTotalsTitle" class="text-sm font-bold text-slate-800 uppercase tracking-wide">Category Totals</h3>
+        <!-- Highlighted category totals box matching dues style -->
+        <div class="bg-amber-50 p-5 rounded-xl border-2 border-amber-200 shadow-sm space-y-4">
+            <h3 id="catTotalsTitle" class="text-sm font-black text-amber-900 uppercase tracking-wide">Category Totals</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full text-xs text-left">
                     <thead>
-                        <tr class="border-b border-amber-200 text-slate-500 font-black uppercase">
-                            <th class="py-2">Category</th>
-                            <th class="py-2 text-right">Paid</th>
-                            <th class="py-2 text-right">Unpaid</th>
-                            <th class="py-2 text-right font-black text-slate-900">Total</th>
+                        <tr class="border-b border-amber-200 text-amber-800 font-black uppercase">
+                            <th class="py-2 px-1">Category</th>
+                            <th class="py-2 px-1 text-right">Paid</th>
+                            <th class="py-2 px-1 text-right text-red-700">Unpaid</th>
+                            <th class="py-2 px-1 text-right font-black text-amber-950">Total</th>
                         </tr>
                     </thead>
-                    <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold">
-                    </tbody>
+                    <tbody id="categoryTableBody" class="divide-y divide-amber-100 text-slate-800 font-bold bg-white rounded-lg"></tbody>
                 </table>
             </div>
         </div>
@@ -415,7 +388,6 @@
     <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
-        
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -449,20 +421,17 @@
 
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
-            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1">
-            </div>
+            <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
         </div>
 
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 id="histMonthsTitle" class="text-sm font-bold text-slate-800 uppercase">Month Spending History</h3>
-            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100">
-            </div>
+            <div id="comparisonList" class="space-y-2 text-sm font-bold text-slate-700 divide-y divide-slate-100"></div>
         </div>
     </div>
 
     <!-- ==================== PAGE 4: PROFILE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
-        
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
@@ -473,7 +442,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -483,7 +452,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -493,7 +462,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -503,7 +472,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm flex justify-between items-center">
@@ -513,7 +482,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalMilkCurdEggsUnpaid" class="text-md font-black text-amber-950">₹0</span>
-                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('MilkCurdEggs')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex justify-between items-center">
@@ -523,7 +492,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded shadow hover:bg-slate-800">Clear All Dues</button>
+                        <button onclick="initiateClearDuesNumpad('Unpaid')" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded shadow hover:bg-slate-800">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -616,7 +585,11 @@
 
         var speechLanguage = 'te-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
         var numpadActiveCategory = "", numpadActiveName = "", tempNumpadValue = "", numpadQty = 1, numpadStep = "amount";
-        var tempMeatType = "", tempMeatQty = 1; // Meat parameters
+        var tempMeatType = "", tempMeatQty = 1; 
+
+        // State trackers for direct ledger dues settlement via numpad [1]
+        var duesSettleMode = false;
+        var duesSettleTarget = ""; // Ganesh, Sujatha, Hari, Other, Unpaid, MilkCurdEggs
 
         var translations = {
             te: {
@@ -781,10 +754,55 @@
         // ROLE PERMISSIONS
         function hasPermission() {
             var u = (appUser || "").toLowerCase().trim();
-            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari
+            return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari [1]
         }
 
-        // COMPRESSION ENGINE
+        // ==================== BILINGUAL SIDE-BURST CONFETTI SYSTEM (ZERO-FAILURE WEB ENGINE) ====================
+        var confettiCanvas = null, ctx = null, particles = [], animationFrame = null;
+        function initConfetti() {
+            confettiCanvas = document.getElementById('confettiCanvas');
+            if (!confettiCanvas) return;
+            ctx = confettiCanvas.getContext('2d');
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        function triggerConfettiBurst() {
+            initConfetti();
+            if (!confettiCanvas || !ctx) return;
+            confettiCanvas.classList.remove('hidden');
+            particles = [];
+            var colors = ['#f43f5e', '#3b82f6', '#eab308', '#10b981', '#a855f7', '#ff7849'];
+            for (var i = 0; i < 150; i++) {
+                var side = Math.random() < 0.5 ? 'left' : 'right';
+                particles.push({
+                    x: side === 'left' ? 0 : confettiCanvas.width,
+                    y: confettiCanvas.height * 0.8,
+                    vx: side === 'left' ? (Math.random() * 8 + 4) : -(Math.random() * 8 + 4),
+                    vy: -(Math.random() * 12 + 8),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 8 + 5,
+                    rotation: Math.random() * 360,
+                    spin: Math.random() * 4 - 2
+                });
+            }
+            animateConfetti();
+        }
+        function animateConfetti() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            var active = false;
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.vx *= 0.98; p.rotation += p.spin;
+                if (p.y < confettiCanvas.height) {
+                    active = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size); ctx.restore();
+                }
+            }
+            if (active) { animationFrame = requestAnimationFrame(animateConfetti); }
+            else { confettiCanvas.classList.add('hidden'); cancelAnimationFrame(animationFrame); }
+        }
+
+        // ==================== STORAGE & COMPRESSION ====================
         function compressAttachmentPhoto(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -865,7 +883,38 @@
             input.value = ""; 
         }
 
-        // ==================== MEAT (CHICKEN/MUTTON/FISH) SELECTION MODULE [1] ====================
+        // ==================== INSTAGRAM STYLE DESCRIPTION MODAL [1] ====================
+        function skipDescriptionModal() {
+            numpadActiveCategory = "Other expenses";
+            numpadActiveName = "Other Item";
+            safeClass('descriptionModal', 'add', 'hidden');
+            
+            // Proceed to Numpad for entering amount
+            tempNumpadValue = "";
+            numpadStep = "amount";
+            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: Other Item";
+            document.getElementById('numpadDisplay').innerText = "₹ 0";
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        function submitDescriptionModal() {
+            var val = document.getElementById('descModalInput').value.trim();
+            if (!val || val === "") {
+                val = "Other Item";
+            }
+            numpadActiveName = val;
+            numpadActiveCategory = detectCategory(val);
+            safeClass('descriptionModal', 'add', 'hidden');
+
+            // Open amount numpad next [1]
+            tempNumpadValue = "";
+            numpadStep = "amount";
+            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName;
+            document.getElementById('numpadDisplay').innerText = "₹ 0";
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        // ==================== VISUAL TILE NUMPAD PORTAL CONTROLLER ====================
         function selectMeatType(type) {
             tempMeatType = type;
             var t1 = document.getElementById('mTypeChicken'), t2 = document.getElementById('mTypeMutton'), t3 = document.getElementById('mTypeFish');
@@ -876,7 +925,7 @@
 
         function selectMeatQty(qty) {
             tempMeatQty = qty;
-            document.getElementById('meatCustomQty').value = ""; // Clear custom input
+            document.getElementById('meatCustomQty').value = ""; 
             highlightMeatQtyButtons(qty);
         }
 
@@ -897,26 +946,15 @@
         }
 
         function submitMeatModal() {
-            if (!tempMeatType) {
-                alert("Please select item: Chicken, Mutton, or Fish!");
-                return;
-            }
-
+            if (!tempMeatType) { alert("Please select Chicken, Mutton, or Fish!"); return; }
             var customVal = parseFloat(document.getElementById('meatCustomQty').value);
-            if (!isNaN(customVal) && customVal > 0) {
-                tempMeatQty = customVal;
-            }
-
-            if (!tempMeatQty || tempMeatQty <= 0) {
-                alert("Please select or enter a valid Quantity!");
-                return;
-            }
+            if (!isNaN(customVal) && customVal > 0) { tempMeatQty = customVal; }
+            if (!tempMeatQty || tempMeatQty <= 0) { alert("Please select a valid Weight!"); return; }
 
             numpadActiveCategory = tempMeatType;
             numpadActiveName = tempMeatType;
-            numpadQty = tempMeatQty; // Assign collected quantity safely [1]
+            numpadQty = tempMeatQty; 
 
-            // Hide Meat Selector & Launch Numpad purely for entering Amount (Skips secondary qty numpad since we captured it here!)
             safeClass('meatModal', 'add', 'hidden');
             tempNumpadValue = "";
             numpadStep = "amount"; 
@@ -925,15 +963,14 @@
             safeClass('numpadModal', 'remove', 'hidden');
         }
 
-        // ==================== VISUAL TILE NUMPAD MODULE [1] ====================
         function launchNumpadForTile(category) {
             tempNumpadValue = "";
             numpadActiveCategory = category;
             numpadActiveName = category;
             numpadQty = 1;
             numpadStep = "amount";
+            duesSettleMode = false; // Reset ledger settlement state [1]
 
-            // Hide custom skip buttons by default on startup
             safeClass('numpadSkipBtn', 'add', 'hidden');
 
             if (category === 'Meat') {
@@ -945,10 +982,9 @@
             }
 
             if (category === 'Others') {
-                var otherDesc = prompt("Please enter description (వస్తువు పేరు):");
-                if (!otherDesc || otherDesc.trim() === "") { alert("Item description required."); return; }
-                numpadActiveCategory = "Other expenses";
-                numpadActiveName = otherDesc.trim();
+                document.getElementById('descModalInput').value = "";
+                safeClass('descriptionModal', 'remove', 'hidden'); // Launch Instagram visual input overlay! [1]
+                return;
             }
 
             document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName;
@@ -956,6 +992,45 @@
             safeClass('numpadModal', 'remove', 'hidden');
         }
 
+        // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL (NO POPUPS) [1] ====================
+        function initiateClearDuesNumpad(target) {
+            // ROLE CONTROL GUARD CHECK FOR SUJATHA AND HARI ONLY [1]
+            if (!hasPermission()) {
+                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle balances.\n\nయాక్సెస్ నిరాకరించబడింది!");
+                return;
+            }
+
+            // Define target totals
+            var maxOutstandingAmount = 0;
+            if (target === 'MilkCurdEggs') {
+                expenses.forEach(function(exp) {
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (exp.paid_by === 'Unpaid' && isTarget) { maxOutstandingAmount += exp.amount; }
+                });
+            } else if (target === 'Unpaid') {
+                expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') maxOutstandingAmount += exp.amount; });
+            } else {
+                expenses.forEach(function(exp) { if (exp.paid_by === target) maxOutstandingAmount += exp.amount; });
+            }
+
+            if (maxOutstandingAmount <= 0) {
+                alert("No outstanding dues to clear for: " + target);
+                return;
+            }
+
+            // Activate Ledger dues settlement state
+            duesSettleMode = true;
+            duesSettleTarget = target;
+            tempNumpadValue = "";
+            numpadStep = "amount"; // Set directly to amount step
+
+            safeClass('numpadSkipBtn', 'add', 'hidden');
+            document.getElementById('numpadCategoryTitle').innerText = "Settle Dues for " + target + " (Max ₹" + maxOutstandingAmount + ")";
+            document.getElementById('numpadDisplay').innerText = "₹ 0";
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        // ==================== GENERAL NUMPAD CONTROLLER ====================
         function tapNumpad(char) {
             var display = document.getElementById('numpadDisplay');
             if (char === 'C') {
@@ -973,13 +1048,19 @@
             if (numpadStep === 'amount') {
                 display.innerText = "₹ " + (tempNumpadValue || "0");
             } else {
-                // Quantity display mapping
                 display.innerText = (tempNumpadValue || "0") + " packet/kg/qty";
             }
         }
 
         function closeNumpad() {
             safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false; // Reset state
+        }
+
+        // COGNIZANT CORRECTED: Restored missing closePaymentModal function safely [2]
+        function closePaymentModal() {
+            safeClass('paymentModal', 'add', 'hidden');
+            safeClass('numpadModal', 'remove', 'hidden'); // allow going back
         }
 
         function submitNumpadAmount() {
@@ -989,31 +1070,30 @@
                 return;
             }
 
+            // Ledger Settle Direct bypass (No payment modal needed for paying back dues) [1]
+            if (duesSettlementFlowProceed(valVal)) {
+                return;
+            }
+
             if (numpadStep === 'amount') {
-                // Transition to QUANTITY numpad for specified visual keys [1]
+                // Transition to Quantity calculator numpad dynamically [1]
                 var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
                 if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
                     numpadStep = "quantity";
-                    tempNumpadValue = ""; // reset for quantity typing
-
-                    // Prompt Title change
+                    tempNumpadValue = ""; 
                     document.getElementById('numpadCategoryTitle').innerText = "Enter Quantity (పరిమాణం) for: " + numpadActiveName;
                     document.getElementById('numpadDisplay').innerText = "0 packet/kg/qty";
 
-                    // Show custom Skip option exclusively on 'Others' [1]
                     if (numpadActiveCategory === 'Other expenses') {
                         safeClass('numpadSkipBtn', 'remove', 'hidden');
                     } else {
                         safeClass('numpadSkipBtn', 'add', 'hidden');
                     }
-                    return; // Stays inside numpad modal for Qty step
+                    return; 
                 }
-
-                // If non-veg category or other, bypass qty numpad step
                 numpadQty = 1;
                 proceedToPaymentSelection(valVal);
             } else {
-                // Quantity step completion
                 numpadQty = valVal;
                 var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
                 proceedToPaymentSelection(baseAmount);
@@ -1028,9 +1108,53 @@
         }
 
         function skipNumpadQty() {
-            numpadQty = 1; // Falls back to default [1]
+            numpadQty = 1; 
             var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
             proceedToPaymentSelection(baseAmount);
+        }
+
+        // DIRECT LEDGER SETTLEMENT SAVER CORE MATH [1]
+        function duesSettlementFlowProceed(amtToClear) {
+            if (!duesSettleMode) return false;
+
+            var settleName = "Dues Settle (" + duesSettleTarget + ")";
+            var settleCat = "Other expenses";
+            var settlePaidBy = duesSettleTarget;
+
+            if (duesSettleTarget === 'MilkCurdEggs') {
+                settleName = "Milk/Curd/Eggs Settle";
+                settleCat = "Milk";
+                settlePaidBy = "Unpaid";
+            } else if (duesSettleTarget === 'Unpaid') {
+                settleName = "Unpaid Dues Cleared";
+                settlePaidBy = "Unpaid";
+            }
+
+            // Insert negative payback credit item directly to reduce remaining balance [1]
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: settleName,
+                amount: -amtToClear, // Negative offset settles dues cleanly [1]
+                qty: 1,
+                paid_by: settlePaidBy,
+                category: settleCat,
+                photo: "",
+                recorded_by: appUser || "System",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            // Settle complete UI visual success [1]
+            safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false;
+
+            // Trigger beautiful fullscreen visual confetti burst! [1]
+            triggerConfettiBurst();
+            return true;
         }
 
         function selectNumpadPayer(payer) {
@@ -1042,7 +1166,7 @@
                 created_at: new Date().toISOString(),
                 name: numpadActiveName,
                 amount: finalAmt,
-                qty: numpadQty, // Use the collected quantity safely [1]
+                qty: numpadQty, 
                 paid_by: payer,
                 category: numpadActiveCategory,
                 photo: "",
@@ -1055,7 +1179,8 @@
             loadExpenses();
 
             safeClass('paymentModal', 'add', 'hidden');
-            alert("Recorded: " + numpadActiveName + " (₹" + finalAmt + ") successfully logged!");
+            // Fullscreen visual success confetti burst! [1]
+            triggerConfettiBurst();
             navigateTo('pageReports');
         }
 
@@ -1078,7 +1203,7 @@
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
-            if (!url || !key) { alert("Please fill in all fields."); return; }
+            if (!url || !key) { alert("Please fill in both fields."); return; }
             if (url.substring(url.length - 1) === '/') { url = url.substring(0, url.length - 1); }
             safeStorage.setItem('sync_url', url); safeStorage.setItem('sync_key', key);
             alert("Database linked! Syncing current records...");
@@ -1113,14 +1238,6 @@
             var m = safeStorage.getItem('budget_monthly') || "12000";
             var elD = document.getElementById('budgetDailyInput'), elW = document.getElementById('budgetWeeklyInput'), elM = document.getElementById('budgetMonthlyInput');
             if (elD) elD.value = d; if (elW) elW.value = w; if (elM) elM.value = m;
-        }
-
-        function saveBudgets() {
-            safeStorage.setItem('budget_daily', document.getElementById('budgetDailyInput').value);
-            safeStorage.setItem('budget_weekly', document.getElementById('budgetWeeklyInput').value);
-            safeStorage.setItem('budget_monthly', document.getElementById('budgetMonthlyInput').value);
-            alert("Budgets updated successfully!");
-            calculateSummaryData();
         }
 
         // AUTO CATEGORIZE SYNONYMS MAP
@@ -1167,7 +1284,7 @@
                 "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
                 "double": 2, "dozen": 12, "half": 0.5, "pack": 1, "packet": 1,
                 "fifteen": 15, "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100,
-                "సగం": 0.5, "అర": 0.5, "ఒകటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9, "పది": 10,
+                "సగం": 0.5, "అర": 0.5, "ఒకటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9, "పది": 10,
                 "పదిహేను": 15, "ఇరవై": 20, "ముప్పై": 30, "నలభై": 40, "యాభై": 50, "అరవై": 60, "డెబ్బై": 70, "ఎనభై": 80, "తొంభై": 90, "వంద": 100
             };
             for (var key in words) {
@@ -1335,189 +1452,7 @@
             safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
         }
 
-        // ==================== CLEAR DUELS (SECURED) ====================
-        function clearUnpaidExpenses() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
-            if (unpaidTotal <= 0) { alert("No unpaid dues!"); return; }
-
-            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now (Press OK to clear full amount):", unpaidTotal);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Unpaid Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Other expenses", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + "! Remaining: ₹" + (unpaidTotal - amtToClear));
-        }
-
-        function clearMemberDues(member) {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
-            if (currentSpent <= 0) { alert("No dues for " + member); return; }
-
-            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amtToClear, qty: 1, paid_by: member, category: "Other expenses", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear));
-        }
-
-        function clearMilkCurdEggsUnpaid() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var currentSpent = 0;
-            expenses.forEach(function(exp) {
-                var isTarget = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
-                if (exp.paid_by === 'Unpaid' && isTarget) { currentSpent += exp.amount; }
-            });
-            if (currentSpent <= 0) { alert("No unpaid dues for Milk, Curd or Eggs!"); return; }
-
-            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Milk", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
-        }
-
-        // ==================== STATS AND BALANCES ====================
-        function calculateSummaryData() {
-            var dSum=0, wSum=0, mSum=0, ySum=0, spentG=0, spentS=0, spentH=0, spentO=0, spentU=0, spentMCE=0;
-            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
-
-            expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at);
-                if (isNaN(expDate.getTime())) expDate = new Date();
-                var itemTotalPrice = exp.amount; 
-
-                if (expDate >= startOfToday) dSum += itemTotalPrice;
-                if (expDate >= lastWeek) wSum += itemTotalPrice;
-                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) mSum += itemTotalPrice;
-                if (expDate.getFullYear() === now.getFullYear()) ySum += itemTotalPrice;
-
-                if (exp.paid_by === 'Ganesh') spentG += itemTotalPrice;
-                else if (exp.paid_by === 'Sujatha') spentS += itemTotalPrice;
-                else if (exp.paid_by === 'Hari') spentH += itemTotalPrice;
-                else if (exp.paid_by === 'Other') spentO += itemTotalPrice;
-                else if (exp.paid_by === 'Unpaid') {
-                    spentU += itemTotalPrice;
-                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
-                    if (isGrocery) spentMCE += itemTotalPrice;
-                }
-            });
-
-            safeSetText('cardDailyAmt', '₹' + dSum); safeSetText('cardWeeklyAmt', '₹' + wSum); safeSetText('cardMonthlyAmt', '₹' + mSum); safeSetText('cardYearlyAmt', '₹' + ySum);
-            safeSetText('totalGanesh', '₹' + spentG); safeSetText('totalSujatha', '₹' + spentS); safeSetText('totalHari', '₹' + spentH); safeSetText('totalOthers', '₹' + spentO);
-            safeSetText('totalUnpaid', '₹' + spentU); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
-            
-            // Progress Update
-            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
-            safeSetText('budgetDailyProgress', '₹' + dSum + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + wSum + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + mSum + ' / ₹' + budM);
-
-            var bD = document.getElementById('budgetDailyBar'), bW = document.getElementById('budgetWeeklyBar'), bM = document.getElementById('budgetMonthlyBar');
-            if (bD) bD.style.width = Math.min((dSum / budD) * 100, 100) + '%';
-            if (bW) bW.style.width = Math.min((wSum / budW) * 100, 100) + '%';
-            if (bM) bM.style.width = Math.min((mSum / budM) * 100, 100) + '%';
-
-            calculateCategoryGrid();
-        }
-
-        // DYNAMIC HIGHLIGHT COLOR MAPPER FOR OVERSPENDING [1, 4]
-        function calculateCategoryGrid() {
-            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
-            var gridData = {};
-            for (var i = 0; i < categories.length; i++) { gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 }; }
-
-            // Find Maximum category spent for visual heatmap ranking [1]
-            var maxSpentCategoryValue = 0;
-
-            expenses.forEach(function(exp) {
-                var cat = exp.category || 'Other expenses';
-                var price = exp.amount; 
-                if (!gridData[cat]) gridData[cat] = { paid: 0, unpaid: 0, total: 0 };
-                gridData[cat].total += price;
-                if (exp.paid_by === 'Unpaid') gridData[cat].unpaid += price;
-                else gridData[cat].paid += price;
-
-                // Track highest spent categories [1]
-                if (gridData[cat].total > maxSpentCategoryValue) {
-                    maxSpentCategoryValue = gridData[cat].total;
-                }
-            });
-
-            var tbody = document.getElementById('categoryTableBody');
-            if (!tbody) return; tbody.innerHTML = "";
-
-            for (var j = 0; j < categories.length; j++) {
-                var c = categories[j]; var d = gridData[c];
-                
-                // Color ranking configuration based on highest limits (Non-bright colors) [1, 4]
-                var heatmapRowColor = "bg-white text-slate-800"; // Default
-                if (maxSpentCategoryValue > 0 && d.total > 0) {
-                    if (d.total === maxSpentCategoryValue) {
-                        // Rank 1 Highest Spent: Warm Rose [1, 4]
-                        heatmapRowColor = "bg-rose-50 text-rose-900 border-l-4 border-rose-300 font-black";
-                    } else if (d.total >= (maxSpentCategoryValue * 0.50)) {
-                        // Moderate spent: Warm Amber [1, 4]
-                        heatmapRowColor = "bg-amber-50 text-amber-900 border-l-4 border-amber-300 font-bold";
-                    }
-                }
-
-                tbody.insertAdjacentHTML('beforeend', '<tr class="border-b border-slate-100 ' + heatmapRowColor + '"><td class="py-3 px-2 font-bold">' + c + '</td><td class="py-3 px-2 text-right">₹' + d.paid + '</td><td class="py-3 px-2 text-right">₹' + d.unpaid + '</td><td class="py-3 px-2 text-right font-black">₹' + d.total + '</td></tr>');
-            }
-        }
-
-        function renderComparisonTab() {
-            var now = new Date(), monthsMap = {};
-            expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
-                var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
-                monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
-            });
-
-            var listContainer = document.getElementById('comparisonList');
-            if (!listContainer) return; listContainer.innerHTML = "";
-
-            var keys = Object.keys(monthsMap);
-            if (keys.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>'; return; }
-
-            keys.forEach(function(mName) {
-                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
-            });
-
-            var alertDetails = document.getElementById('overspentDetails');
-            if (!alertDetails) return; alertDetails.innerHTML = "";
-
-            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear(), lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
-            var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
-
-            var curTotal = monthsMap[currentMonthName] || 0, prevTotal = monthsMap[lastMonthName] || 0;
-            if (prevTotal > 0) {
-                if (curTotal > prevTotal) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
-                else alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
-            }
-
-            var tiffinSum = 0;
-            expenses.forEach(function(exp) {
-                var expDate = new Date(exp.created_at);
-                if (!isNaN(expDate.getTime()) && expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
-                    tiffinSum += exp.amount;
-                }
-            });
-
-            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
-                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
-            } else {
-                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
-            }
-        }
-
-        // NAVIGATION & TOGGLES
+        // ==================== NAVIGATION & TOGGLES ====================
         function navigateTo(pageId) {
             var containers = document.querySelectorAll('.page-container');
             for (var i = 0; i < containers.length; i++) containers[i].classList.add('hidden');
