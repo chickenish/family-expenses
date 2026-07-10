@@ -2201,6 +2201,165 @@
                 listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-3"><div class="flex-1"><div class="flex items-center gap-2"><span class="font-bold text-gray-800">' + exp.name + '</span><span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' + photoIconHTML + '</div><div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]"><span class="text-slate-400 font-semibold">' + displayDate + '</span><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span><span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + bColor + '">' + bLabel + '</span><span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stamp + '</span></div></div><div class="flex items-center gap-2"><span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span><button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button><button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button></div></div>');
             });
         }
+       // ==================== FIXES FOR MISSING FUNCTIONS ====================
+
+// Fix for Errors 1 & 3: Clears the calendar filter and displays all expenses
+function clearCalendarFilter() {
+  activeFilter = 'all';
+  selectedCalendarDate = "";
+  selectedGridVal = "";
+  var titleEl = document.getElementById('reportListTitle');
+  if (titleEl) {
+    titleEl.innerText = "Displaying: All";
+  }
+  renderExpenses();
+  calculateCategoryGrid();
+}
+
+// Fix for Error 2: Filters the displayed logs to a specific clicked date
+function filterLogBySpecificDate(dateStr) {
+  activeFilter = 'calendar';
+  selectedCalendarDate = dateStr;
+  var titleEl = document.getElementById('reportListTitle');
+  if (titleEl) {
+    titleEl.innerText = "Displaying: " + dateStr;
+  }
+  renderExpenses();
+}
+
+// Fix for Errors 4 & 5: Clear dues for members with built-in permission checks
+function clearMemberDuesDirect(member) {
+  if (typeof clearMemberDues === 'function') {
+    clearMemberDues(member);
+  } else {
+    alert("Function clearMemberDues is not available.");
+  }
+}
+
+// Fix for Error 6: Exits the current profile and goes back to login screen
+function promptUserChange() {
+  if (typeof logoutProfile === 'function') {
+    logoutProfile();
+  } else {
+    safeStorage.removeItem('is_logged_in');
+    checkUser();
+  }
+}
+
+
+// ==================== COMPLETE TELUGU UI TRANSLATION SYSTEM ====================
+
+// Dictionary mapping English words/categories to Telugu equivalents
+function tText(text) {
+  if (uiLanguage === 'en') return text;
+  
+  var map = {
+    // Categories
+    "Milk": "పాలు",
+    "Curd": "పెరుగు",
+    "Eggs": "గుడ్లు",
+    "Vegetables": "కూరగాయలు",
+    "Tiffins": "టిఫిన్స్",
+    "Oil": "నూనె / ఆయిల్",
+    "Monthly Kirana": "నెల సరుకులు",
+    "Meat": "మాంసం / చికెన్",
+    "Chicken/Mutton/Fish": "చికెన్ / మటన్ / చేప",
+    "Others": "ఇతరులు",
+    "Other": "ఇతరులు",
+    "Other expenses": "ఇతర ఖర్చులు",
+    "Mo. Kirana": "కిరాణా",
+    
+    // Quick favorites
+    "Milk (2 packs)": "పాలు (2 ప్యాకెట్లు)",
+    "Eggs (1 Dozen)": "గుడ్లు (1 డజన్)",
+    "Curd Big": "పెద్ద పెరుగు",
+    "Curd Small": "చిన్న పెరుగు",
+    
+    // UI Headings & Layout Labels
+    "Daily Favorites": "రోజువారీ ఇష్టమైనవి",
+    "Visual Category Keys": "విభాగాల కీలు",
+    "Who paid?": "ఎవరు చెల్లించారు?",
+    "Select payment source to record transaction instantly.": "లావాదేవీని తక్షణమే రికార్డ్ చేయడానికి చెల్లింపు మార్గాన్ని ఎంచుకోండి.",
+    "Unpaid / Credit Tab (ఉంచాము)": "ఉంచాము / బకాయి",
+    "Paid by Ganesh": "గణేష్ చెల్లించారు",
+    "Paid by Sujatha": "సుజాత చెల్లించారు",
+    "Paid by Hari": "హరి చెల్లించారు",
+    "Paid by Other (ఇతరులు)": "ఇతరులు చెల్లించారు",
+    "Save Expense": "ఖర్చును సేవ్ చేయండి",
+    "Cancel Editing": "సవరణను రద్దు చేయి",
+    "Time-Period Expenses": "కాలాల వారీగా ఖర్చులు",
+    "Filter Calendar": "క్యాలెండర్ ఫిల్టర్",
+    "Select Date to view logs": "లాగ్లను చూడటానికి తేదీని ఎంచుకోండి",
+    "Select Date...": "తేదీని ఎంచుకోండి...",
+    "Clear": "క్లియర్",
+    "Category Totals": "విభాగాల వారీగా మొత్తం",
+    "Category": "విభాగం",
+    "Paid": "చెల్లించినవి",
+    "Unpaid": "బకాయిలు",
+    "Total": "మొత్తం",
+    "Displaying: All": "అన్నీ చూపిస్తోంది",
+    "Show All": "అన్నీ చూపించు",
+    "Monthly Comparisons": "నెలవారీ సరిపోలికలు",
+    "Budget Visualizer": "బడ్జెట్ విజువలైజర్",
+    "Daily Budget": "రోజువారీ బడ్జెట్",
+    "Weekly Budget": "వారపు బడ్జెట్",
+    "Monthly Budget": "నెలవారీ బడ్జెట్",
+    "Automated Tips & Analysis": "విశ్లేషణ & చిట్కాలు",
+    "Monthly Expenditure Records": "నెలవారీ ఖర్చుల రికార్డులు",
+    "Month": "నెల",
+    "Grand Total": "మొత్తం",
+    "Month Spending History": "నెలవారీ ఖర్చుల చరిత్ర",
+    "Ledger Dues": "బకాయిలు",
+    "Total out-of-pocket spent": "మొత్తం ఖర్చు చేశారు",
+    "Total spent by others": "ఇతరులు ఖర్చు చేసిన మొత్తం",
+    "Milk, Curd & Eggs Unpaid Dues": "పాలు, పెరుగు & గుడ్ల బకాయిలు",
+    "Outstanding Unpaid Grocery Tab": "మిగిలిన కిరాణా బకాయిలు",
+    "Pending Dues": "మిగిలిన బకాయిలు",
+    "Unpaid Credit tab balance": "బకాయి బ్యాలెన్స్",
+    "Clear All Dues": "అన్ని బకాయిలు క్లియర్ చేయి",
+    "Budget Threshold Limits": "బడ్జెట్ పరిమితులు",
+    "Configure limits to analyze overspending patterns dynamically.": "ఖర్చులను విశ్లేషించడానికి పరిమితులను కాన్ఫిగర్ చేయండి.",
+    "Daily Limit": "రోజువారీ పరిమితి",
+    "Weekly Limit": "వారపు పరిమితి",
+    "Monthly Limit": "నెలవారీ పరిమితి",
+    "Save Budgets": "బడ్జెట్లను సేవ్ చేయి",
+    "Cloud Sync Settings": "క్లౌడ్ సింక్ సెట్టింగులు",
+    "Supabase Project URL": "సుపబేస్ ప్రాజెక్ట్ URL",
+    "Supabase Anon Key": "సుపబేస్ అనోన్ కీ",
+    "Sync Cloud DB": "క్లౌడ్‌తో సింక్ చేయి",
+    "Local Only": "లోకల్ మాత్రమే",
+    "Profile Settings": "ప్రొఫైల్ సెట్టింగులు",
+    "New Username": "కొత్త యూజర్ నేమ్",
+    "New Password": "కొత్త పాస్‌వర్డ్",
+    "Save Settings": "సెట్టింగులను సేవ్ చేయి",
+    "Logout / Reset": "లాగౌట్ / రీసెట్",
+    "Add Expense": "చేర్చండి",
+    "Reports": "రిపోర్టులు",
+    "Compare": "పోలికలు",
+    "Dues & Profile": "బకాయిలు & ప్రొఫైల్"
+  };
+  return map[text] || text;
+}
+
+// Intercepts the original updateUI function to dynamically translate buttons and static texts
+var originalUpdateUI = updateUI;
+updateUI = function() {
+  if (typeof originalUpdateUI === 'function') {
+    originalUpdateUI();
+  }
+  
+  // Scans and translates static text elements on the fly
+  var elementsToTranslate = document.querySelectorAll('button, span, h3, h2, label, p, th');
+  elementsToTranslate.forEach(function(el) {
+    if (el.children.length === 0 && el.innerText.trim() !== '') {
+      var originalText = el.getAttribute('data-orig-text') || el.innerText.trim();
+      if (!el.hasAttribute('data-orig-text')) {
+        el.setAttribute('data-orig-text', originalText);
+      }
+      el.innerText = tText(originalText);
+    }
+  });
+};
     </script>
 </body>
 </html>
