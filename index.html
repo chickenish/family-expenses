@@ -6,30 +6,25 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Link App Manifest & Icons -->
-    <link rel="manifest" href="./manifest.json">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%231e293b'/><text x='50%25' y='55%25' font-family='sans-serif' font-size='220' font-weight='bold' fill='white' dominant-baseline='middle' text-anchor='middle'>₹</text></svg>">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800 select-none">
 
     <!-- FULLSCREEN CONFETTI CANVAS -->
     <canvas id="confettiCanvas" class="pointer-events-none fixed inset-0 z-50 w-full h-full hidden"></canvas>
 
-    <!-- CUSTOM APP DIALOG MODAL (Replaces all native alerts, prompts, and confirms) -->
+    <!-- CUSTOM APP DIALOG MODAL -->
     <div id="customDialogModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
             <h3 id="dialogTitle" class="text-sm font-black text-slate-800 uppercase tracking-wide">Alert</h3>
             <p id="dialogMessage" class="text-sm text-slate-600 font-semibold"></p>
             <div id="dialogInputContainer" class="hidden">
-                <input type="text" id="dialogInput" class="w-full p-2.5 border border-slate-200 bg-slate-50 text-sm font-bold rounded-lg focus:outline-none focus:bg-white text-center">
+                <input type="text" id="dialogInput" class="w-full p-2 bg-slate-50 border rounded-lg text-sm text-center">
             </div>
             <div id="dialogButtonsContainer" class="flex gap-2 justify-end pt-2 border-t"></div>
         </div>
     </div>
 
-    <!-- BILINGUAL APP-STYLE TIME FILTER CALENDAR MODAL (Borderless Text Keys) -->
+    <!-- BILINGUAL APP-STYLE TIME FILTER MODAL (Borderless Minimalist Layout) -->
     <div id="appFilterModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 text-center">
             <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Select Date Filter (తేదీ)</h3>
@@ -43,7 +38,7 @@
             </div>
             <div class="grid grid-cols-2 gap-2 pt-2 border-t">
                 <button onclick="closeFilterModal()" class="w-full bg-slate-100 p-2 rounded-xl font-bold text-xs uppercase">Cancel</button>
-                <button onclick="applyFilterDirect()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs uppercase">Apply</button>
+                <button onclick="applyFilterDirect()" class="w-full bg-slate-900 text-white p-2 rounded-xl font-black text-xs uppercase">Apply</button>
             </div>
         </div>
     </div>
@@ -54,37 +49,37 @@
             <div class="bg-slate-100 border border-slate-200 p-5 rounded-2xl text-center space-y-3">
                 <span class="px-2 py-0.5 bg-slate-200 text-[10px] font-black uppercase text-slate-500 rounded-full tracking-wider">Item Description</span>
                 <p class="text-sm font-bold text-slate-800">What did you buy today? / ఏమి కొన్నారు?</p>
-                <input type="text" id="descModalInput" placeholder="Write here... (ఎంటర్ చేయండి)" class="w-full p-2.5 bg-white border border-slate-200 text-sm font-bold rounded-xl text-center focus:outline-none focus:border-slate-800">
+                <input type="text" id="descModalInput" placeholder="Write here... (ఎంటర్ చేయండి)" class="w-full p-2 bg-white border rounded-xl text-sm text-center focus:outline-none">
             </div>
             <div class="grid grid-cols-2 gap-2 pt-1">
-                <button onclick="skipDescriptionModal()" class="w-full bg-slate-100 border text-slate-700 p-2.5 rounded-xl font-bold text-xs">Skip (స్కిప్)</button>
-                <button onclick="submitDescriptionModal()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs">Proceed ➔</button>
+                <button onclick="skipDescriptionModal()" class="w-full bg-slate-100 border text-slate-700 p-2 rounded-xl font-bold text-xs">Skip</button>
+                <button onclick="submitDescriptionModal()" class="w-full bg-slate-900 text-white p-2 rounded-xl font-black text-xs">Proceed ➔</button>
             </div>
         </div>
     </div>
 
     <!-- MEAT CHOICE MODAL -->
-    <div id="meatModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
+    <div id="meatModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
             <h3 class="text-sm font-black text-slate-850 uppercase tracking-wide">Meat Log Details</h3>
             <div>
                 <label class="block text-[10px] font-bold text-slate-400 uppercase">1. Select Non-Veg Type</label>
                 <div class="grid grid-cols-3 gap-2 mt-1">
-                    <button onclick="selectMeatType('Chicken')" id="mTypeChicken" class="p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Chicken</button>
-                    <button onclick="selectMeatType('Mutton')" id="mTypeMutton" class="p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Mutton</button>
-                    <button onclick="selectMeatType('Fish')" id="mTypeFish" class="p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Fish</button>
+                    <button onclick="selectMeatType('Chicken')" id="mTypeChicken" class="p-2 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Chicken</button>
+                    <button onclick="selectMeatType('Mutton')" id="mTypeMutton" class="p-2 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Mutton</button>
+                    <button onclick="selectMeatType('Fish')" id="mTypeFish" class="p-2 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">Fish</button>
                 </div>
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-slate-400 uppercase">2. Select Weight (Kgs)</label>
                 <div class="grid grid-cols-4 gap-1.5 mt-1">
-                    <button onclick="selectMeatQty(0.25)" id="mQty1" class="p-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1/4 kg</button>
-                    <button onclick="selectMeatQty(0.5)" id="mQty2" class="p-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1/2 kg</button>
-                    <button onclick="selectMeatQty(0.75)" id="mQty3" class="p-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">3/4 kg</button>
-                    <button onclick="selectMeatQty(1)" id="mQty4" class="p-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1 kg</button>
+                    <button onclick="selectMeatQty(0.25)" id="mQty1" class="p-2 border rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1/4 kg</button>
+                    <button onclick="selectMeatQty(0.5)" id="mQty2" class="p-2 border rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1/2 kg</button>
+                    <button onclick="selectMeatQty(0.75)" id="mQty3" class="p-2 border rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">3/4 kg</button>
+                    <button onclick="selectMeatQty(1)" id="mQty4" class="p-2 border rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1 kg</button>
                 </div>
                 <div class="mt-2">
-                    <input type="number" id="meatCustomQty" step="0.01" placeholder="Or enter custom weight (e.g. 1.5 kgs)" class="w-full p-2.5 border border-slate-200 text-xs font-semibold bg-slate-50 rounded-lg focus:bg-white focus:outline-none" oninput="clearMeatQtyButtons()">
+                    <input type="number" id="meatCustomQty" step="0.01" placeholder="Or enter custom weight (e.g. 1.5 kgs)" class="w-full p-2 border text-xs font-semibold bg-slate-50 rounded-lg focus:bg-white focus:outline-none" oninput="clearMeatQtyButtons()">
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-2 pt-2 border-t">
@@ -98,25 +93,25 @@
     <div id="numpadModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 text-center">
             <h3 class="text-xs uppercase font-black text-slate-400" id="numpadCategoryTitle">Logging Expense</h3>
-            <div class="text-3xl font-black text-slate-900 py-3 bg-slate-50 rounded-xl border border-slate-200 shadow-sm" id="numpadDisplay">₹ 0</div>
+            <div class="text-3xl font-black text-slate-900 py-3 bg-slate-50 rounded-xl border border-slate-200" id="numpadDisplay">₹ 0</div>
             
             <div class="grid grid-cols-3 gap-2 text-xl font-bold">
-                <button onclick="tapNumpad('1')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">1</button>
-                <button onclick="tapNumpad('2')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">2</button>
-                <button onclick="tapNumpad('3')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">3</button>
-                <button onclick="tapNumpad('4')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">4</button>
-                <button onclick="tapNumpad('5')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">5</button>
-                <button onclick="tapNumpad('6')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">6</button>
-                <button onclick="tapNumpad('7')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">7</button>
-                <button onclick="tapNumpad('8')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">8</button>
-                <button onclick="tapNumpad('9')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">9</button>
-                <button onclick="tapNumpad('C')" class="p-3.5 bg-red-50 text-red-600 rounded-xl">C</button>
-                <button onclick="tapNumpad('0')" class="p-3.5 bg-slate-100 hover:bg-slate-200 rounded-xl transition">0</button>
-                <button onclick="tapNumpad('DEL')" class="p-3.5 bg-slate-100 rounded-xl">⌫</button>
+                <button onclick="tapNumpad('1')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">1</button>
+                <button onclick="tapNumpad('2')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">2</button>
+                <button onclick="tapNumpad('3')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">3</button>
+                <button onclick="tapNumpad('4')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">4</button>
+                <button onclick="tapNumpad('5')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">5</button>
+                <button onclick="tapNumpad('6')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">6</button>
+                <button onclick="tapNumpad('7')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">7</button>
+                <button onclick="tapNumpad('8')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">8</button>
+                <button onclick="tapNumpad('9')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">9</button>
+                <button onclick="tapNumpad('C')" class="p-3 bg-red-50 text-red-600 rounded-xl">C</button>
+                <button onclick="tapNumpad('0')" class="p-3 bg-slate-100 hover:bg-slate-200 rounded-xl">0</button>
+                <button onclick="tapNumpad('DEL')" class="p-3 bg-slate-100 rounded-xl">⌫</button>
             </div>
             <div class="grid grid-cols-3 gap-1.5 pt-2 border-t">
                 <button onclick="closeNumpad()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-xs uppercase">Cancel</button>
-                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border border-slate-300 text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip</button>
+                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip</button>
                 <button onclick="submitNumpadAmount()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs uppercase">Next ➔</button>
             </div>
         </div>
@@ -134,11 +129,11 @@
                 <button onclick="selectNumpadPayer('Hari')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Hari</button>
                 <button onclick="selectNumpadPayer('Other')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Other (ఇతరులు)</button>
             </div>
-            <button onclick="closePaymentModal()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-sm mt-2">Back</button>
+            <button onclick="closePaymentModal()" class="w-full bg-slate-200 text-slate-800 p-2 rounded-xl font-bold text-sm mt-2">Back</button>
         </div>
     </div>
 
-    <!-- TABLET REMOTE TROUBLESHOOTER -->
+    <!-- TABLET REMOTE TROUBLESHOOTER (Alerts exact crashes) -->
     <script>
         window.onerror = function(message, source, lineno) {
             alert("Tablet Error Detected:\n" + message + "\nLine: " + lineno);
@@ -147,7 +142,7 @@
     </script>
 
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
             <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
@@ -279,7 +274,7 @@
                 </div>
                 <div>
                     <label id="lblQty" class="block text-xs font-bold text-slate-500 uppercase">Quantity</label>
-                    <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg focus:bg-white focus:outline-none">
                 </div>
             </div>
             
@@ -293,7 +288,7 @@
             </div>
 
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-250 text-slate-700 p-2 rounded-lg font-bold transition text-sm">Cancel Editing</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-250 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
         </div>
     </div>
 
@@ -307,24 +302,25 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
                 <span id="cardDailyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardWeekTitle" class="block text-[10px] uppercase font-bold text-slate-400">Weekly</span>
                 <span id="cardWeeklyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardMonthTitle" class="block text-[10px] uppercase font-bold text-slate-400">Monthly</span>
-                <span id="cardMonthlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardMonthlyAmt" class="block text-lg font-black text-slate-900 mt-1">₹0</span>
             </button>
-            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
+            <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-3 rounded-xl text-left shadow-sm active:scale-95 transition">
                 <span id="cardYearTitle" class="block text-[10px] uppercase font-bold text-slate-400">Yearly</span>
-                <span id="cardYearlyAmt" class="block text-xl font-black text-slate-950 mt-1">₹0</span>
+                <span id="cardYearlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
         </div>
 
+        <!-- Custom Calendar Filter to Search Particular Days -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <label id="lblCalendar" class="block text-xs font-bold text-slate-500 uppercase">Select Date to view logs</label>
             <div class="flex gap-2">
@@ -379,7 +375,7 @@
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
                 <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-950 h-1.5 rounded-full" style="width: 0%"></div>
+                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -445,7 +441,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalGanesh" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Ganesh')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -455,7 +451,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalSujatha" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDuesDirect('Sujatha')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -466,7 +462,7 @@
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
                         <!-- Direct Settle Bypass [1] -->
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="clearMemberDuesDirect('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -476,7 +472,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalOthers" class="text-md font-black text-slate-950">₹0</span>
-                        <button onclick="clearMemberDues('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Other')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-amber-50 p-4 rounded-xl border border-amber-200 shadow-sm flex justify-between items-center">
@@ -486,7 +482,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalMilkCurdEggsUnpaid" class="text-md font-black text-amber-950">₹0</span>
-                        <button onclick="clearMilkCurdEggsUnpaid()" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('MilkCurdEggs')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-300 shadow-sm flex justify-between items-center">
@@ -496,7 +492,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalUnpaid" class="text-lg font-black text-slate-950">₹0</span>
-                        <button onclick="clearUnpaidExpenses()" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded shadow hover:bg-slate-800">Clear All Dues</button>
+                        <button onclick="initiateClearDuesNumpad('Unpaid')" class="px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded shadow hover:bg-slate-800">Clear All Dues</button>
                     </div>
                 </div>
             </div>
@@ -587,35 +583,35 @@
             removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
         };
 
-        var speechLanguage = 'en-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
+        var speechLanguage = 'te-IN', uiLanguage = 'en', expenses = [], activeFilter = 'all', selectedCalendarDate = "", appUser = "", tempCompressedPhoto = "", editingExpenseId = null;
         var numpadActiveCategory = "", numpadActiveName = "", tempNumpadValue = "", numpadQty = 1, numpadStep = "amount";
         var tempMeatType = "", tempMeatQty = 1; 
         var duesSettleMode = false, duesSettleTarget = "";
         var isManualFormPayerSelection = false;
 
-        // Custom calendar variables for ES5 direct rendering [1]
-        var calendarModeType = "day"; 
-        var calendarFilterTarget = "category"; 
+        // Calendar states for ES5 direct rendering [1]
+        var calendarModeType = "day"; // day, month, year
+        var calendarFilterTarget = "category"; // category, log
         var calYear = new Date().getFullYear();
         var calMonth = new Date().getMonth(); // 0-11
         var selectedGridVal = "";
 
         var translations = {
             te: {
-                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను... మాట్లాడండి",
+                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను...",
                 formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం (Qty)", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
                 reportHeader: "కాలాల వారీగా ఖర్చులు", peopleHeader: "బకాయిలు", lblOthersName: "ఇతరులు", lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)", navAdd: "చేర్చండి", navReports: "రిపోర్టులు", navPeople: "ప్రొఫైల్ & బకాయిలు",
-                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
+                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "Analysis", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
             },
             en: {
-                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening... speak now",
+                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening...",
                 formHeading: "Expense Details", lblItem: "Item Name", lblAmount: "Amount (₹)", lblQty: "Quantity", lblPaidBy: "Who Paid?", saveBtn: "Save Expense", noExpenses: "No expenses logged yet", uiBtn: "తెలుగు UI",
                 reportHeader: "Time-Period Expenses", peopleHeader: "Ledger Dues", lblOthersName: "Others", lblUnpaidTab: "Pending Dues", navAdd: "Add Expense", navReports: "Reports", navPeople: "Dues & Profile",
-                compareHeader: "Monthly Comparisons", overspentTitle: "⚠️ Spending Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
+                compareHeader: "Monthly Comparisons", overspentTitle: "Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
             }
         };
 
-        // DOM CONTROL BINDINGS (CRASH PREVENTING SYSTEM)
+        // DOM UTILS
         function safeClass(id, action, className) {
             var el = document.getElementById(id);
             if (el) {
@@ -634,26 +630,12 @@
             updateUI(); 
             loadExpenses();
             loadSavedBudgets();
-            
-            // Connect offline manifest PWA registration safely [1]
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function() {
-                    console.log("Offline caching helper is fully operational on GitHub Pages [1]!");
-                }).catch(function(e) {
-                    console.warn("Service worker offline helper failed to link:", e);
-                });
-            }
         });
 
-        // IDENTITY SECURITY ENGINE (Safely loads session state or login blocks) [3]
+        // IDENTITY
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
-            var isLoggedLocal = safeStorage.getItem('is_logged_in');
-            
-            // Remember Me session logic [3]
-            var isLoggedSession = null;
-            try { isLoggedSession = sessionStorage.getItem('is_logged_in'); } catch(e) {}
-            var isLogged = isLoggedLocal || isLoggedSession;
+            var isLogged = safeStorage.getItem('is_logged_in');
 
             if (!profileStr) {
                 safeClass('registerScreen', 'remove', 'hidden');
@@ -666,9 +648,7 @@
                     appUser = p.username;
                     safeSetText('currentUserDisplay', "User: " + p.username);
                     var editEl = document.getElementById('editUsername');
-                    if (editEl) {
-                        editEl.value = p.username;
-                    }
+                    if (editEl) editEl.value = p.username;
                     safeClass('loginScreen', 'add', 'hidden');
                 } else {
                     safeClass('loginScreen', 'remove', 'hidden');
@@ -703,18 +683,14 @@
             if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) {
-                alert("Profile corrupted.");
+                appAlert("Profile Error", "Profile corrupted.");
                 safeStorage.removeItem('family_profile');
                 checkUser();
                 return;
             }
 
             if (p.username === user && p.password === pass) {
-                if (remember) {
-                    safeStorage.setItem('is_logged_in', 'true');
-                } else {
-                    try { sessionStorage.setItem('is_logged_in', 'true'); } catch(e) {}
-                }
+                safeStorage.setItem('is_logged_in', 'true');
                 document.getElementById('loginUser').value = "";
                 document.getElementById('loginPass').value = "";
                 checkUser();
@@ -749,7 +725,7 @@
 
             appPrompt("Identity check", "Question: " + qMap[p.question] + "\nEnter answer:", "", function(entered) {
                 if (entered && entered.trim().toLowerCase() === p.answer) {
-                    if (!newPass) { appAlert("Error", "New Password is required."); return; }
+                    if (!newPass) { appAlert("Error", "Password is required."); return; }
                     p.password = newPass;
                     safeStorage.setItem('family_profile', JSON.stringify(p));
                     appAlert("Success", "Password updated successfully!");
@@ -776,19 +752,59 @@
         function logoutProfile() {
             appConfirm("Exit App", "Reset login credentials or Logout from this device?", function() {
                 safeStorage.removeItem('is_logged_in');
-                try { sessionStorage.removeItem('is_logged_in'); } catch(e) {}
                 checkUser();
             });
-        }
-
-        function promptUserChange() {
-            logoutProfile();
         }
 
         // ROLE PERMISSIONS
         function hasPermission() {
             var u = (appUser || "").toLowerCase().trim();
             return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari [1]
+        }
+
+        // ==================== BILINGUAL SIDE-BURST CONFETTI SYSTEM ====================
+        var confettiCanvas = null, ctx = null, particles = [], animationFrame = null;
+        function initConfetti() {
+            confettiCanvas = document.getElementById('confettiCanvas');
+            if (!confettiCanvas) return;
+            ctx = confettiCanvas.getContext('2d');
+            confettiCanvas.width = window.innerWidth;
+            confettiCanvas.height = window.innerHeight;
+        }
+        function triggerConfettiBurst() {
+            initConfetti();
+            if (!confettiCanvas || !ctx) return;
+            confettiCanvas.classList.remove('hidden');
+            particles = [];
+            var colors = ['#f43f5e', '#3b82f6', '#eab308', '#10b981', '#a855f7', '#ff7849'];
+            for (var i = 0; i < 150; i++) {
+                var side = Math.random() < 0.5 ? 'left' : 'right';
+                particles.push({
+                    x: side === 'left' ? 0 : confettiCanvas.width,
+                    y: confettiCanvas.height * 0.8,
+                    vx: side === 'left' ? (Math.random() * 8 + 4) : -(Math.random() * 8 + 4),
+                    vy: -(Math.random() * 12 + 8),
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    size: Math.random() * 8 + 5,
+                    rotation: Math.random() * 360,
+                    spin: Math.random() * 4 - 2
+                });
+            }
+            animateConfetti();
+        }
+        function animateConfetti() {
+            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+            var active = false;
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.vx *= 0.98; p.rotation += p.spin;
+                if (p.y < confettiCanvas.height) {
+                    active = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
+                    ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size); ctx.restore();
+                }
+            }
+            if (active) { animationFrame = requestAnimationFrame(animateConfetti); }
+            else { confettiCanvas.classList.add('hidden'); cancelAnimationFrame(animationFrame); }
         }
 
         // COMPRESSION ENGINE
@@ -987,6 +1003,149 @@
             safeClass('numpadModal', 'remove', 'hidden');
         }
 
+        // ==================== BILINGUAL APP-STYLE TIME SELECTOR CALENDAR [1] ====================
+        function openCustomDatePickerModal(target) {
+            calendarFilterTarget = target; // 'category' or 'log'
+            switchFilterTab('day');
+            safeClass('appFilterModal', 'remove', 'hidden');
+        }
+
+        function closeFilterModal() {
+            safeClass('appFilterModal', 'add', 'hidden');
+        }
+
+        function switchFilterTab(tabType) {
+            calendarModeType = tabType;
+            var tDay = document.getElementById('tabDay'), tMonth = document.getElementById('tabMonth'), tYear = document.getElementById('tabYear');
+            
+            if (tDay) tDay.className = "px-3 py-1.5 rounded-md " + (tabType === 'day' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+            if (tMonth) tMonth.className = "px-3 py-1.5 rounded-md " + (tabType === 'month' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+            if (tYear) tYear.className = "px-3 py-1.5 rounded-md " + (tabType === 'year' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+
+            generateFilterGrid();
+        }
+
+        // NEW: APP-STYLE DATE/CALENDAR GENERATOR (No native border keys) [1]
+        function generateFilterGrid() {
+            var gridArea = document.getElementById('filterGridArea');
+            if (!gridArea) return;
+            gridArea.innerHTML = "";
+
+            if (calendarModeType === 'day') {
+                // Generate a fully interactive, completely borderless calendar [1]
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                
+                // Calendar header with controls
+                var headerHTML = 
+                    '<div class="col-span-7 flex justify-between items-center px-2 py-1 font-bold text-sm text-slate-800 border-b pb-2">' +
+                        '<button onclick="changeCalMonth(-1)">◀</button>' +
+                        '<span>' + monthNames[calMonth] + ' ' + calYear + '</span>' +
+                        '<button onclick="changeCalMonth(1)">▶</button>' +
+                    '</div>';
+                
+                gridArea.innerHTML = headerHTML;
+
+                // Render weekdays header [1]
+                var weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+                for (var i = 0; i < weekdays.length; i++) {
+                    gridArea.insertAdjacentHTML('beforeend', '<span class="text-center font-black text-[10px] text-slate-400 py-1">' + weekdays[i] + '</span>');
+                }
+
+                var firstDayIdx = new Date(calYear, calMonth, 1).getDay();
+                var totalDays = new Date(calYear, calMonth + 1, 0).getDate();
+
+                // Spacing padding
+                for (var space = 0; space < firstDayIdx; space++) {
+                    gridArea.insertAdjacentHTML('beforeend', '<span></span>');
+                }
+
+                // Render day buttons (borderless, minimalist, clean font) [1]
+                for (var d = 1; d <= totalDays; d++) {
+                    var dStr = String(d).padStart(2, '0');
+                    var mStr = String(calMonth + 1).padStart(2, '0');
+                    var fullDateVal = calYear + '-' + mStr + '-' + dStr;
+                    
+                    var isSelected = (selectedGridVal === fullDateVal);
+                    var btnClass = isSelected ? "text-center font-black text-sm text-slate-900 underline" : "text-center text-sm font-semibold text-slate-500 hover:text-slate-900";
+                    
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectCalDate(\'' + fullDateVal + '\')" class="' + btnClass + '">' + d + '</button>');
+                }
+            } else if (calendarModeType === 'month') {
+                // Generate months as simple borderless text elements [1]
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                for (var m = 0; m < months.length; m++) {
+                    var mVal = String(m + 1).padStart(2, '0');
+                    var isSelected = (selectedGridVal === mVal);
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + mVal + '\')" class="' + btnClass + '">' + months[m] + '</button>');
+                }
+            } else {
+                // Generate Years [1]
+                var years = ["2025", "2026", "2027", "2028"];
+                for (var y = 0; y < years.length; y++) {
+                    var isSelected = (selectedGridVal === years[y]);
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + years[y] + '\')" class="' + btnClass + '">' + years[y] + '</button>');
+                }
+            }
+        }
+
+        function changeCalMonth(dir) {
+            calMonth += dir;
+            if (calMonth < 0) {
+                calMonth = 11;
+                calYear -= 1;
+            } else if (calMonth > 11) {
+                calMonth = 0;
+                calYear += 1;
+            }
+            generateCalendarDayGrid();
+        }
+
+        function generateCalendarDayGrid() {
+            generateFilterGrid();
+        }
+
+        function selectCalDate(dateVal) {
+            selectedGridVal = dateVal;
+            generateCalendarDayGrid(); 
+        }
+
+        function selectGridValue(val) {
+            selectedGridVal = val;
+            generateFilterGrid();
+        }
+
+        function applyFilterDirect() {
+            if (!selectedGridVal) {
+                alert("Please select a date from the calendar!");
+                return;
+            }
+
+            var now = new Date();
+            var targetFilterString = "";
+
+            if (calendarModeType === 'day') {
+                targetFilterString = selectedGridVal; // Already formatted YYYY-MM-DD
+            } else if (calendarModeType === 'month') {
+                targetFilterString = now.getFullYear() + "-" + selectedGridVal; // YYYY-MM
+            } else {
+                targetFilterString = selectedGridVal; // YYYY
+            }
+
+            closeFilterModal();
+
+            if (calendarFilterTarget === 'category') {
+                activeFilter = targetFilterString;
+                var displayLabels = { "day": "Day", "month": "Month", "year": "Year" };
+                safeSetText('categoryActiveTimeframe', displayLabels[calendarModeType] + ": " + selectedGridVal);
+                calculateCategoryGrid();
+            } else {
+                filterLogBySpecificDate(targetFilterString);
+            }
+            selectedGridVal = ""; // reset
+        }
+
         // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL [1] ====================
         function initiateClearDuesNumpad(target) {
             if (!hasPermission()) {
@@ -1052,143 +1211,31 @@
             safeClass('numpadModal', 'remove', 'hidden');
         }
 
-        // ==================== BILINGUAL APP-STYLE TIME SELECTOR CALENDAR [1] ====================
-        function openCustomDatePickerModal(target) {
-            calendarFilterTarget = target; 
-            switchFilterTab('day');
-            safeClass('appFilterModal', 'remove', 'hidden');
-        }
-
-        function closeFilterModal() {
-            safeClass('appFilterModal', 'add', 'hidden');
-        }
-
-        function switchFilterTab(tabType) {
-            calendarModeType = tabType;
-            var tDay = document.getElementById('tabDay'), tMonth = document.getElementById('tabMonth'), tYear = document.getElementById('tabYear');
-            
-            if (tDay) tDay.className = "px-3 py-1.5 rounded-md " + (tabType === 'day' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
-            if (tMonth) tMonth.className = "px-3 py-1.5 rounded-md " + (tabType === 'month' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
-            if (tYear) tYear.className = "px-3 py-1.5 rounded-md " + (tabType === 'year' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
-
-            generateFilterGrid();
-        }
-
-        // NEW: APP-STYLE FULL DATE CALENDAR GENERATOR (No native border keys) [1]
-        function generateFilterGrid() {
-            var gridArea = document.getElementById('filterGridArea');
-            if (!gridArea) return;
-            gridArea.innerHTML = "";
-
-            if (calendarModeType === 'day') {
-                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                
-                var headerHTML = 
-                    '<div class="col-span-7 flex justify-between items-center px-2 py-1 font-bold text-sm text-slate-800 border-b pb-2">' +
-                        '<button onclick="changeCalMonth(-1)">◀</button>' +
-                        '<span>' + monthNames[calMonth] + ' ' + calYear + '</span>' +
-                        '<button onclick="changeCalMonth(1)">▶</button>' +
-                    '</div>';
-                
-                gridArea.innerHTML = headerHTML;
-
-                var weekdays = ["S", "M", "T", "W", "T", "F", "S"];
-                for (var i = 0; i < weekdays.length; i++) {
-                    gridArea.insertAdjacentHTML('beforeend', '<span class="text-center font-black text-[10px] text-slate-400 py-1">' + weekdays[i] + '</span>');
-                }
-
-                var firstDayIdx = new Date(calYear, calMonth, 1).getDay();
-                var totalDays = new Date(calYear, calMonth + 1, 0).getDate();
-
-                for (var space = 0; space < firstDayIdx; space++) {
-                    gridArea.insertAdjacentHTML('beforeend', '<span></span>');
-                }
-
-                // Render day buttons borderless [1]
-                for (var d = 1; d <= totalDays; d++) {
-                    var dStr = String(d).padStart(2, '0');
-                    var mStr = String(calMonth + 1).padStart(2, '0');
-                    var fullDateVal = calYear + '-' + mStr + '-' + dStr;
-                    
-                    var isSelected = (selectedGridVal === fullDateVal);
-                    var btnClass = isSelected ? "text-center font-black text-sm text-slate-900 underline" : "text-center text-sm font-semibold text-slate-500 hover:text-slate-900";
-                    
-                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectCalDate(\'' + fullDateVal + '\')" class="' + btnClass + '">' + d + '</button>');
-                }
-            } else if (calendarModeType === 'month') {
-                // borderless text months [1]
-                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                for (var m = 0; m < months.length; m++) {
-                    var mVal = String(m + 1).padStart(2, '0');
-                    var isSelected = (selectedGridVal === mVal);
-                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
-                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + mVal + '\')" class="' + btnClass + '">' + months[m] + '</button>');
+        // ==================== GENERAL NUMPAD CONTROLLER ====================
+        function tapNumpad(char) {
+            var display = document.getElementById('numpadDisplay');
+            if (char === 'C') {
+                tempNumpadValue = "";
+            } else if (char === 'DEL') {
+                if (tempNumpadValue.length > 0) {
+                    tempNumpadValue = tempNumpadValue.substring(0, tempNumpadValue.length - 1);
                 }
             } else {
-                // borderless text years [1]
-                var years = ["2025", "2026", "2027", "2028"];
-                for (var y = 0; y < years.length; y++) {
-                    var isSelected = (selectedGridVal === years[y]);
-                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
-                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + years[y] + '\')" class="' + btnClass + '">' + years[y] + '</button>');
+                if (tempNumpadValue.length < 7) {
+                    tempNumpadValue += char;
                 }
             }
-        }
 
-        function changeCalMonth(dir) {
-            calMonth += dir;
-            if (calMonth < 0) {
-                calMonth = 11;
-                calYear -= 1;
-            } else if (calMonth > 11) {
-                calMonth = 0;
-                calYear += 1;
-            }
-            generateCalendarDayGrid();
-        }
-
-        function generateCalendarDayGrid() {
-            generateFilterGrid();
-        }
-
-        function selectCalDate(dateVal) {
-            selectedGridVal = dateVal;
-            generateCalendarDayGrid(); 
-        }
-
-        function selectGridValue(val) {
-            selectedGridVal = val;
-            generateFilterGrid();
-        }
-
-        function applyFilterDirect() {
-            if (!selectedGridVal) {
-                alert("Please select a date from the calendar!");
-                return;
-            }
-
-            var now = new Date();
-            var targetFilterString = "";
-
-            if (calendarModeType === 'day') {
-                targetFilterString = selectedGridVal; 
-            } else if (calendarModeType === 'month') {
-                targetFilterString = now.getFullYear() + "-" + selectedGridVal; 
+            if (numpadStep === 'amount') {
+                display.innerText = "₹ " + (tempNumpadValue || "0");
             } else {
-                targetFilterString = selectedGridVal; 
+                display.innerText = (tempNumpadValue || "0") + " packet/kg/qty";
             }
+        }
 
-            closeFilterModal();
-
-            if (calendarFilterTarget === 'category') {
-                activeFilter = targetFilterString;
-                var displayLabels = { "day": "Day", "month": "Month", "year": "Year" };
-                safeSetText('categoryActiveTimeframe', displayLabels[calendarModeType] + ": " + selectedGridVal);
-                calculateCategoryGrid();
-            } else {
-                filterLogBySpecificDate(targetFilterString);
-            }
-            selectedGridVal = ""; 
+        function closeNumpad() {
+            safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false; 
         }
 
         function closePaymentModal() {
@@ -1212,7 +1259,6 @@
             }
 
             if (numpadStep === 'amount') {
-                // COGNIZANT HIGH VALUE CORRECTION: Store price amount BEFORE resetting temp value for qty step! [1, 2]
                 safeStorage.setItem('last_temp_amt', valVal);
 
                 var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
@@ -1251,9 +1297,22 @@
             proceedToPaymentSelection(baseAmount);
         }
 
-        // NEW: UNPAID-TO-PAID SETTLEMENT CALCULATIONS ENGINE [1]
+        // DIRECT LEDGER SETTLEMENT SAVER CORE MATH
         function duesSettlementFlowProceed(amtToClear) {
             if (!duesSettleMode) return false;
+
+            var settleName = "Dues Settle (" + duesSettleTarget + ")";
+            var settleCat = "Other expenses";
+            var settlePaidBy = duesSettleTarget;
+
+            if (duesSettleTarget === 'MilkCurdEggs') {
+                settleName = "Milk/Curd/Eggs Settle";
+                settleCat = "Milk";
+                settlePaidBy = "Unpaid";
+            } else if (duesSettleTarget === 'Unpaid') {
+                settleName = "Unpaid Dues Cleared";
+                settlePaidBy = "Unpaid";
+            }
 
             // Mark outstanding items as Settled directly without inserting negative bills [1]
             var remaining = amtToClear;
@@ -1278,13 +1337,13 @@
                         remaining -= exp.amount;
                         exp.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
                     } else {
-                        // Split Item into paid and unpaid segments mathematically [1]
+                        // Split Item into paid and unpaid segments [1]
                         var originalAmt = exp.amount;
                         exp.amount = originalAmt - remaining; // Remaining unpaid amount kept [1]
 
                         var clearedPartItem = JSON.parse(JSON.stringify(exp));
                         clearedPartItem.id = Date.now() + i;
-                        clearedPartItem.amount = remaining; // Paid segment [1]
+                        clearedPartItem.amount = remaining; // Settled segment [1]
                         clearedPartItem.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
                         
                         expenses.push(clearedPartItem);
@@ -1304,9 +1363,7 @@
             return true;
         }
 
-        // COGNIZANT CORRECTED: Payer Selection mapper for both manual form & Visual numpads [1, 2]
         function selectNumpadPayer(payer) {
-            // Check if this was opened from the manual form [1]
             if (isManualFormPayerSelection) {
                 document.getElementById('paidBy').value = payer;
                 
@@ -1441,7 +1498,6 @@
             }
         }
 
-        // BILINGUAL LOGIC
         function convertWordsToNumbers(text) {
             var t = text.toLowerCase();
             var words = {
@@ -1477,7 +1533,7 @@
             };
             rec.onerror = function(event) {
                 if (event.error === 'not-allowed') {
-                    alert("Mic Access Denied!\nPlease check browser settings and allow Microphone permissions.");
+                    alert("Mic Access Denied!\nPlease allow Microphone permissions.");
                 } else if (event.error === 'no-speech') {
                     alert("No speech detected.");
                 } else {
@@ -1561,7 +1617,7 @@
             if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
             var name = nameEl.value.trim(), amount = parseFloat(amtEl.value), qty = parseFloat(qtyEl.value) || 1, paidBy = paidEl.value;
             var category = detectCategory(name), dateVal = new Date().toISOString(); 
-            if (!name || isNaN(amount)) { alert("Enter valid details."); return; }
+            if (!name || isNaN(amount)) { appAlert("Error", "Enter valid details."); return; }
             var creatorName = appUser || "Guest";
 
             if (editingExpenseId !== null) {
@@ -1571,11 +1627,369 @@
                     }
                     return exp;
                 });
-                editingExpenseId = null; alert("Item updated!");
+                editingExpenseId = null; appAlert("Success", "Item updated!");
             } else {
                 expenses.push({ id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || "", recorded_by: creatorName, edited_by: "" });
             }
             saveToLocalAndCloud(expenses); clearAttachedPhoto(); cancelEditingMode(); loadExpenses(); navigateTo('pageReports');
+        }
+
+        function enterEditingMode(id) {
+            editingExpenseId = id; var target = null;
+            for (var i = 0; i < expenses.length; i++) { if (expenses[i].id === id) { target = expenses[i]; break; } }
+            if (!target) return;
+            document.getElementById('itemName').value = target.name;
+            document.getElementById('itemAmount').value = target.amount;
+            document.getElementById('itemQty').value = target.qty;
+            
+            document.getElementById('paidBy').value = target.paid_by;
+            var labelMap = { "Unpaid": "Unpaid / Credit Tab (ఉంచాము)", "Ganesh": "Ganesh", "Sujatha": "Sujatha", "Hari": "Hari", "Other": "Other (ఇతరులు)" };
+            document.getElementById('manualPaidByTrigger').innerText = labelMap[target.paid_by] || target.paid_by;
+
+            if (target.photo) {
+                tempCompressedPhoto = target.photo;
+                var pr = document.getElementById('imagePreview');
+                if (pr) pr.src = tempCompressedPhoto;
+                safeClass('imageStatusArea', 'remove', 'hidden');
+            } else { clearAttachedPhoto(); }
+            safeClass('editBadge', 'remove', 'hidden'); safeClass('cancelEditBtn', 'remove', 'hidden');
+            document.getElementById('saveBtn').innerText = "Update Expense"; navigateTo('pageAdd');
+        }
+
+        function cancelEditingMode() {
+            editingExpenseId = null; safeClass('editBadge', 'add', 'hidden'); safeClass('cancelEditBtn', 'add', 'hidden');
+            document.getElementById('saveBtn').innerText = translations[uiLanguage].saveBtn;
+            document.getElementById('itemName').value = ""; document.getElementById('itemAmount').value = ""; document.getElementById('itemQty').value = "1";
+            document.getElementById('paidBy').value = "Unpaid"; 
+            document.getElementById('manualPaidByTrigger').innerText = "Unpaid / Credit Tab (ఉంచాము)";
+            clearAttachedPhoto();
+        }
+
+        function deleteExpenseLocal(id) {
+            appConfirm("Delete Expense", "Are you sure you want to delete this expense?", function() {
+                var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+                if (url && key) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
+                    xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                    xhr.send();
+                }
+                expenses = expenses.filter(function(exp) { return exp.id !== id; });
+                safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
+            });
+        }
+
+        // ==================== CLEAR DUELS (SECURED) ====================
+        function clearUnpaidExpenses() {
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
+            if (unpaidTotal <= 0) { alert("No unpaid dues!"); return; }
+
+            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now (Press OK to clear full amount):", unpaidTotal);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Unpaid Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Other expenses", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + "! Remaining: ₹" + (unpaidTotal - amtToClear));
+        }
+
+        function clearMemberDues(member) {
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
+            if (currentSpent <= 0) { alert("No dues for " + member); return; }
+
+            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amtToClear, qty: 1, paid_by: member, category: "Other expenses", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear));
+        }
+
+        function clearMilkCurdEggsUnpaid() {
+            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
+            var currentSpent = 0;
+            expenses.forEach(function(exp) {
+                var isTarget = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                if (exp.paid_by === 'Unpaid' && isTarget) { currentSpent += exp.amount; }
+            });
+            if (currentSpent <= 0) { alert("No unpaid dues for Milk, Curd or Eggs!"); return; }
+
+            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
+            if (amtInput === null) return;
+            var amtToClear = parseFloat(amtInput);
+            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
+
+            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Milk", recorded_by: appUser, edited_by: "" });
+            saveToLocalAndCloud(expenses); loadExpenses();
+            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
+        }
+
+        // ==================== STATS AND BALANCES ====================
+        function calculateSummaryData() {
+            var dSum=0, wSum=0, mSum=0, ySum=0, spentG=0, spentS=0, spentH=0, spentO=0, spentU=0, spentMCE=0;
+            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var itemTotalPrice = exp.amount; 
+
+                if (expDate >= startOfToday) dSum += itemTotalPrice;
+                if (expDate >= lastWeek) wSum += itemTotalPrice;
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) mSum += itemTotalPrice;
+                if (expDate.getFullYear() === now.getFullYear()) ySum += itemTotalPrice;
+
+                if (exp.paid_by === 'Ganesh') spentG += itemTotalPrice;
+                else if (exp.paid_by === 'Sujatha') spentS += itemTotalPrice;
+                else if (exp.paid_by === 'Hari') spentH += itemTotalPrice;
+                else if (exp.paid_by === 'Other') spentO += itemTotalPrice;
+                else if (exp.paid_by === 'Unpaid') {
+                    spentU += itemTotalPrice;
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (isGrocery) spentMCE += itemTotalPrice;
+                }
+            });
+
+            safeSetText('cardDailyAmt', '₹' + dSum); safeSetText('cardWeeklyAmt', '₹' + wSum); safeSetText('cardMonthlyAmt', '₹' + mSum); safeSetText('cardYearlyAmt', '₹' + ySum);
+            safeSetText('totalGanesh', '₹' + spentG); safeSetText('totalSujatha', '₹' + spentS); safeSetText('totalHari', '₹' + spentH); safeSetText('totalOthers', '₹' + spentO);
+            safeSetText('totalUnpaid', '₹' + spentU); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
+            
+            // Progress Update
+            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+            safeSetText('budgetDailyProgress', '₹' + dSum + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + wSum + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + mSum + ' / ₹' + budM);
+
+            var bD = document.getElementById('budgetDailyBar'), bW = document.getElementById('budgetWeeklyBar'), bM = document.getElementById('budgetMonthlyBar');
+            if (bD) bD.style.width = Math.min((dSum / budD) * 100, 100) + '%';
+            if (bW) bW.style.width = Math.min((wSum / budW) * 100, 100) + '%';
+            if (bM) bM.style.width = Math.min((mSum / budM) * 100, 100) + '%';
+
+            calculateCategoryGrid();
+        }
+
+        // DYNAMIC HIGHLIGHT COLOR MAPPER FOR OVERSPENDING [1, 4]
+        function calculateCategoryGrid() {
+            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
+            var gridData = {};
+            for (var i = 0; i < categories.length; i++) { gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 }; }
+
+            // Find Maximum category spent for visual heatmap ranking [1]
+            var maxSpentCategoryValue = 0;
+
+            expenses.forEach(function(exp) {
+                // Apply calendar time filters dynamically to totals grid [1]
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var yyyy = expDate.getFullYear(), mm = String(expDate.getMonth() + 1).padStart(2, '0'), dd = String(expDate.getDate()).padStart(2, '0');
+                var expDateStr = yyyy + '-' + mm + '-' + dd;
+
+                var isMatched = true;
+                if (activeFilter === 'calendar' && selectedCalendarDate) {
+                    if (selectedCalendarDate.length === 4) { // Year only
+                        isMatched = (String(yyyy) === selectedCalendarDate);
+                    } else if (selectedCalendarDate.length === 7) { // Month/Year
+                        isMatched = ((yyyy + '-' + mm) === selectedCalendarDate);
+                    } else { // Exact day YYYY-MM-DD
+                        isMatched = (expDateStr === selectedCalendarDate);
+                    }
+                }
+
+                if (isMatched) {
+                    var cat = exp.category || 'Other expenses';
+                    var price = exp.amount; 
+                    if (!gridData[cat]) gridData[cat] = { paid: 0, unpaid: 0, total: 0 };
+                    gridData[cat].total += price;
+                    if (exp.paid_by === 'Unpaid') gridData[cat].unpaid += price;
+                    else gridData[cat].paid += price;
+
+                    if (gridData[cat].total > maxSpentCategoryValue) {
+                        maxSpentCategoryValue = gridData[cat].total;
+                    }
+                }
+            });
+
+            var tbody = document.getElementById('categoryTableBody');
+            if (!tbody) return; tbody.innerHTML = "";
+
+            for (var j = 0; j < categories.length; j++) {
+                var c = categories[j]; var d = gridData[c];
+                
+                var heatmapRowColor = "bg-white text-slate-800"; 
+                if (maxSpentCategoryValue > 0 && d.total > 0) {
+                    if (d.total === maxSpentCategoryValue) {
+                        // Rank 1 Highest Spent: Warm Rose [1, 4]
+                        heatmapRowColor = "bg-rose-50 text-rose-900 border-l-4 border-rose-300 font-black";
+                    } else if (d.total >= (maxSpentCategoryValue * 0.50)) {
+                        // Moderate spent: Warm Amber [1, 4]
+                        heatmapRowColor = "bg-amber-50 text-amber-900 border-l-4 border-amber-300 font-bold";
+                    }
+                }
+
+                tbody.insertAdjacentHTML('beforeend', '<tr class="border-b border-slate-100 ' + heatmapRowColor + '"><td class="py-3 px-2 font-bold">' + c + '</td><td class="py-3 px-2 text-right">₹' + d.paid + '</td><td class="py-3 px-2 text-right">₹' + d.unpaid + '</td><td class="py-3 px-2 text-right font-black">₹' + d.total + '</td></tr>');
+            }
+        }
+
+        // COGNIZANT DYNAMIC INJECTOR: Month histories ledger calculations [1]
+        function renderComparisonTab() {
+            var now = new Date(), monthsMap = {};
+            var monthlyLedgerData = {}; // MonthName -> { paid, unpaid, total }
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
+                
+                monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
+
+                // Group Monthly Ledger details [1]
+                if (!monthlyLedgerData[monthName]) {
+                    monthlyLedgerData[monthName] = { paid: 0, unpaid: 0, total: 0 };
+                }
+                monthlyLedgerData[monthName].total += exp.amount;
+                if (exp.paid_by === 'Unpaid') {
+                    monthlyLedgerData[monthName].unpaid += exp.amount;
+                } else {
+                    monthlyLedgerData[monthName].paid += exp.amount;
+                }
+            });
+
+            var listContainer = document.getElementById('comparisonList');
+            if (listContainer) {
+                listContainer.innerHTML = "";
+                var keys = Object.keys(monthsMap);
+                if (keys.length === 0) {
+                    listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
+                } else {
+                    keys.forEach(function(mName) {
+                        listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
+                    });
+                }
+            }
+
+            // Render the brand new Monthly Expenditure Records Table [1]
+            var mTableBody = document.getElementById('monthlyHistoryTableBody');
+            if (mTableBody) {
+                mTableBody.innerHTML = "";
+                var mKeys = Object.keys(monthlyLedgerData);
+                if (mKeys.length === 0) {
+                    mTableBody.innerHTML = '<tr><td colspan="4" class="text-slate-400 text-center py-4">No records available.</td></tr>';
+                } else {
+                    mKeys.forEach(function(mName) {
+                        var mData = monthlyLedgerData[mName];
+                        mTableBody.insertAdjacentHTML('beforeend', '<tr class="border-b border-amber-100 bg-white"><td class="py-3 px-1 text-slate-800 font-bold">' + mName + '</td><td class="py-3 px-1 text-right text-green-600 font-bold">₹' + mData.paid + '</td><td class="py-3 px-1 text-right text-red-500 font-bold">₹' + mData.unpaid + '</td><td class="py-3 px-1 text-right font-black text-slate-900">₹' + mData.total + '</td></tr>');
+                    });
+                }
+            }
+
+            var alertDetails = document.getElementById('overspentDetails');
+            if (!alertDetails) return; alertDetails.innerHTML = "";
+
+            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear(), lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
+            var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
+
+            var curTotal = monthsMap[currentMonthName] || 0, prevTotal = monthsMap[lastMonthName] || 0;
+            if (prevTotal > 0) {
+                if (curTotal > prevTotal) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
+                else alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
+            }
+
+            var tiffinSum = 0;
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (!isNaN(expDate.getTime()) && expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                    tiffinSum += exp.amount;
+                }
+            });
+
+            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+            } else {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
+            }
+        }
+
+        // NAVIGATION & TOGGLES
+        function navigateTo(pageId) {
+            var containers = document.querySelectorAll('.page-container');
+            for (var i = 0; i < containers.length; i++) containers[i].classList.add('hidden');
+            document.getElementById(pageId).classList.remove('hidden');
+
+            var navs = ['navAdd', 'navReports', 'navCompare', 'navPeople'];
+            for (var j = 0; j < navs.length; j++) {
+                var el = document.getElementById(navs[j]);
+                if (el) { el.classList.remove('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800'); el.classList.add('text-slate-400', 'font-bold'); }
+            }
+
+            var map = { 'pageAdd': 'navAdd', 'pageReports': 'navReports', 'pageCompare': 'navCompare', 'pagePeople': 'navPeople' };
+            var activeNav = document.getElementById(map[pageId]);
+            if (activeNav) { activeNav.classList.remove('text-slate-400', 'font-bold'); activeNav.classList.add('text-slate-800', 'font-black', 'border-t-2', 'border-slate-800'); }
+        }
+
+        function toggleUILanguage() {
+            uiLanguage = (uiLanguage === 'en') ? 'te' : 'en';
+            updateUI();
+        }
+
+        function updateUI() {
+            var t = translations[uiLanguage];
+            safeSetText('appTitle', t.title); safeSetText('uiLangBtn', t.uiBtn); safeSetText('speechHeading', t.speechHeading); safeSetText('voiceLabel', t.voiceLabel);
+            safeSetText('cameraLabel', t.cameraLabel); safeSetText('photoLabel', t.photoLabel); safeSetText('statusText', t.statusIdle); safeSetText('formHeading', t.formHeading);
+            safeSetText('lblItem', t.lblItem); safeSetText('lblAmount', t.lblAmount); safeSetText('lblQty', t.lblQty); safeSetText('lblPaidBy', t.lblPaidBy);
+            safeSetText('saveBtn', editingExpenseId ? "Update Expense" : t.saveBtn); safeSetText('reportHeader', t.reportHeader); safeSetText('peopleHeader', t.peopleHeader);
+            safeSetText('lblOthersName', t.lblOthersName); safeSetText('lblUnpaidTab', t.lblUnpaidTab); safeSetText('compareHeader', t.compareHeader); safeSetText('overspentTitle', t.overspentTitle);
+            safeSetText('histMonthsTitle', t.histMonthsTitle); safeSetText('catTotalsTitle', t.catTotalsTitle); safeSetText('cardDayTitle', t.cardDayTitle);
+            safeSetText('cardWeekTitle', t.cardWeekTitle); safeSetText('cardMonthTitle', t.cardMonthTitle); safeSetText('cardYearTitle', t.cardYearTitle); safeSetText('lblCalendar', t.lblCalendar);
+            
+            safeSetText('navTextAdd', t.navAdd); safeSetText('navTextRep', t.navReports); safeSetText('navTextComp', t.navCompare); safeSetText('navTextPeo', t.navPeople);
+            renderExpenses();
+        }
+
+        function filterReport(type) {
+            activeFilter = type; var titleEl = document.getElementById('reportListTitle');
+            if (titleEl) {
+                var titles = { all: "All Expenses", daily: "Today's Expenses", weekly: "Weekly Expenses", monthly: "Monthly Expenses", yearly: "Yearly Expenses" };
+                titleEl.innerText = titles[type] || "Expenses Log";
+            }
+            renderExpenses();
+        }
+
+        function renderExpenses() {
+            var listContainer = document.getElementById('expenseList');
+            if (!listContainer) return; listContainer.innerHTML = "";
+            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            var filtered = expenses.filter(function(exp) {
+                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                if (activeFilter === 'daily') return expDate >= startOfToday;
+                if (activeFilter === 'weekly') return expDate >= lastWeek;
+                if (activeFilter === 'monthly') return expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear();
+                if (activeFilter === 'yearly') return expDate.getFullYear() === now.getFullYear();
+                if (activeFilter === 'calendar') {
+                    var yyyy = expDate.getFullYear(), mm = String(expDate.getMonth() + 1).padStart(2, '0'), dd = String(expDate.getDate()).padStart(2, '0');
+                    return (yyyy + '-' + mm + '-' + dd) === selectedCalendarDate;
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">' + translations[uiLanguage].noExpenses + '</p>'; return; }
+
+            filtered.forEach(function(exp) {
+                var itemTotalPrice = exp.amount, expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var displayDate = expDate.getDate() + '/' + (expDate.getMonth()+1) + '/' + expDate.getFullYear();
+
+                var isUnpaid = exp.paid_by === 'Unpaid';
+                var bColor = isUnpaid ? 'bg-slate-100 text-slate-700 border border-slate-200' : 'bg-slate-800 text-white';
+                var bLabel = isUnpaid ? 'Unpaid' : 'Paid: ' + exp.paid_by;
+                var stamp = exp.edited_by ? "Edited by " + exp.edited_by : "Recorded by " + (exp.recorded_by || "Guest");
+
+                var photoIconHTML = exp.photo ? '<button onclick="viewPhotoById(' + exp.id + ')" class="px-2 py-0.5 bg-slate-100 border border-slate-300 rounded text-[10px] font-bold text-slate-700 transition">🖼️ Photo</button>' : '';
+
+                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-3"><div class="flex-1"><div class="flex items-center gap-2"><span class="font-bold text-gray-800">' + exp.name + '</span><span class="text-xs text-gray-400 font-semibold">(Qty: ' + exp.qty + ')</span>' + photoIconHTML + '</div><div class="flex flex-wrap gap-2 items-center mt-1 text-[11px]"><span class="text-slate-400 font-semibold">' + displayDate + '</span><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold uppercase text-[9px]">' + (exp.category || 'Other') + '</span><span class="px-2 py-0.5 text-xs font-semibold rounded-full ' + bColor + '">' + bLabel + '</span><span class="text-slate-400 italic bg-slate-100 px-1.5 py-0.5 rounded font-medium">' + stamp + '</span></div></div><div class="flex items-center gap-2"><span class="font-bold text-slate-900 mr-2">₹' + itemTotalPrice + '</span><button onclick="enterEditingMode(' + exp.id + ')" class="text-slate-600 hover:text-slate-900 text-xs font-bold border border-slate-200 px-2 py-1 rounded bg-white">✏️ Edit</button><button onclick="deleteExpenseLocal(' + exp.id + ')" class="text-red-500 hover:text-red-700 text-sm">❌</button></div></div>');
+            });
         }
     </script>
 </body>
