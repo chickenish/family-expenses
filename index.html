@@ -1905,20 +1905,67 @@
             alert("Cleared ₹" + amtToClear + "! Remaining: ₹" + (unpaidTotal - amtToClear));
         }
 
-        function clearMemberDues(member) {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
-            if (currentSpent <= 0) { alert("No dues for " + member); return; }
-
-            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amtToClear, qty: 1, paid_by: member, category: "Other expenses", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear));
-        }
+       function clearMemberDues(member) {
+  // 1. Check permissions using your theme alert style
+  if (!hasPermission()) { 
+    appAlert(
+      "Access Denied", 
+      "Only Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."
+    ); 
+    return; 
+  }
+  
+  // 2. Calculate the dues
+  var currentSpent = 0; 
+  expenses.forEach(function(exp) { 
+    if (exp.paid_by === member) currentSpent += exp.amount; 
+  });
+  
+  // 3. If no dues, show custom alert
+  if (currentSpent <= 0) { 
+    appAlert("Ledger Info", "No dues for " + member); 
+    return; 
+  }
+  
+  // 4. Request the clear amount using your theme prompt style
+  appPrompt(
+    "Clear Dues", 
+    member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", 
+    currentSpent, 
+    function(amtInput) {
+      // Callback logic runs after the user clicks "OK" in the app dialog
+      if (amtInput === null || amtInput.trim() === "") return;
+      
+      var amtToClear = parseFloat(amtInput);
+      if (isNaN(amtToClear) || amtToClear <= 0) { 
+        appAlert("Invalid Amount", "Please enter a valid amount."); 
+        return; 
+      }
+      
+      // 5. Keep your EXACT original calculation, object push, and sync logic
+      expenses.push({ 
+        id: Date.now(), 
+        created_at: new Date().toISOString(), 
+        name: "Payback to " + member, 
+        amount: -amtToClear, 
+        qty: 1, 
+        paid_by: member, 
+        category: "Other expenses", 
+        recorded_by: appUser, 
+        edited_by: "" 
+      });
+      
+      saveToLocalAndCloud(expenses); 
+      loadExpenses();
+      
+      // 6. Success message using custom theme alert style
+      appAlert(
+        "Dues Cleared", 
+        "Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear)
+      );
+    }
+  );
+} 
 
         function clearMilkCurdEggsUnpaid() {
             if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
