@@ -200,7 +200,34 @@
             </div>
         </div>
     </div>
-
+<!-- EGGS CHOICE MODAL -->
+<div id="eggModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+  <div class="bg-white p-5 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
+    <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Egg Log Details</h3>
+    
+    <div>
+      <label class="block text-[10px] font-bold text-slate-400 uppercase">Select Quantity</label>
+      <div class="grid grid-cols-2 gap-2 mt-1">
+        <button onclick="selectEggQty(6, '6 eggs')" id="eQty6" class="p-2.5 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">6 Eggs</button>
+        <button onclick="selectEggQty(12, '1 dozen')" id="eQty12" class="p-2.5 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">1 Dozen</button>
+        <button onclick="selectEggQty(18, '1.5 dozen')" id="eQty18" class="p-2.5 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">1.5 Dozen</button>
+        <button onclick="selectEggQty(24, '2 dozen')" id="eQty24" class="p-2.5 border rounded-lg text-xs font-bold text-slate-700 bg-slate-50">2 Dozen</button>
+      </div>
+    </div>
+    
+    <div>
+      <label class="block text-[10px] font-bold text-slate-400 uppercase">Or enter custom units (e.g. 3 dozen etc)</label>
+      <div class="mt-1">
+        <input type="text" id="eggCustomQty" placeholder="e.g. 3 dozen or 30 eggs" class="w-full p-2.5 border text-xs font-semibold bg-slate-50 rounded-lg focus:bg-white focus:outline-none" oninput="clearEggQtyButtons()">
+      </div>
+    </div>
+    
+    <div class="grid grid-cols-2 gap-2 pt-2 border-t">
+      <button onclick="closeEggModal()" class="w-full bg-slate-200 text-slate-800 p-2 text-xs font-bold rounded-lg">Cancel</button>
+      <button onclick="submitEggModal()" class="w-full bg-slate-900 text-white p-2 text-xs font-black rounded-lg">Proceed ➔</button>
+    </div>
+  </div>
+</div>
     <!-- TILES NUMPAD OVERLAYS -->
     <div id="numpadModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 text-center">
@@ -1204,6 +1231,15 @@
 
             safeClass('numpadSkipBtn', 'add', 'hidden');
 
+           if (category === 'Eggs') {
+    tempEggQty = 12;
+    tempEggLabel = "1 dozen";
+    var customInput = document.getElementById('eggCustomQty');
+    if (customInput) customInput.value = "";
+    highlightEggQtyButtons(12);
+    safeClass('eggModal', 'remove', 'hidden');
+    return;
+  } 
             if (category === 'Meat') {
                 tempMeatType = ""; tempMeatQty = 1;
                 document.getElementById('meatCustomQty').value = "";
@@ -2417,6 +2453,77 @@ updateUI = function() {
     }
   });
 };
+
+     // ==================== EGGS MODAL CONTROLLERS ====================
+var tempEggQty = 12;
+var tempEggLabel = "1 dozen";
+
+function selectEggQty(qty, label) {
+  tempEggQty = qty;
+  tempEggLabel = label;
+  var customInput = document.getElementById('eggCustomQty');
+  if (customInput) customInput.value = "";
+  highlightEggQtyButtons(qty);
+}
+
+function clearEggQtyButtons() {
+  highlightEggQtyButtons(null);
+}
+
+function highlightEggQtyButtons(qty) {
+  var q6 = document.getElementById('eQty6');
+  var q12 = document.getElementById('eQty12');
+  var q18 = document.getElementById('eQty18');
+  var q24 = document.getElementById('eQty24');
+  
+  if (q6) q6.className = "p-2.5 border border-slate-200 rounded-lg text-xs font-bold " + (qty === 6 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
+  if (q12) q12.className = "p-2.5 border border-slate-200 rounded-lg text-xs font-bold " + (qty === 12 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
+  if (q18) q18.className = "p-2.5 border border-slate-200 rounded-lg text-xs font-bold " + (qty === 18 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
+  if (q24) q24.className = "p-2.5 border border-slate-200 rounded-lg text-xs font-bold " + (qty === 24 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
+}
+
+function closeEggModal() {
+  safeClass('eggModal', 'add', 'hidden');
+}
+
+function submitEggModal() {
+  var customInput = document.getElementById('eggCustomQty');
+  var customVal = customInput ? customInput.value.trim() : "";
+  
+  if (customVal !== "") {
+    tempEggLabel = customVal;
+    var num = parseFloat(customVal);
+    if (!isNaN(num) && num > 0) {
+      if (customVal.toLowerCase().indexOf('dozen') !== -1) {
+        tempEggQty = num * 12;
+      } else {
+        tempEggQty = num;
+      }
+    } else {
+      tempEggQty = 1;
+    }
+  }
+  
+  numpadActiveCategory = 'Eggs';
+  numpadActiveName = 'Eggs';
+  numpadQty = tempEggQty;
+  
+  safeClass('eggModal', 'add', 'hidden');
+  tempNumpadValue = "";
+  numpadStep = "amount";
+  
+  var titleEl = document.getElementById('numpadCategoryTitle');
+  if (titleEl) {
+    titleEl.innerText = "Enter Amount (ధర) for: Eggs (" + tempEggLabel + ")";
+  }
+  
+  var displayEl = document.getElementById('numpadDisplay');
+  if (displayEl) {
+    displayEl.innerText = "₹ 0";
+  }
+  
+  safeClass('numpadModal', 'remove', 'hidden');
+}   
     </script>
 </body>
 </html>
