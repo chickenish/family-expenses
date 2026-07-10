@@ -1743,13 +1743,13 @@
             });
         }
     </script>
- // Register App Offline Helper
+    // Register App Offline Helper
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').then(function() {
                 console.log("Offline helper synced.");
             }).catch(function(err) {
                 console.warn("Offline error:", err);
             });
-        }   
-</body>
+        }
+ </body>
 </html>
