@@ -840,6 +840,12 @@
         }
 
         window.addEventListener('DOMContentLoaded', function() {
+            // Register service worker to make the app installable
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(function(reg) { console.log('Service Worker Registered!', reg); })
+      .catch(function(err) { console.log('Service Worker failed: ', err); });
+  }
             checkUser();
             updateUI(); 
             loadExpenses();
