@@ -1504,40 +1504,54 @@
         }
 
         function submitNumpadAmount() {
-            var valVal = parseFloat(tempNumpadValue);
-            if (isNaN(valVal) || valVal <= 0) {
-                alert("Please enter a valid number.");
-                return;
-            }
-
-            if (duesSettlementFlowProceed(valVal)) {
-                return;
-            }
-
-            if (numpadStep === 'amount') {
-                safeStorage.setItem('last_temp_amt', valVal);
-
-                var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
-                if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
-                    numpadStep = "quantity";
-                    tempNumpadValue = ""; 
-                    document.getElementById('numpadCategoryTitle').innerText = "Enter Quantity (పరిమాణం) for: " + numpadActiveName;
-                    document.getElementById('numpadDisplay').innerText = "0 packet/kg/qty";
-
-                    if (numpadActiveCategory === 'Other expenses') {
-                        safeClass('numpadSkipBtn', 'remove', 'hidden');
-                    } else {
-                        safeClass('numpadSkipBtn', 'add', 'hidden');
-                    }
-                    return; 
-                }
-                numpadQty = 1;
-                proceedToPaymentSelection(valVal);
-            } else {
-                numpadQty = valVal;
-                var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
-                proceedToPaymentSelection(baseAmount);
-            }
+  var valVal = parseFloat(tempNumpadValue);
+  if (isNaN(valVal) || valVal <= 0) {
+    alert("Please enter a valid number.");
+    return;
+  }
+  if (duesSettlementFlowProceed(valVal)) {
+    return;
+  }
+  
+  if (numpadStep === 'amount') {
+    safeStorage.setItem('last_temp_amt', valVal);
+    
+    // We removed 'Eggs' from this list to bypass the manual quantity step
+    var qtyCategories = ['Milk', 'Curd', 'Oil', 'Other expenses']; 
+    
+    if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
+      numpadStep = "quantity";
+      tempNumpadValue = ""; 
+      
+      var titleEl = document.getElementById('numpadCategoryTitle');
+      if (titleEl) {
+        titleEl.innerText = "Enter Quantity (పరిమాణం) for: " + numpadActiveName;
+      }
+      
+      var displayEl = document.getElementById('numpadDisplay');
+      if (displayEl) {
+        displayEl.innerText = "0 packet/kg/qty";
+      }
+      
+      if (numpadActiveCategory === 'Other expenses') {
+        safeClass('numpadSkipBtn', 'remove', 'hidden');
+      } else {
+        safeClass('numpadSkipBtn', 'add', 'hidden');
+      }
+      return; 
+    }
+    
+    // Keeps your pre-selected quantity (from the Meat/Eggs cards) safe from being reset to 1
+    if (['Chicken', 'Mutton', 'Fish', 'Eggs'].indexOf(numpadActiveCategory) === -1) {
+      numpadQty = 1;
+    }
+    
+    proceedToPaymentSelection(valVal);
+  } else {
+    numpadQty = valVal;
+    var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
+    proceedToPaymentSelection(baseAmount);
+  }
         }
 
         function proceedToPaymentSelection(amount) {
