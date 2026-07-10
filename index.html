@@ -4,44 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Expense Tracker</title>
+    <!-- Tailwind CSS (Styling) -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- Link App Manifest & Icons -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%231e293b'/><text x='50%25' y='55%25' font-family='sans-serif' font-size='220' font-weight='bold' fill='white' dominant-baseline='middle' text-anchor='middle'>₹</text></svg>">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Tailwind CSS (Styling) -->
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 min-h-screen pb-24 text-slate-800 select-none">
 
-    <!-- FULLSCREEN CONFETTI CANVAS (Zero dependencies, lightweight) -->
+    <!-- FULLSCREEN CONFETTI CANVAS -->
     <canvas id="confettiCanvas" class="pointer-events-none fixed inset-0 z-50 w-full h-full hidden"></canvas>
+
+    <!-- CUSTOM APP DIALOG MODAL (Replaces all native alerts, prompts and confirms) -->
+    <div id="customDialogModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-5 rounded-2xl shadow-xl max-w-sm w-full space-y-4">
+            <h3 id="dialogTitle" class="text-sm font-black text-slate-800 uppercase tracking-wide">Alert</h3>
+            <p id="dialogMessage" class="text-sm text-slate-600 font-semibold"></p>
+            <div id="dialogInputContainer" class="hidden">
+                <input type="text" id="dialogInput" class="w-full p-2.5 border border-slate-200 bg-slate-50 text-sm font-bold rounded-lg focus:outline-none focus:bg-white text-center">
+            </div>
+            <div id="dialogButtonsContainer" class="flex gap-2 justify-end pt-2 border-t"></div>
+        </div>
+    </div>
 
     <!-- TABLET REMOTE TROUBLESHOOTER -->
     <script>
         window.onerror = function(msg, url, line) {
-            alert("Tablet Error: " + msg + "\nLine: " + line);
+            alert("Tablet Error Captured:\n" + msg + "\nLine: " + line);
             return false;
         };
     </script>
 
     <!-- ==================== 1. PROFILE CREATION SCREEN ==================== -->
     <div id="registerScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Create Profile</h2>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Create Profile</h2>
             <p class="text-xs text-slate-500">Set up your username and password to secure your expense tracker.</p>
             <div class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50 focus:bg-white focus:outline-none">
+                    <input type="text" id="regUser" placeholder="e.g. Sujatha" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <input type="password" id="regPass" placeholder="••••••••" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="regQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
+                    <select id="regQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-850 font-semibold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
@@ -49,9 +61,9 @@
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Answer</label>
-                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
+                    <input type="text" id="regAnswer" placeholder="Your Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50 focus:bg-white focus:outline-none">
                 </div>
-                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition shadow">Create Profile</button>
+                <button onclick="submitRegistration()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition shadow">Create Profile</button>
                 <div class="text-center pt-2">
                     <button onclick="safeClass('registerScreen','add','hidden'); safeClass('loginScreen','remove','hidden');" class="text-xs font-bold text-slate-400 hover:text-slate-800 underline">Already have a profile? Sign In</button>
                 </div>
@@ -61,17 +73,17 @@
 
     <!-- ==================== 2. LOGIN SCREEN ==================== -->
     <div id="loginScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-900">Sign In</h2>
-            <p class="text-xs text-slate-500">Sign in to manage your records.</p>
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
+            <h2 class="text-2xl font-black text-slate-900">Sign In</h2>
+            <p class="text-xs text-slate-500">Sign in to manage your household records.</p>
             <div class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm font-semibold focus:bg-white focus:outline-none">
+                    <input type="text" id="loginUser" placeholder="Enter Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Password</label>
-                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm focus:bg-white focus:outline-none">
+                    <input type="password" id="loginPass" placeholder="Enter Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
                 </div>
                 <div class="flex items-center justify-between">
                     <label class="flex items-center gap-2 cursor-pointer">
@@ -80,7 +92,7 @@
                     </label>
                     <button onclick="showForgotPassword()" class="text-xs font-bold text-slate-500 hover:text-slate-800 underline">Forgot Password?</button>
                 </div>
-                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold hover:bg-slate-850 active:scale-95 transition">Login</button>
+                <button onclick="submitLogin()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold hover:bg-slate-850 transition">Login</button>
                 <div class="text-center pt-2">
                     <button onclick="safeClass('loginScreen','add','hidden'); safeClass('registerScreen','remove','hidden');" class="text-xs font-bold text-slate-400 hover:text-slate-800 underline">New User? Create Profile (సైన్ అప్)</button>
                 </div>
@@ -88,7 +100,7 @@
         </div>
     </div>
 
-    <!-- ==================== 3. INSTAGRAM STYLE DESCRIPTION MODAL FOR OTHERS ==================== -->
+    <!-- ==================== 3. INSTAGRAM STYLE ASK-A-QUESTION MODAL FOR OTHERS ==================== -->
     <div id="descriptionModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fade-in">
         <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 border border-slate-200">
             <div class="bg-slate-100 border border-slate-200 p-5 rounded-2xl text-center space-y-3">
@@ -156,7 +168,7 @@
             </div>
             <div class="grid grid-cols-3 gap-1.5 pt-2 border-t">
                 <button onclick="closeNumpad()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-xl font-bold text-xs uppercase">Cancel</button>
-                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border border-slate-300 text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip (స్కిప్)</button>
+                <button id="numpadSkipBtn" onclick="skipNumpadQty()" class="hidden w-full border border-slate-300 text-slate-700 p-2.5 rounded-xl font-bold text-xs uppercase">Skip</button>
                 <button onclick="submitNumpadAmount()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs uppercase">Next ➔</button>
             </div>
         </div>
@@ -178,35 +190,35 @@
         </div>
     </div>
 
-    <!-- FORGOT PASSWORD SCREEN (Safely mounted directly in document to prevent any Line undefined errors) -->
+    <!-- ==================== 6. FORGOT PASSWORD SCREEN ==================== -->
     <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
+        <div class="max-w-md w-full mx-auto space-y-6 bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
             <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
-            <p class="text-xs text-slate-500">Verify details to construct a new secure passcode.</p>
+            <p class="text-xs text-slate-500">Verify your security answer to setup a new password.</p>
             <div class="space-y-4 text-left">
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50">
+                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 text-slate-800 bg-slate-50 font-semibold focus:bg-white focus:outline-none">
+                    <select id="forgotQuestion" class="mt-1 block w-full p-3 border border-slate-200 text-slate-800 bg-slate-50 font-bold focus:bg-white focus:outline-none">
                         <option value="1">What is your mother's maiden name?</option>
                         <option value="2">What was the name of your first pet?</option>
                         <option value="3">What city were you born in?</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Answer</label>
-                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50">
+                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Security Answer</label>
+                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg font-semibold text-slate-800 bg-slate-50">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
-                    <input type="password" id="forgotNewPass" placeholder="Type Password" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-sm">
+                    <input type="password" id="forgotNewPass" placeholder="Type New Password" class="mt-1 block w-full p-3 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
                 </div>
                 <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-lg font-bold text-xs uppercase">Back</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold text-xs uppercase">Update</button>
+                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-3 rounded-lg font-bold">Back</button>
+                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold">Update</button>
                 </div>
             </div>
         </div>
@@ -328,7 +340,7 @@
             </div>
         </div>
 
-        <!-- Form -->
+        <!-- Form Details -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div class="flex justify-between items-center border-b pb-1">
                 <h2 id="formHeading" class="text-md font-black text-slate-700 uppercase">Expense Details</h2>
@@ -348,25 +360,24 @@
                     <input type="number" id="itemQty" value="1" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg focus:bg-white focus:outline-none">
                 </div>
             </div>
+            
+            <!-- COGNIZANT CORRECTED: Dropdown-free payer selector [1] -->
             <div>
                 <label id="lblPaidBy" class="block text-xs font-bold text-slate-500 uppercase">Who Paid?</label>
-                <select id="paidBy" class="mt-1 block w-full p-2.5 border border-slate-200 bg-slate-50 rounded-lg text-slate-800 font-bold focus:bg-white focus:outline-none">
-                    <option value="Unpaid">Unpaid / Credit Tab (ఉంచాము)</option>
-                    <option value="Ganesh">Ganesh</option>
-                    <option value="Sujatha">Sujatha</option>
-                    <option value="Hari">Hari</option>
-                    <option value="Other">Other (ఇతరులు)</option>
-                </select>
+                <button type="button" id="manualPaidByTrigger" onclick="openManualPaidByModal()" class="mt-1 block w-full p-3 border border-slate-200 bg-slate-50 rounded-lg text-left text-sm font-bold text-slate-800 focus:bg-white">
+                    Unpaid / Credit Tab (ఉంచాము)
+                </button>
+                <input type="hidden" id="paidBy" value="Unpaid">
             </div>
+
             <button onclick="saveExpenseLocal()" id="saveBtn" class="w-full bg-slate-900 text-white p-3 rounded-lg font-bold transition active:scale-95 shadow-sm">Save Expense</button>
-            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-250 text-slate-700 p-2 rounded-lg font-bold transition text-xs">Cancel Editing</button>
+            <button onclick="cancelEditingMode()" id="cancelEditBtn" class="hidden w-full bg-gray-250 text-slate-700 p-2 rounded-lg font-bold transition text-sm">Cancel Editing</button>
         </div>
     </div>
 
     <!-- ==================== PAGE 2: CATEGORY REPORTS ==================== -->
     <div id="pageReports" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
-        
         <div class="grid grid-cols-2 gap-3">
             <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
@@ -378,7 +389,7 @@
             </button>
             <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardMonthTitle" class="block text-[10px] uppercase font-bold text-slate-400">Monthly</span>
-                <span id="cardMonthlyAmt" class="block text-lg font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardMonthlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
             </button>
             <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardYearTitle" class="block text-[10px] uppercase font-bold text-slate-400">Yearly</span>
@@ -404,7 +415,7 @@
                             <th class="py-2 px-1">Category</th>
                             <th class="py-2 px-1 text-right">Paid</th>
                             <th class="py-2 px-1 text-right text-red-700">Unpaid</th>
-                            <th class="py-2 px-1 text-right font-black text-amber-950">Total</th>
+                            <th class="py-2 px-1 text-right font-black text-slate-900">Total</th>
                         </tr>
                     </thead>
                     <tbody id="categoryTableBody" class="divide-y divide-slate-100 text-slate-700 font-bold bg-white rounded-lg"></tbody>
@@ -426,6 +437,8 @@
     <!-- ==================== PAGE 3: MONTHLY COMPARISON ==================== -->
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
+        
+        <!-- Monthly budget progress bars -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -433,8 +446,8 @@
                     <span>Daily Budget</span>
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetDailyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -442,8 +455,8 @@
                     <span>Weekly Budget</span>
                     <span id="budgetWeeklyProgress">₹0 / ₹3000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetWeeklyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetWeeklyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -451,8 +464,8 @@
                     <span>Monthly Budget</span>
                     <span id="budgetMonthlyProgress">₹0 / ₹12000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                    <div id="budgetMonthlyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div id="budgetMonthlyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
         </div>
@@ -460,6 +473,25 @@
         <div id="alertCard" class="bg-white border border-slate-200 p-5 rounded-xl shadow-sm space-y-2">
             <h3 id="overspentTitle" class="text-xs font-bold text-slate-400 uppercase">Automated Tips & Analysis</h3>
             <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
+        </div>
+
+        <!-- NEW COMPONENT: MONTHLY EXPENDITURE LEDGER RECORDS [1] -->
+        <div class="bg-amber-50 p-5 rounded-xl border-2 border-amber-200 shadow-sm space-y-4">
+            <h3 id="monthlyHistoryTitle" class="text-sm font-bold text-amber-900 uppercase tracking-wide font-black">Monthly Expenditure Records</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full text-xs text-left">
+                    <thead>
+                        <tr class="border-b border-amber-200 text-slate-500 font-black uppercase">
+                            <th class="py-2 px-1">Month</th>
+                            <th class="py-2 px-1 text-right">Paid</th>
+                            <th class="py-2 px-1 text-right text-red-600">Unpaid</th>
+                            <th class="py-2 px-1 text-right font-black text-amber-950">Grand Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyHistoryTableBody" class="divide-y divide-amber-100 text-slate-800 font-bold bg-white rounded-lg">
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
@@ -470,7 +502,6 @@
 
     <!-- ==================== PAGE 4: PROFILE & SETTLEMENTS ==================== -->
     <div id="pagePeople" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
-        
         <div class="space-y-4">
             <h2 id="peopleHeader" class="text-lg font-black text-slate-950 uppercase">Ledger Dues</h2>
             <div class="space-y-3">
@@ -501,6 +532,7 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
+                        <!-- Direct Clear Bypass with Confetti logic [1] -->
                         <button onclick="initiateClearDuesNumpad('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
@@ -618,7 +650,7 @@
     <script>
         var safeStorage = {
             getItem: function(key) { try { return localStorage.getItem(key); } catch(e) { return this[key] || null; } },
-            setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[key] = val; } },
+            setItem: function(key, val) { try { localStorage.setItem(key, val); } catch(e) { this[k] = val; } },
             removeItem: function(key) { try { localStorage.removeItem(key); } catch(e) { delete this[key]; } }
         };
 
@@ -626,6 +658,7 @@
         var numpadActiveCategory = "", numpadActiveName = "", tempNumpadValue = "", numpadQty = 1, numpadStep = "amount";
         var tempMeatType = "", tempMeatQty = 1; 
         var duesSettleMode = false, duesSettleTarget = "";
+        var isManualFormPayerSelection = false; // Tracks if we used the Who Paid overlay inside manual form [1]
 
         var translations = {
             te: {
@@ -663,6 +696,87 @@
             loadSavedBudgets();
         });
 
+        // ==================== APP-STYLE CUSTOM DIALOG ENGINE [1] ====================
+        function appAlert(title, message, callback) {
+            document.getElementById('dialogTitle').innerText = title;
+            document.getElementById('dialogMessage').innerText = message;
+            safeClass('dialogInputContainer', 'add', 'hidden');
+            
+            var container = document.getElementById('dialogButtonsContainer');
+            container.innerHTML = "";
+            
+            var okBtn = document.createElement('button');
+            okBtn.className = "px-4 py-2 bg-slate-900 text-white font-bold rounded-lg text-xs uppercase shadow-sm active:scale-95 transition";
+            okBtn.innerText = "OK";
+            okBtn.onclick = function() {
+                safeClass('customDialogModal', 'add', 'hidden');
+                if (callback) callback();
+            };
+            container.appendChild(okBtn);
+            safeClass('customDialogModal', 'remove', 'hidden');
+        }
+
+        function appConfirm(title, message, onConfirm, onCancel) {
+            document.getElementById('dialogTitle').innerText = title;
+            document.getElementById('dialogMessage').innerText = message;
+            safeClass('dialogInputContainer', 'add', 'hidden');
+            
+            var container = document.getElementById('dialogButtonsContainer');
+            container.innerHTML = "";
+            
+            var cancelBtn = document.createElement('button');
+            cancelBtn.className = "px-4 py-2 bg-slate-100 hover:bg-slate-200 border text-slate-700 font-bold rounded-lg text-xs uppercase";
+            cancelBtn.innerText = "Cancel";
+            cancelBtn.onclick = function() {
+                safeClass('customDialogModal', 'add', 'hidden');
+                if (onCancel) onCancel();
+            };
+
+            var confirmBtn = document.createElement('button');
+            confirmBtn.className = "px-4 py-2 bg-slate-900 text-white font-bold rounded-lg text-xs uppercase shadow-sm active:scale-95 transition";
+            confirmBtn.innerText = "Confirm";
+            confirmBtn.onclick = function() {
+                safeClass('customDialogModal', 'add', 'hidden');
+                if (onConfirm) onConfirm();
+            };
+
+            container.appendChild(cancelBtn);
+            container.appendChild(confirmBtn);
+            safeClass('customDialogModal', 'remove', 'hidden');
+        }
+
+        function appPrompt(title, message, defaultValue, onSubmit) {
+            document.getElementById('dialogTitle').innerText = title;
+            document.getElementById('dialogMessage').innerText = message;
+            safeClass('dialogInputContainer', 'remove', 'hidden');
+            
+            var input = document.getElementById('dialogInput');
+            input.value = defaultValue || "";
+            
+            var container = document.getElementById('dialogButtonsContainer');
+            container.innerHTML = "";
+            
+            var cancelBtn = document.createElement('button');
+            cancelBtn.className = "px-4 py-2 bg-slate-100 hover:bg-slate-200 border text-slate-700 font-bold rounded-lg text-xs uppercase";
+            cancelBtn.innerText = "Cancel";
+            cancelBtn.onclick = function() {
+                safeClass('customDialogModal', 'add', 'hidden');
+            };
+
+            var submitBtn = document.createElement('button');
+            submitBtn.className = "px-4 py-2 bg-slate-900 text-white font-bold rounded-lg text-xs uppercase shadow-sm active:scale-95 transition";
+            submitBtn.innerText = "Submit";
+            submitBtn.onclick = function() {
+                var val = input.value.trim();
+                safeClass('customDialogModal', 'add', 'hidden');
+                if (onSubmit) onSubmit(val);
+            };
+
+            container.appendChild(cancelBtn);
+            container.appendChild(submitBtn);
+            safeClass('customDialogModal', 'remove', 'hidden');
+        }
+
         // IDENTITY SECURITY ENGINE
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
@@ -694,7 +808,7 @@
             var ans = document.getElementById('regAnswer').value.trim().toLowerCase();
 
             if (!user || !pass || !ans) {
-                alert("Please fill in all fields.");
+                appAlert("Setup", "Please fill in all fields.");
                 return;
             }
 
@@ -714,7 +828,7 @@
             if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) {
-                alert("Profile corrupted.");
+                appAlert("Login Error", "Profile corrupted.");
                 safeStorage.removeItem('family_profile');
                 checkUser();
                 return;
@@ -731,34 +845,47 @@
                 checkUser();
                 loadExpenses();
             } else {
-                alert("Incorrect username or password.");
+                appAlert("Login Error", "Incorrect username or password.");
             }
         }
 
         function showForgotPassword() {
             safeClass('loginScreen', 'add', 'hidden');
             safeClass('registerScreen', 'add', 'hidden');
+            safeClass('forgotScreen', 'remove', 'hidden');
+        }
+
+        function cancelForgotPassword() {
+            safeClass('forgotScreen', 'add', 'hidden');
+            checkUser();
+        }
+
+        function submitForgotPassword() {
+            var user = document.getElementById('forgotUser').value.trim();
+            var q = document.getElementById('forgotQuestion').value;
+            var ans = document.getElementById('forgotAnswer').value.trim().toLowerCase();
+            var newPass = document.getElementById('forgotNewPass').value.trim();
+
             var profileStr = safeStorage.getItem('family_profile');
             if (!profileStr) return;
             var p;
             try { p = JSON.parse(profileStr); } catch(e) { p = { username: "", question: "1", answer: "" }; }
             var qMap = {"1":"What is your mother's maiden name?","2":"What was the name of your first pet?","3":"What city were you born in?"};
 
-            var ans = prompt("Password Recovery Answer required.\nQuestion: " + qMap[p.question]);
-            if (ans) {
-                ans = ans.trim().toLowerCase();
-                if (ans === p.answer) {
-                    var newPass = prompt("Identity verified! Enter new password:");
-                    if (newPass) {
-                        p.password = newPass;
-                        safeStorage.setItem('family_profile', JSON.stringify(p));
-                        alert("Password updated! Log in now.");
+            appPrompt("Identity Verification", "Question: " + qMap[p.question] + "\nEnter security answer:", "", function(enteredAns) {
+                if (enteredAns && enteredAns.trim().toLowerCase() === p.answer) {
+                    if (!newPass) {
+                        appAlert("Error", "Enter a valid new password.");
+                        return;
                     }
+                    p.password = newPass;
+                    safeStorage.setItem('family_profile', JSON.stringify(p));
+                    appAlert("Success", "Password updated successfully! Sign in now.");
+                    cancelForgotPassword();
                 } else {
-                    alert("Incorrect answer.");
+                    appAlert("Verification failed", "Incorrect answer.");
                 }
-            }
-            checkUser();
+            });
         }
 
         function updateProfileDetails() {
@@ -767,20 +894,20 @@
             var p; try { p = JSON.parse(profileStr); } catch(e) {}
             var newUser = document.getElementById('editUsername').value.trim();
             var newPass = document.getElementById('editPassword').value.trim();
-            if (!newUser) { alert("Username is required."); return; }
+            if (!newUser) { appAlert("Error", "Username is required."); return; }
             p.username = newUser;
             if (newPass) p.password = newPass;
             safeStorage.setItem('family_profile', JSON.stringify(p));
             document.getElementById('editPassword').value = "";
-            alert("Settings updated!");
+            appAlert("Success", "Settings updated!");
             checkUser();
         }
 
         function logoutProfile() {
-            if (confirm("Reset login credentials or Logout from this device?")) {
+            appConfirm("Exit App", "Reset login credentials or Logout from this device?", function() {
                 safeStorage.removeItem('is_logged_in');
                 checkUser();
-            }
+            });
         }
 
         function promptUserChange() {
@@ -793,7 +920,7 @@
             return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari
         }
 
-        // ==================== BILINGUAL SIDE-BURST CONFETTI SYSTEM (ZERO-FAILURE WEB ENGINE) ====================
+        // ==================== BILINGUAL SIDE-BURST CONFETTI SYSTEM ====================
         var confettiCanvas = null, ctx = null, particles = [], animationFrame = null;
         function initConfetti() {
             confettiCanvas = document.getElementById('confettiCanvas');
@@ -883,7 +1010,7 @@
             document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
-        // DIRECT CAMERA CAPTURE
+        // DIRECT CAMERA CAPTURE [5]
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -897,21 +1024,29 @@
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                     var b64 = canvas.toDataURL('image/jpeg', 0.6);
 
-                    var bName = prompt("Bill Photo Captured successfully!\nPlease enter a Name or Item Description for this bill:");
-                    if (!bName || bName.trim() === "") { alert("Cancelled. Bill name is required."); return; }
-
-                    var bAmt = prompt("Enter the Total Bill Amount (₹) for \"" + bName + "\":");
-                    if (bAmt && !isNaN(parseFloat(bAmt))) {
-                        var detCat = detectCategory(bName);
-                        var newExp = {
-                            id: Date.now(), created_at: new Date().toISOString(), name: bName, amount: parseFloat(bAmt), qty: 1,
-                            paid_by: "Unpaid", category: detCat, photo: b64, recorded_by: appUser || "Guest", edited_by: ""
-                        };
-                        expenses.push(newExp);
-                        saveToLocalAndCloud(expenses);
-                        alert("Logged bill! Category: " + detCat + " (Total ₹" + bAmt + ")");
-                        navigateTo('pageReports');
-                    } else { alert("Cancelled or invalid amount."); }
+                    appPrompt("Direct Camera Scan", "Please enter a Name or Item Description for this bill:", "", function(bName) {
+                        if (!bName || bName.trim() === "") {
+                            appAlert("Error", "Bill name is required.");
+                            return;
+                        }
+                        
+                        appPrompt("Direct Camera Scan", "Enter the Total Bill Amount (₹) for \"" + bName + "\":", "", function(bAmt) {
+                            var amtVal = parseFloat(bAmt);
+                            if (bAmt && !isNaN(amtVal)) {
+                                var detCat = detectCategory(bName);
+                                var newExp = {
+                                    id: Date.now(), created_at: new Date().toISOString(), name: bName, amount: amtVal, qty: 1,
+                                    paid_by: "Unpaid", category: detCat, photo: b64, recorded_by: appUser || "Guest", edited_by: ""
+                                };
+                                expenses.push(newExp);
+                                saveToLocalAndCloud(expenses);
+                                appAlert("Saved successfully", "Logged bill! Category: " + detCat + " (Total ₹" + amtVal + ")");
+                                navigateTo('pageReports');
+                            } else {
+                                appAlert("Error", "Invalid amount.");
+                            }
+                        });
+                    });
                 };
                 img.src = e.target.result;
             };
@@ -925,7 +1060,6 @@
             numpadActiveName = "Other Item";
             safeClass('descriptionModal', 'add', 'hidden');
             
-            // Proceed to Numpad for entering amount
             tempNumpadValue = "";
             numpadStep = "amount";
             document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: Other Item";
@@ -942,7 +1076,6 @@
             numpadActiveCategory = detectCategory(val);
             safeClass('descriptionModal', 'add', 'hidden');
 
-            // Open amount numpad next [1]
             tempNumpadValue = "";
             numpadStep = "amount";
             document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName;
@@ -1028,10 +1161,41 @@
             safeClass('numpadModal', 'remove', 'hidden');
         }
 
-        // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL (NO POPUPS) [1] ====================
+        // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL [1] ====================
         function initiateClearDuesNumpad(target) {
             if (!hasPermission()) {
-                alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues or settle balances.\n\nయాక్సెస్ నిరాకరించబడింది!");
+                appAlert("Access Denied", "Only Sujatha and Hari have permission to clear dues or settle balances.");
+                return;
+            }
+
+            // DUAL COGNIZANT BYPASS: Direct settle for HARI with side confetti! [1]
+            if (target === 'Hari') {
+                var hariSpent = 0;
+                expenses.forEach(function(exp) { if (exp.paid_by === 'Hari') hariSpent += exp.amount; });
+                
+                if (hariSpent <= 0) {
+                    appAlert("Ledger info", "Hari has no outstanding dues to clear.");
+                    return;
+                }
+
+                // Settle directly without prompt/alerts [1]
+                expenses.push({
+                    id: Date.now(),
+                    created_at: new Date().toISOString(),
+                    name: "Payback to Hari (Direct Clear)",
+                    amount: -hariSpent,
+                    qty: 1,
+                    paid_by: "Hari",
+                    category: "Other expenses",
+                    recorded_by: appUser || "System",
+                    edited_by: ""
+                });
+
+                saveToLocalAndCloud(expenses);
+                loadExpenses();
+                
+                // Direct full screen side burst confetti! [1]
+                triggerConfettiBurst();
                 return;
             }
 
@@ -1048,7 +1212,7 @@
             }
 
             if (maxOutstandingAmount <= 0) {
-                alert("No outstanding dues to clear for: " + target);
+                appAlert("Ledger Dues", "No outstanding dues to clear for: " + target);
                 return;
             }
 
@@ -1090,10 +1254,14 @@
             duesSettleMode = false; 
         }
 
-        // COGNIZANT CORRECTED: Fully declared closePaymentModal safely [2]
         function closePaymentModal() {
             safeClass('paymentModal', 'add', 'hidden');
-            safeClass('numpadModal', 'remove', 'hidden'); 
+            isManualFormPayerSelection = false; // Reset form tracker
+            
+            // If we came from Numpad flow, return to Numpad
+            if (!isManualFormPayerSelection) {
+                safeClass('numpadModal', 'remove', 'hidden');
+            }
         }
 
         function submitNumpadAmount() {
@@ -1108,6 +1276,9 @@
             }
 
             if (numpadStep === 'amount') {
+                // COGNIZANT HIGH VALUE CORRECTION: Store price amount BEFORE resetting temp value for qty step! [1, 2]
+                safeStorage.setItem('last_temp_amt', valVal);
+
                 var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
                 if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
                     numpadStep = "quantity";
@@ -1184,7 +1355,26 @@
             return true;
         }
 
+        // COGNIZANT CORRECTED: Payer Selection mapper for both manual form & Visual numpads [1, 2]
         function selectNumpadPayer(payer) {
+            // Check if this was opened from the manual form [1]
+            if (isManualFormPayerSelection) {
+                document.getElementById('paidBy').value = payer;
+                
+                var labelMap = {
+                    "Unpaid": "Unpaid / Credit Tab (ఉంచాము)",
+                    "Ganesh": "Ganesh",
+                    "Sujatha": "Sujatha",
+                    "Hari": "Hari",
+                    "Other": "Other (ఇతరులు)"
+                };
+                
+                document.getElementById('manualPaidByTrigger').innerText = labelMap[payer] || payer;
+                safeClass('paymentModal', 'add', 'hidden');
+                isManualFormPayerSelection = false; // Reset state
+                return;
+            }
+
             var finalAmt = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
             if (isNaN(finalAmt) || finalAmt <= 0) return;
 
@@ -1208,6 +1398,13 @@
             safeClass('paymentModal', 'add', 'hidden');
             triggerConfettiBurst();
             navigateTo('pageReports');
+        }
+
+        // COGNIZANT CORRECTED: Opens custom payment modal from the manual Form [1]
+        function openManualPaidByModal() {
+            isManualFormPayerSelection = true;
+            safeClass('paymentModal', 'remove', 'hidden');
+            document.getElementById('paymentModalTitle').innerText = "Select Who Paid (ఎవరు చెల్లించారు?)";
         }
 
         // FILTER CALENDAR
@@ -1257,7 +1454,7 @@
             }
         }
 
-        // BUDGET CONTROLS
+        // BUDGETS
         function loadSavedBudgets() {
             var d = safeStorage.getItem('budget_daily') || "500";
             var w = safeStorage.getItem('budget_weekly') || "3000";
@@ -1361,7 +1558,7 @@
         function processVoiceText(rawText) {
             var text = convertWordsToNumbers(rawText);
             var amount = "", qty = 1, item = rawText;
-            var matches = text.match(/\d+(\.\d+)?/g); 
+            var matches = text.match(/\d+(\.\d+)?/g);
             if (matches) {
                 if (matches.length === 1) {
                     amount = matches[0];
@@ -1399,7 +1596,7 @@
             expenses.push(newExpense);
             saveToLocalAndCloud(expenses);
             loadExpenses();
-            alert("Logged: " + name + " (₹" + amount + ") successfully!");
+            appAlert("Saved successfully", "Logged: " + name + " (₹" + amount + ") successfully!");
             navigateTo('pageReports');
         }
 
@@ -1431,7 +1628,7 @@
             if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
             var name = nameEl.value.trim(), amount = parseFloat(amtEl.value), qty = parseFloat(qtyEl.value) || 1, paidBy = paidEl.value;
             var category = detectCategory(name), dateVal = new Date().toISOString(); 
-            if (!name || isNaN(amount)) { alert("Enter valid details."); return; }
+            if (!name || isNaN(amount)) { appAlert("Error", "Enter valid details."); return; }
             var creatorName = appUser || "Guest";
 
             if (editingExpenseId !== null) {
@@ -1441,7 +1638,7 @@
                     }
                     return exp;
                 });
-                editingExpenseId = null; alert("Item updated!");
+                editingExpenseId = null; appAlert("Success", "Item updated!");
             } else {
                 expenses.push({ id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || "", recorded_by: creatorName, edited_by: "" });
             }
@@ -1455,7 +1652,12 @@
             document.getElementById('itemName').value = target.name;
             document.getElementById('itemAmount').value = target.amount;
             document.getElementById('itemQty').value = target.qty;
+            
+            // Set paidBy value & trigger button label [1]
             document.getElementById('paidBy').value = target.paid_by;
+            var labelMap = { "Unpaid": "Unpaid / Credit Tab (ఉంచాము)", "Ganesh": "Ganesh", "Sujatha": "Sujatha", "Hari": "Hari", "Other": "Other (ఇతరులు)" };
+            document.getElementById('manualPaidByTrigger').innerText = labelMap[target.paid_by] || target.paid_by;
+
             if (target.photo) {
                 tempCompressedPhoto = target.photo;
                 var pr = document.getElementById('imagePreview');
@@ -1470,70 +1672,23 @@
             editingExpenseId = null; safeClass('editBadge', 'add', 'hidden'); safeClass('cancelEditBtn', 'add', 'hidden');
             document.getElementById('saveBtn').innerText = translations[uiLanguage].saveBtn;
             document.getElementById('itemName').value = ""; document.getElementById('itemAmount').value = ""; document.getElementById('itemQty').value = "1";
-            document.getElementById('paidBy').value = "Unpaid"; clearAttachedPhoto();
+            document.getElementById('paidBy').value = "Unpaid"; 
+            document.getElementById('manualPaidByTrigger').innerText = "Unpaid / Credit Tab (ఉంచాము)";
+            clearAttachedPhoto();
         }
 
         function deleteExpenseLocal(id) {
-            if (!confirm("Delete this expense?")) return;
-            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
-            if (url && key) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
-                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
-                xhr.send();
-            }
-            expenses = expenses.filter(function(exp) { return exp.id !== id; });
-            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
-        }
-
-        // ==================== CLEAR DUELS (SECURED FOR SUJATHA AND HARI ONLY) ====================
-        function clearUnpaidExpenses() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var unpaidTotal = 0; expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') unpaidTotal += exp.amount; });
-            if (unpaidTotal <= 0) { alert("No unpaid dues!"); return; }
-
-            var amtInput = prompt("Current Unpaid dues are ₹" + unpaidTotal + ".\nEnter amount to clear now (Press OK to clear full amount):", unpaidTotal);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Unpaid Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Other expenses", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + "! Remaining: ₹" + (unpaidTotal - amtToClear));
-        }
-
-        function clearMemberDues(member) {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var currentSpent = 0; expenses.forEach(function(exp) { if (exp.paid_by === member) currentSpent += exp.amount; });
-            if (currentSpent <= 0) { alert("No dues for " + member); return; }
-
-            var amtInput = prompt(member + " spent a total of ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Payback to " + member, amount: -amtToClear, qty: 1, paid_by: member, category: "Other expenses", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " for " + member + "! Remaining: ₹" + (currentSpent - amtToClear));
-        }
-
-        function clearMilkCurdEggsUnpaid() {
-            if (!hasPermission()) { alert("Access Denied!\nOnly Sujatha and Hari have permission to clear dues.\n\nయాక్సెస్ నిరాకరించబడింది!\nబకాయిలు క్లియర్ చేయడానికి కేవలం సుజాత మరియు హరికి మాత్రమే అనుమతి ఉంది."); return; }
-            var currentSpent = 0;
-            expenses.forEach(function(exp) {
-                var isTarget = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
-                if (exp.paid_by === 'Unpaid' && isTarget) { currentSpent += exp.amount; }
+            appConfirm("Delete Expense", "Are you sure you want to delete this expense?", function() {
+                var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+                if (url && key) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
+                    xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                    xhr.send();
+                }
+                expenses = expenses.filter(function(exp) { return exp.id !== id; });
+                safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
             });
-            if (currentSpent <= 0) { alert("No unpaid dues for Milk, Curd or Eggs!"); return; }
-
-            var amtInput = prompt("Total Unpaid Milk, Curd & Eggs dues is ₹" + currentSpent + ".\nEnter amount to clear now (Press OK to clear full amount):", currentSpent);
-            if (amtInput === null) return;
-            var amtToClear = parseFloat(amtInput);
-            if (isNaN(amtToClear) || amtToClear <= 0) { alert("Invalid amount."); return; }
-
-            expenses.push({ id: Date.now(), created_at: new Date().toISOString(), name: "Milk/Curd/Eggs Dues Settle", amount: -amtToClear, qty: 1, paid_by: "Unpaid", category: "Milk", recorded_by: appUser, edited_by: "" });
-            saveToLocalAndCloud(expenses); loadExpenses();
-            alert("Cleared ₹" + amtToClear + " from Milk, Curd & Eggs dues! Remaining: ₹" + (currentSpent - amtToClear));
         }
 
         // ==================== STATS AND BALANCES ====================
@@ -1617,23 +1772,56 @@
             }
         }
 
+        // COGNIZANT DYNAMIC INJECTOR: Month histories ledger calculations [1]
         function renderComparisonTab() {
             var now = new Date(), monthsMap = {};
+            var monthlyLedgerData = {}; // MonthName -> { paid, unpaid, total }
+
             expenses.forEach(function(exp) {
                 var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
                 var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
+                
                 monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
+
+                // Group Monthly Ledger details
+                if (!monthlyLedgerData[monthName]) {
+                    monthlyLedgerData[monthName] = { paid: 0, unpaid: 0, total: 0 };
+                }
+                monthlyLedgerData[monthName].total += exp.amount;
+                if (exp.paid_by === 'Unpaid') {
+                    monthlyLedgerData[monthName].unpaid += exp.amount;
+                } else {
+                    monthlyLedgerData[monthName].paid += exp.amount;
+                }
             });
 
             var listContainer = document.getElementById('comparisonList');
-            if (!listContainer) return; listContainer.innerHTML = "";
+            if (listContainer) {
+                listContainer.innerHTML = "";
+                var keys = Object.keys(monthsMap);
+                if (keys.length === 0) {
+                    listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
+                } else {
+                    keys.forEach(function(mName) {
+                        listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
+                    });
+                }
+            }
 
-            var keys = Object.keys(monthsMap);
-            if (keys.length === 0) { listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>'; return; }
-
-            keys.forEach(function(mName) {
-                listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
-            });
+            // Render the brand new Monthly Expenditure Records Table [1]
+            var mTableBody = document.getElementById('monthlyHistoryTableBody');
+            if (mTableBody) {
+                mTableBody.innerHTML = "";
+                var mKeys = Object.keys(monthlyLedgerData);
+                if (mKeys.length === 0) {
+                    mTableBody.innerHTML = '<tr><td colspan="4" class="text-slate-400 text-center py-4">No historical records available.</td></tr>';
+                } else {
+                    mKeys.forEach(function(mName) {
+                        var mData = monthlyLedgerData[mName];
+                        mTableBody.insertAdjacentHTML('beforeend', '<tr class="border-b border-amber-100"><td class="py-3 px-1 text-slate-800 font-bold">' + mName + '</td><td class="py-3 px-1 text-right text-green-600 font-bold">₹' + mData.paid + '</td><td class="py-3 px-1 text-right text-red-500 font-bold">₹' + mData.unpaid + '</td><td class="py-3 px-1 text-right font-black text-slate-900">₹' + mData.total + '</td></tr>');
+                    });
+                }
+            }
 
             var alertDetails = document.getElementById('overspentDetails');
             if (!alertDetails) return; alertDetails.innerHTML = "";
@@ -1656,9 +1844,9 @@
             });
 
             if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
-                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home more often could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
             } else {
-                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are stable.</p>');
             }
         }
 
@@ -1743,13 +1931,5 @@
             });
         }
     </script>
-    // Register App Offline Helper
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').then(function() {
-                console.log("Offline helper synced.");
-            }).catch(function(err) {
-                console.warn("Offline error:", err);
-            });
-        }
- </body>
+</body>
 </html>
