@@ -6,6 +6,7 @@
     <title>Family Expense Tracker</title>
     <!-- Tailwind CSS (Styling) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link App Manifest & Icons -->
     <link rel="manifest" href="./manifest.json">
     <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='120' fill='%231e293b'/><text x='50%25' y='55%25' font-family='sans-serif' font-size='220' font-weight='bold' fill='white' dominant-baseline='middle' text-anchor='middle'>₹</text></svg>">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,16 +23,16 @@
             <h3 id="dialogTitle" class="text-sm font-black text-slate-800 uppercase tracking-wide">Alert</h3>
             <p id="dialogMessage" class="text-sm text-slate-600 font-semibold"></p>
             <div id="dialogInputContainer" class="hidden">
-                <input type="text" id="dialogInput" class="w-full p-2 border rounded-lg text-sm text-center">
+                <input type="text" id="dialogInput" class="w-full p-2.5 border border-slate-200 bg-slate-50 text-sm font-bold rounded-lg focus:outline-none focus:bg-white text-center">
             </div>
             <div id="dialogButtonsContainer" class="flex gap-2 justify-end pt-2 border-t"></div>
         </div>
     </div>
 
-    <!-- BILINGUAL APP-STYLE TIME FILTER MODAL -->
+    <!-- BILINGUAL APP-STYLE TIME FILTER MODAL (Borderless Minimalist Layout) -->
     <div id="appFilterModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-75 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-5 rounded-2xl shadow-2xl max-w-sm w-full space-y-4 text-center">
-            <h3 class="text-xs font-black text-slate-400 uppercase tracking-wide">Select Date Filter (తేదీ)</h3>
+            <h3 class="text-xs font-black text-slate-800 uppercase tracking-wide">Select Date Filter (తేదీ)</h3>
             <div class="flex justify-around bg-slate-100 p-1 rounded-lg text-xs font-bold">
                 <button onclick="switchFilterTab('day')" id="tabDay" class="px-3 py-1.5 rounded-md bg-white text-slate-900 shadow">Day</button>
                 <button onclick="switchFilterTab('month')" id="tabMonth" class="px-3 py-1.5 rounded-md text-slate-500">Month</button>
@@ -53,11 +54,11 @@
             <div class="bg-slate-100 border border-slate-200 p-5 rounded-2xl text-center space-y-3">
                 <span class="px-2 py-0.5 bg-slate-200 text-[10px] font-black uppercase text-slate-500 rounded-full tracking-wider">Item Description</span>
                 <p class="text-sm font-bold text-slate-800">What did you buy today? / ఏమి కొన్నారు?</p>
-                <input type="text" id="descModalInput" placeholder="Write here... (ఎంటర్ చేయండి)" class="w-full p-2 bg-white border rounded-xl text-sm text-center focus:outline-none">
+                <input type="text" id="descModalInput" placeholder="Write here... (ఎంటర్ చేయండి)" class="w-full p-2.5 bg-white border border-slate-200 text-sm font-bold rounded-xl text-center focus:outline-none">
             </div>
             <div class="grid grid-cols-2 gap-2 pt-1">
-                <button onclick="skipDescriptionModal()" class="w-full bg-slate-100 border text-slate-700 p-2 rounded-xl font-bold text-xs">Skip</button>
-                <button onclick="submitDescriptionModal()" class="w-full bg-slate-900 text-white p-2 rounded-xl font-black text-xs">Proceed ➔</button>
+                <button onclick="skipDescriptionModal()" class="w-full bg-slate-100 border text-slate-700 p-2 rounded-xl font-bold text-xs">Skip (స్కిప్)</button>
+                <button onclick="submitDescriptionModal()" class="w-full bg-slate-900 text-white p-2.5 rounded-xl font-black text-xs">Proceed ➔</button>
             </div>
         </div>
     </div>
@@ -83,7 +84,7 @@
                     <button onclick="selectMeatQty(1)" id="mQty4" class="p-2 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-700 bg-slate-50">1 kg</button>
                 </div>
                 <div class="mt-2">
-                    <input type="number" id="meatCustomQty" step="0.01" placeholder="Or enter custom weight (e.g. 1.5 kgs)" class="w-full p-2 border text-xs font-semibold bg-slate-50 rounded-lg focus:bg-white focus:outline-none" oninput="clearMeatQtyButtons()">
+                    <input type="number" id="meatCustomQty" step="0.01" placeholder="Or enter custom weight (e.g. 1.5 kgs)" class="w-full p-2.5 border border-slate-200 text-xs font-semibold bg-slate-50 rounded-lg focus:bg-white focus:outline-none" oninput="clearMeatQtyButtons()">
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-2 pt-2 border-t">
@@ -127,7 +128,7 @@
             <h3 class="text-md font-black text-slate-800 uppercase" id="paymentModalTitle">Who paid?</h3>
             <p class="text-xs text-slate-400">Select payment source to record transaction instantly.</p>
             <div class="flex flex-col gap-2 pt-2">
-                <button onclick="selectNumpadPayer('Unpaid')" class="p-3 bg-red-50 border border-red-200 rounded-xl font-bold text-red-900 active:scale-95 transition">Unpaid / Credit Tab (ఉంచాము)</option>
+                <button onclick="selectNumpadPayer('Unpaid')" class="p-3 bg-red-50 border border-red-200 rounded-xl font-bold text-red-900 active:scale-95 transition">Unpaid / Credit Tab (ఉంచాము)</button>
                 <button onclick="selectNumpadPayer('Ganesh')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Ganesh</button>
                 <button onclick="selectNumpadPayer('Sujatha')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Sujatha</button>
                 <button onclick="selectNumpadPayer('Hari')" class="p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 active:scale-95 transition">Paid by Hari</button>
@@ -137,42 +138,8 @@
         </div>
     </div>
 
-    <!-- ==================== 6. FORGOT PASSWORD SCREEN ==================== -->
-    <div id="forgotScreen" class="hidden fixed inset-0 bg-slate-50 flex flex-col justify-center p-6 z-50 overflow-y-auto">
-        <div class="max-w-md w-full mx-auto space-y-4 bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center">
-            <h2 class="text-xl font-black text-slate-950">Reset Password</h2>
-            <p class="text-xs text-slate-500">Verify security question details.</p>
-            <div class="space-y-4 text-left">
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Username</label>
-                    <input type="text" id="forgotUser" placeholder="Type Username" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Security Question</label>
-                    <select id="forgotQuestion" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-sm text-slate-800 focus:bg-white focus:outline-none">
-                        <option value="1">What is your mother's maiden name?</option>
-                        <option value="2">What was the name of your first pet?</option>
-                        <option value="3">What city were you born in?</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">Your Answer</label>
-                    <input type="text" id="forgotAnswer" placeholder="Type Answer" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg font-semibold text-slate-805 bg-slate-50">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase">New Password</label>
-                    <input type="password" id="forgotNewPass" placeholder="Type Password" class="mt-1 block w-full p-2.5 border border-slate-200 rounded-lg text-slate-805 bg-slate-50">
-                </div>
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                    <button onclick="cancelForgotPassword()" class="w-full bg-slate-200 text-slate-800 p-2.5 rounded-lg font-bold text-xs uppercase">Back</button>
-                    <button onclick="submitForgotPassword()" class="w-full bg-slate-900 text-white p-2.5 rounded-lg font-bold text-xs uppercase">Update</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- MAIN HEADER -->
-    <header class="bg-white border-b border-slate-200 text-slate-800 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
+    <header class="bg-white border-b border-slate-200 text-slate-850 p-4 shadow-sm flex justify-between items-center sticky top-0 z-40">
         <div>
             <h1 id="appTitle" class="text-sm font-black tracking-wide uppercase text-slate-900">Family Expenses</h1>
             <p class="text-[10px] opacity-75 font-semibold text-slate-500" id="currentUserDisplay">Logged in: Guest</p>
@@ -189,6 +156,11 @@
         <!-- Speak / Image Actions Card -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm text-center space-y-4">
             <h2 id="speechHeading" class="text-md font-bold text-slate-700">Choose Action</h2>
+            <div class="flex justify-center gap-2">
+                <button id="btnEn" onclick="setSpeechLanguage('en-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm">English</button>
+                <button id="btnTe" onclick="setSpeechLanguage('te-IN')" class="px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600">తెలుగు</button>
+            </div>
+            
             <div class="grid grid-cols-3 gap-2 py-1">
                 <!-- Microphone Button -->
                 <div class="flex flex-col items-center">
@@ -308,7 +280,7 @@
                 </div>
             </div>
             
-            <!-- Custom choice box to replace native picker [1] -->
+            <!-- Dropdown-free payer selector -->
             <div>
                 <label id="lblPaidBy" class="block text-xs font-bold text-slate-500 uppercase">Who Paid?</label>
                 <button type="button" id="manualPaidByTrigger" onclick="openManualPaidByModal()" class="mt-1 block w-full p-3 border border-slate-200 bg-slate-50 rounded-lg text-left text-sm font-bold text-slate-800 focus:bg-white">
@@ -327,18 +299,18 @@
         
         <div class="flex justify-between items-center">
             <h2 id="reportHeader" class="text-lg font-black text-slate-950 uppercase">Time-Period Expenses</h2>
-            <!-- App-style Category custom date-picker button [1] -->
+            <!-- App-style Category custom date-picker button -->
             <button onclick="openCustomDatePickerModal('category')" class="border border-slate-300 text-slate-700 bg-white hover:bg-slate-50 px-2.5 py-1.5 rounded-lg text-xs font-bold transition shadow-sm">📅 Filter Calendar</button>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
             <button onclick="filterReport('daily')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardDayTitle" class="block text-[10px] uppercase font-bold text-slate-400">Today</span>
-                <span id="cardDailyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardDailyAmt" class="block text-xl font-black text-slate-950 mt-1">₹0</span>
             </button>
             <button onclick="filterReport('weekly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardWeekTitle" class="block text-[10px] uppercase font-bold text-slate-400">Weekly</span>
-                <span id="cardWeeklyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardWeeklyAmt" class="block text-xl font-black text-slate-950 mt-1">₹0</span>
             </button>
             <button onclick="filterReport('monthly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardMonthTitle" class="block text-[10px] uppercase font-bold text-slate-400">Monthly</span>
@@ -346,14 +318,14 @@
             </button>
             <button onclick="filterReport('yearly')" class="border border-slate-200 bg-white p-4 rounded-xl text-left text-slate-800 shadow-sm active:scale-95 transition">
                 <span id="cardYearTitle" class="block text-[10px] uppercase font-bold text-slate-400">Yearly</span>
-                <span id="cardYearlyAmt" class="block text-xl font-black text-slate-900 mt-1">₹0</span>
+                <span id="cardYearlyAmt" class="block text-xl font-black text-slate-950 mt-1">₹0</span>
             </button>
         </div>
 
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
             <label id="lblCalendar" class="block text-xs font-bold text-slate-500 uppercase">Select Date to view logs</label>
             <div class="flex gap-2">
-                <!-- Custom app-style trigger for logs list filtering [1] -->
+                <!-- Custom app-style trigger for logs list filtering -->
                 <button type="button" onclick="openCustomDatePickerModal('log')" class="w-full p-2.5 bg-slate-50 border rounded-lg text-left text-xs font-bold text-slate-600">Select Date...</button>
                 <button onclick="clearCalendarFilter()" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition border">Clear</button>
             </div>
@@ -385,7 +357,7 @@
                 <h3 id="reportListTitle" class="text-sm font-bold text-slate-800 uppercase">Displaying: All</h3>
                 <button id="showAllBtn" onclick="clearCalendarFilter()" class="text-xs text-slate-500 font-semibold underline">Show All</button>
             </div>
-            <div id="expenseList" class="space-y-2 divide-y divide-slate-100 max-h-96 overflow-y-auto">
+            <div id="expenseList" class="space-y-2 divide-y divide-gray-100 max-h-96 overflow-y-auto">
                 <p class="text-gray-400 text-center py-4">No expenses found.</p>
             </div>
         </div>
@@ -395,7 +367,6 @@
     <div id="pageCompare" class="page-container hidden max-w-md mx-auto p-4 space-y-6">
         <h2 id="compareHeader" class="text-lg font-black text-slate-950 uppercase">Monthly Comparisons</h2>
         
-        <!-- Monthly budget progress bars -->
         <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
             <h3 class="text-xs font-black text-slate-400 uppercase">Budget Visualizer</h3>
             <div class="space-y-1">
@@ -403,8 +374,8 @@
                     <span>Daily Budget</span>
                     <span id="budgetDailyProgress">₹0 / ₹500</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetDailyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetDailyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -412,8 +383,8 @@
                     <span>Weekly Budget</span>
                     <span id="budgetWeeklyProgress">₹0 / ₹3000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetWeeklyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetWeeklyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
             <div class="space-y-1">
@@ -421,8 +392,8 @@
                     <span>Monthly Budget</span>
                     <span id="budgetMonthlyProgress">₹0 / ₹12000</span>
                 </div>
-                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                    <div id="budgetMonthlyBar" class="bg-slate-900 h-2 rounded-full" style="width: 0%"></div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                    <div id="budgetMonthlyBar" class="bg-slate-900 h-1.5 rounded-full" style="width: 0%"></div>
                 </div>
             </div>
         </div>
@@ -432,7 +403,7 @@
             <div id="overspentDetails" class="text-sm text-slate-800 font-bold space-y-1"></div>
         </div>
 
-        <!-- NEW COMPONENT: MONTHLY EXPENDITURE LEDGER RECORDS [1] -->
+        <!-- MONTHLY EXPENDITURE LEDGER RECORDS -->
         <div class="bg-amber-50 p-5 rounded-xl border-2 border-amber-200 shadow-sm space-y-4">
             <h3 id="monthlyHistoryTitle" class="text-sm font-bold text-amber-900 uppercase tracking-wide font-black">Monthly Expenditure Records</h3>
             <div class="overflow-x-auto">
@@ -491,7 +462,7 @@
                     <div class="flex items-center gap-3">
                         <span id="totalHari" class="text-md font-black text-slate-950">₹0</span>
                         <!-- Direct Settle Bypass [1] -->
-                        <button onclick="clearMemberDues('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
+                        <button onclick="initiateClearDuesNumpad('Hari')" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-[10px] font-bold rounded">Clear</button>
                     </div>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex justify-between items-center">
@@ -618,7 +589,7 @@
         var duesSettleMode = false, duesSettleTarget = "";
         var isManualFormPayerSelection = false;
 
-        // Custom calendar variables for ES5 direct rendering [1]
+        // Custom calendar variables for ES5 borderless selector [1]
         var calendarModeType = "day"; 
         var calendarFilterTarget = "category"; 
         var calYear = new Date().getFullYear();
@@ -627,16 +598,16 @@
 
         var translations = {
             te: {
-                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను...",
-                formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
+                title: "ఇంటి ఖర్చులు", speechHeading: "మార్గాలు ఎంచుకోండి", voiceLabel: "మాట్లాడండి", cameraLabel: "బిల్ కెమెరా", photoLabel: "ఫోటో జత", statusIdle: "పై వాటిని ఎంచుకోండి", statusListening: "వింటున్నాను... మాట్లాడండి",
+                formHeading: "ఖర్చు వివరాలు", lblItem: "వస్తువు పేరు", lblAmount: "ధర (Amount ₹)", lblQty: "పరిమాణం (Qty)", lblPaidBy: "ఎవరు చెల్లించారు?", saveBtn: "సేవ్ చేయండి", noExpenses: "ఇంకా ఏమీ నమోదు చేయలేదు", uiBtn: "English UI",
                 reportHeader: "కాలాల వారీగా ఖర్చులు", peopleHeader: "బకాయిలు", lblOthersName: "ఇతరులు", lblUnpaidTab: "మిగిలిన బకాయిలు (బ్యాలెన్స్)", navAdd: "చేర్చండి", navReports: "రిపోర్టులు", navPeople: "ప్రొఫైల్ & బకాయిలు",
-                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "Analysis", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
+                compareHeader: "నెలవారీ సరిపోలికలు", overspentTitle: "⚠️ ఖర్చుల విశ్లేషణ", histMonthsTitle: "నెలవారీ ఖర్చులు", catTotalsTitle: "విభాగాల వారీగా ఖర్చులు", navCompare: "పోలికలు", cardDayTitle: "ఈరోజు", cardWeekTitle: "వారం", cardMonthTitle: "నెల", cardYearTitle: "సంవత్సరం", lblCalendar: "తేదీ ఎంచుకోండి"
             },
             en: {
-                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening...",
+                title: "Family Expenses", speechHeading: "Choose Action", voiceLabel: "Speak", cameraLabel: "Bill Camera", photoLabel: "Photo", statusIdle: "Select action above", statusListening: "Listening... speak now",
                 formHeading: "Expense Details", lblItem: "Item Name", lblAmount: "Amount (₹)", lblQty: "Quantity", lblPaidBy: "Who Paid?", saveBtn: "Save Expense", noExpenses: "No expenses logged yet", uiBtn: "తెలుగు UI",
                 reportHeader: "Time-Period Expenses", peopleHeader: "Ledger Dues", lblOthersName: "Others", lblUnpaidTab: "Pending Dues", navAdd: "Add Expense", navReports: "Reports", navPeople: "Dues & Profile",
-                compareHeader: "Monthly Comparisons", overspentTitle: "Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
+                compareHeader: "Monthly Comparisons", overspentTitle: "⚠️ Spending Analysis", histMonthsTitle: "Month Spending History", catTotalsTitle: "Category Totals", navCompare: "Compare", cardDayTitle: "Today", cardWeekTitle: "Weekly", cardMonthTitle: "Monthly", cardYearTitle: "Yearly", lblCalendar: "Select Date to view logs"
             }
         };
 
@@ -663,18 +634,19 @@
             // Connect offline manifest PWA registration safely [1]
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function() {
-                    console.log("Offline caching helper is fully operational on GitHub Pages!");
+                    console.log("Offline caching helper is fully operational on GitHub Pages [1]!");
                 }).catch(function(e) {
                     console.warn("Service worker offline helper failed to link:", e);
                 });
             }
         });
 
-        // IDENTITY SECURITY ENGINE [3]
+        // IDENTITY SECURITY ENGINE (Safely loads session state or login blocks) [3]
         function checkUser() {
             var profileStr = safeStorage.getItem('family_profile');
             var isLoggedLocal = safeStorage.getItem('is_logged_in');
             
+            // Remember Me session logic [3]
             var isLoggedSession = null;
             try { isLoggedSession = sessionStorage.getItem('is_logged_in'); } catch(e) {}
             var isLogged = isLoggedLocal || isLoggedSession;
@@ -734,6 +706,7 @@
             }
 
             if (p.username === user && p.password === pass) {
+                // Remember Me custom device check [3]
                 if (remember) {
                     safeStorage.setItem('is_logged_in', 'true');
                 } else {
@@ -805,59 +778,10 @@
             });
         }
 
-        function promptUserChange() {
-            logoutProfile();
-        }
-
         // ROLE PERMISSIONS
         function hasPermission() {
             var u = (appUser || "").toLowerCase().trim();
             return (u === "sujatha" || u === "hari"); // Checks for Sujatha or Hari
-        }
-
-        // ==================== BILINGUAL SIDE-BURST CONFETTI SYSTEM ====================
-        var confettiCanvas = null, ctx = null, particles = [], animationFrame = null;
-        function initConfetti() {
-            confettiCanvas = document.getElementById('confettiCanvas');
-            if (!confettiCanvas) return;
-            ctx = confettiCanvas.getContext('2d');
-            confettiCanvas.width = window.innerWidth;
-            confettiCanvas.height = window.innerHeight;
-        }
-        function triggerConfettiBurst() {
-            initConfetti();
-            if (!confettiCanvas || !ctx) return;
-            confettiCanvas.classList.remove('hidden');
-            particles = [];
-            var colors = ['#f43f5e', '#3b82f6', '#eab308', '#10b981', '#a855f7', '#ff7849'];
-            for (var i = 0; i < 150; i++) {
-                var side = Math.random() < 0.5 ? 'left' : 'right';
-                particles.push({
-                    x: side === 'left' ? 0 : confettiCanvas.width,
-                    y: confettiCanvas.height * 0.8,
-                    vx: side === 'left' ? (Math.random() * 8 + 4) : -(Math.random() * 8 + 4),
-                    vy: -(Math.random() * 12 + 8),
-                    color: colors[Math.floor(Math.random() * colors.length)],
-                    size: Math.random() * 8 + 5,
-                    rotation: Math.random() * 360,
-                    spin: Math.random() * 4 - 2
-                });
-            }
-            animateConfetti();
-        }
-        function animateConfetti() {
-            ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
-            var active = false;
-            for (var i = 0; i < particles.length; i++) {
-                var p = particles[i];
-                p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.vx *= 0.98; p.rotation += p.spin;
-                if (p.y < confettiCanvas.height) {
-                    active = true; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rotation * Math.PI / 180);
-                    ctx.fillStyle = p.color; ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size); ctx.restore();
-                }
-            }
-            if (active) { animationFrame = requestAnimationFrame(animateConfetti); }
-            else { confettiCanvas.classList.add('hidden'); cancelAnimationFrame(animationFrame); }
         }
 
         // COMPRESSION ENGINE
@@ -905,7 +829,7 @@
             document.getElementById('photoViewerModal').classList.add('hidden');
         }
 
-        // DIRECT CAMERA CAPTURE [5]
+        // DIRECT CAMERA CAPTURE
         function captureBillPhotoDirect(input) {
             if (!input.files || !input.files[0]) return;
             var file = input.files[0], reader = new FileReader();
@@ -949,177 +873,6 @@
             input.value = ""; 
         }
 
-        // ==================== INSTAGRAM STYLE DESCRIPTION MODAL [1] ====================
-        function skipDescriptionModal() {
-            numpadActiveCategory = "Other expenses";
-            numpadActiveName = "Other Item";
-            safeClass('descriptionModal', 'add', 'hidden');
-            
-            tempNumpadValue = "";
-            numpadStep = "amount";
-            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: Other Item";
-            document.getElementById('numpadDisplay').innerText = "₹ 0";
-            safeClass('numpadModal', 'remove', 'hidden');
-        }
-
-        function submitDescriptionModal() {
-            var val = document.getElementById('descModalInput').value.trim();
-            if (!val || val === "") {
-                val = "Other Item";
-            }
-            numpadActiveName = val;
-            numpadActiveCategory = detectCategory(val);
-            safeClass('descriptionModal', 'add', 'hidden');
-
-            tempNumpadValue = "";
-            numpadStep = "amount";
-            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName;
-            document.getElementById('numpadDisplay').innerText = "₹ 0";
-            safeClass('numpadModal', 'remove', 'hidden');
-        }
-
-        // ==================== VISUAL TILE NUMPAD PORTAL CONTROLLER ====================
-        function selectMeatType(type) {
-            tempMeatType = type;
-            var t1 = document.getElementById('mTypeChicken'), t2 = document.getElementById('mTypeMutton'), t3 = document.getElementById('mTypeFish');
-            if (t1) t1.className = "p-2 border border-slate-200 rounded-lg text-xs font-bold " + (type === 'Chicken' ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-50 text-slate-700');
-            if (t2) t2.className = "p-2 border border-slate-200 rounded-lg text-xs font-bold " + (type === 'Mutton' ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-50 text-slate-700');
-            if (t3) t3.className = "p-2 border border-slate-200 rounded-lg text-xs font-bold " + (type === 'Fish' ? 'bg-slate-900 text-white shadow-sm' : 'bg-slate-50 text-slate-700');
-        }
-
-        function selectMeatQty(qty) {
-            tempMeatQty = qty;
-            document.getElementById('meatCustomQty').value = ""; 
-            highlightMeatQtyButtons(qty);
-        }
-
-        function clearMeatQtyButtons() {
-            highlightMeatQtyButtons(null);
-        }
-
-        function highlightMeatQtyButtons(qty) {
-            var q1 = document.getElementById('mQty1'), q2 = document.getElementById('mQty2'), q3 = document.getElementById('mQty3'), q4 = document.getElementById('mQty4');
-            if (q1) q1.className = "p-2 border border-slate-200 rounded-lg text-[10px] font-bold " + (qty === 0.25 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
-            if (q2) q2.className = "p-2 border border-slate-200 rounded-lg text-[10px] font-bold " + (qty === 0.5 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
-            if (q3) q3.className = "p-2 border border-slate-200 rounded-lg text-[10px] font-bold " + (qty === 0.75 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
-            if (q4) q4.className = "p-2 border border-slate-200 rounded-lg text-[10px] font-bold " + (qty === 1 ? 'bg-slate-900 text-white' : 'bg-slate-50 text-slate-700');
-        }
-
-        function closeMeatModal() {
-            safeClass('meatModal', 'add', 'hidden');
-        }
-
-        function submitMeatModal() {
-            if (!tempMeatType) { alert("Please select Chicken, Mutton, or Fish!"); return; }
-            var customVal = parseFloat(document.getElementById('meatCustomQty').value);
-            if (!isNaN(customVal) && customVal > 0) { tempMeatQty = customVal; }
-            if (!tempMeatQty || tempMeatQty <= 0) { alert("Please select a valid Weight!"); return; }
-
-            numpadActiveCategory = tempMeatType;
-            numpadActiveName = tempMeatType;
-            numpadQty = tempMeatQty; 
-
-            safeClass('meatModal', 'add', 'hidden');
-            tempNumpadValue = "";
-            numpadStep = "amount"; 
-            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName + " (" + numpadQty + " kg)";
-            document.getElementById('numpadDisplay').innerText = "₹ 0";
-            safeClass('numpadModal', 'remove', 'hidden');
-        }
-
-        function launchNumpadForTile(category) {
-            tempNumpadValue = "";
-            numpadActiveCategory = category;
-            numpadActiveName = category;
-            numpadQty = 1;
-            numpadStep = "amount";
-            duesSettleMode = false; 
-
-            safeClass('numpadSkipBtn', 'add', 'hidden');
-
-            if (category === 'Meat') {
-                tempMeatType = ""; tempMeatQty = 1;
-                document.getElementById('meatCustomQty').value = "";
-                selectMeatType(""); highlightMeatQtyButtons(null);
-                safeClass('meatModal', 'remove', 'hidden');
-                return;
-            }
-
-            if (category === 'Others') {
-                document.getElementById('descModalInput').value = "";
-                safeClass('descriptionModal', 'remove', 'hidden'); 
-                return;
-            }
-
-            document.getElementById('numpadCategoryTitle').innerText = "Enter Amount (ధర) for: " + numpadActiveName;
-            document.getElementById('numpadDisplay').innerText = "₹ 0";
-            safeClass('numpadModal', 'remove', 'hidden');
-        }
-
-        // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL [1] ====================
-        function initiateClearDuesNumpad(target) {
-            if (!hasPermission()) {
-                appAlert("Access Denied", "Only Sujatha and Hari have permission to clear dues or settle balances.");
-                return;
-            }
-
-            // DUAL COGNIZANT BYPASS: Direct settle for HARI with side confetti! [1]
-            if (target === 'Hari') {
-                var hariSpent = 0;
-                expenses.forEach(function(exp) { if (exp.paid_by === 'Hari') hariSpent += exp.amount; });
-                
-                if (hariSpent <= 0) {
-                    appAlert("Ledger info", "Hari has no outstanding dues to clear.");
-                    return;
-                }
-
-                expenses.push({
-                    id: Date.now(),
-                    created_at: new Date().toISOString(),
-                    name: "Payback to Hari (Direct Clear)",
-                    amount: -hariSpent,
-                    qty: 1,
-                    paid_by: "Hari",
-                    category: "Other expenses",
-                    recorded_by: appUser || "System",
-                    edited_by: ""
-                });
-
-                saveToLocalAndCloud(expenses);
-                loadExpenses();
-                
-                triggerConfettiBurst();
-                return;
-            }
-
-            var maxOutstandingAmount = 0;
-            if (target === 'MilkCurdEggs') {
-                expenses.forEach(function(exp) {
-                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
-                    if (exp.paid_by === 'Unpaid' && isGrocery) { maxOutstandingAmount += exp.amount; }
-                });
-            } else if (target === 'Unpaid') {
-                expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') maxOutstandingAmount += exp.amount; });
-            } else {
-                expenses.forEach(function(exp) { if (exp.paid_by === target) maxOutstandingAmount += exp.amount; });
-            }
-
-            if (maxOutstandingAmount <= 0) {
-                appAlert("Ledger Dues", "No outstanding dues to clear for: " + target);
-                return;
-            }
-
-            duesSettleMode = true;
-            duesSettleTarget = target;
-            tempNumpadValue = "";
-            numpadStep = "amount"; 
-
-            safeClass('numpadSkipBtn', 'add', 'hidden');
-            document.getElementById('numpadCategoryTitle').innerText = "Settle Dues for " + target + " (Max ₹" + maxOutstandingAmount + ")";
-            document.getElementById('numpadDisplay').innerText = "₹ 0";
-            safeClass('numpadModal', 'remove', 'hidden');
-        }
-
         // ==================== BILINGUAL APP-STYLE TIME SELECTOR CALENDAR [1] ====================
         function openCustomDatePickerModal(target) {
             calendarFilterTarget = target; 
@@ -1142,7 +895,7 @@
             generateFilterGrid();
         }
 
-        // DYNAMIC APP CALENDAR GENERATOR (ZINC THEMED - NO BORDERS OR KEYS BOXES) [1]
+        // NEW: APP-STYLE FULL DATE CALENDAR GENERATOR (No native border keys) [1]
         function generateFilterGrid() {
             var gridArea = document.getElementById('filterGridArea');
             if (!gridArea) return;
@@ -1189,7 +942,7 @@
                 for (var m = 0; m < months.length; m++) {
                     var mVal = String(m + 1).padStart(2, '0');
                     var isSelected = (selectedGridVal === mVal);
-                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2 animate-pulse" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
                     gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + mVal + '\')" class="' + btnClass + '">' + months[m] + '</button>');
                 }
             } else {
@@ -1197,7 +950,7 @@
                 var years = ["2025", "2026", "2027", "2028"];
                 for (var y = 0; y < years.length; y++) {
                     var isSelected = (selectedGridVal === years[y]);
-                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2 animate-pulse" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
                     gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + years[y] + '\')" class="' + btnClass + '">' + years[y] + '</button>');
                 }
             }
@@ -1259,6 +1012,257 @@
             selectedGridVal = ""; 
         }
 
+        // ==================== NEW: DUES SETTLEMENT NUMPAD PORTAL [1] ====================
+        function initiateClearDuesNumpad(target) {
+            if (!hasPermission()) {
+                appAlert("Access Denied", "Only Sujatha and Hari have permission to clear dues or settle balances.");
+                return;
+            }
+
+            // DUAL COGNIZANT BYPASS: Direct settle for HARI with side confetti! [1]
+            if (target === 'Hari') {
+                var hariSpent = 0;
+                expenses.forEach(function(exp) { if (exp.paid_by === 'Hari') hariSpent += exp.amount; });
+                
+                if (hariSpent <= 0) {
+                    appAlert("Ledger info", "Hari has no outstanding dues to clear.");
+                    return;
+                }
+
+                // Settle directly without prompt/alerts [1]
+                expenses.push({
+                    id: Date.now(),
+                    created_at: new Date().toISOString(),
+                    name: "Payback to Hari (Direct Clear)",
+                    amount: -hariSpent,
+                    qty: 1,
+                    paid_by: "Hari",
+                    category: "Other expenses",
+                    recorded_by: appUser || "System",
+                    edited_by: ""
+                });
+
+                saveToLocalAndCloud(expenses);
+                loadExpenses();
+                
+                triggerConfettiBurst();
+                return;
+            }
+
+            var maxOutstandingAmount = 0;
+            if (target === 'MilkCurdEggs') {
+                expenses.forEach(function(exp) {
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (exp.paid_by === 'Unpaid' && isGrocery) { maxOutstandingAmount += exp.amount; }
+                });
+            } else if (target === 'Unpaid') {
+                expenses.forEach(function(exp) { if (exp.paid_by === 'Unpaid') maxOutstandingAmount += exp.amount; });
+            } else {
+                expenses.forEach(function(exp) { if (exp.paid_by === target) maxOutstandingAmount += exp.amount; });
+            }
+
+            if (maxOutstandingAmount <= 0) {
+                appAlert("Ledger Dues", "No outstanding dues to clear for: " + target);
+                return;
+            }
+
+            duesSettleMode = true;
+            duesSettleTarget = target;
+            tempNumpadValue = "";
+            numpadStep = "amount"; 
+
+            safeClass('numpadSkipBtn', 'add', 'hidden');
+            document.getElementById('numpadCategoryTitle').innerText = "Settle Dues for " + target + " (Max ₹" + maxOutstandingAmount + ")";
+            document.getElementById('numpadDisplay').innerText = "₹ 0";
+            safeClass('numpadModal', 'remove', 'hidden');
+        }
+
+        // ==================== GENERAL NUMPAD CONTROLLER ====================
+        function tapNumpad(char) {
+            var display = document.getElementById('numpadDisplay');
+            if (char === 'C') {
+                tempNumpadValue = "";
+            } else if (char === 'DEL') {
+                if (tempNumpadValue.length > 0) {
+                    tempNumpadValue = tempNumpadValue.substring(0, tempNumpadValue.length - 1);
+                }
+            } else {
+                if (tempNumpadValue.length < 7) {
+                    tempNumpadValue += char;
+                }
+            }
+
+            if (numpadStep === 'amount') {
+                display.innerText = "₹ " + (tempNumpadValue || "0");
+            } else {
+                display.innerText = (tempNumpadValue || "0") + " packet/kg/qty";
+            }
+        }
+
+        function closeNumpad() {
+            safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false; 
+        }
+
+        // COGNIZANT CORRECTED: Restored missing closePaymentModal function safely [2]
+        function closePaymentModal() {
+            safeClass('paymentModal', 'add', 'hidden');
+            isManualFormPayerSelection = false; 
+            
+            if (!isManualFormPayerSelection) {
+                safeClass('numpadModal', 'remove', 'hidden');
+            }
+        }
+
+        function submitNumpadAmount() {
+            var valVal = parseFloat(tempNumpadValue);
+            if (isNaN(valVal) || valVal <= 0) {
+                alert("Please enter a valid number.");
+                return;
+            }
+
+            if (duesSettlementFlowProceed(valVal)) {
+                return;
+            }
+
+            if (numpadStep === 'amount') {
+                // COGNIZANT HIGH VALUE CORRECTION: Store price amount BEFORE resetting temp value for qty step! [1, 2]
+                safeStorage.setItem('last_temp_amt', valVal);
+
+                var qtyCategories = ['Milk', 'Curd', 'Eggs', 'Oil', 'Other expenses'];
+                if (qtyCategories.indexOf(numpadActiveCategory) !== -1) {
+                    numpadStep = "quantity";
+                    tempNumpadValue = ""; 
+                    document.getElementById('numpadCategoryTitle').innerText = "Enter Quantity (పరిమాణం) for: " + numpadActiveName;
+                    document.getElementById('numpadDisplay').innerText = "0 packet/kg/qty";
+
+                    if (numpadActiveCategory === 'Other expenses') {
+                        safeClass('numpadSkipBtn', 'remove', 'hidden');
+                    } else {
+                        safeClass('numpadSkipBtn', 'add', 'hidden');
+                    }
+                    return; 
+                }
+                numpadQty = 1;
+                proceedToPaymentSelection(valVal);
+            } else {
+                numpadQty = valVal;
+                var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
+                proceedToPaymentSelection(baseAmount);
+            }
+        }
+
+        function proceedToPaymentSelection(amount) {
+            safeStorage.setItem('last_temp_amt', amount);
+            safeClass('numpadModal', 'add', 'hidden');
+            safeClass('paymentModal', 'remove', 'hidden');
+            document.getElementById('paymentModalTitle').innerText = "Who paid ₹" + amount + "?";
+        }
+
+        function skipNumpadQty() {
+            numpadQty = 1; 
+            var baseAmount = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
+            proceedToPaymentSelection(baseAmount);
+        }
+
+        // NEW: UNPAID-TO-PAID SETTLEMENT CALCULATIONS ENGINE [1]
+        function duesSettlementFlowProceed(amtToClear) {
+            if (!duesSettleMode) return false;
+
+            // Mark outstanding items as Settled directly without inserting negative bills [1]
+            var remaining = amtToClear;
+            for (var i = expenses.length - 1; i >= 0; i--) {
+                if (remaining <= 0) break;
+                
+                var exp = expenses[i];
+                var isTargetMatch = false;
+
+                if (duesSettleTarget === 'MilkCurdEggs') {
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    isTargetMatch = (exp.paid_by === 'Unpaid' && isGrocery);
+                } else if (duesSettleTarget === 'Unpaid') {
+                    isTargetMatch = (exp.paid_by === 'Unpaid');
+                } else {
+                    isTargetMatch = (exp.paid_by === duesSettleTarget);
+                }
+
+                if (isTargetMatch) {
+                    if (exp.amount <= remaining) {
+                        // Fully Clear, shift unpaid status to Settled [1]
+                        remaining -= exp.amount;
+                        exp.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
+                    } else {
+                        // Split Item into paid and unpaid segments [1]
+                        var originalAmt = exp.amount;
+                        exp.amount = originalAmt - remaining; // Remaining unpaid amount kept [1]
+
+                        var clearedPartItem = JSON.parse(JSON.stringify(exp));
+                        clearedPartItem.id = Date.now() + i;
+                        clearedPartItem.amount = remaining; // Settled segment [1]
+                        clearedPartItem.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
+                        
+                        expenses.push(clearedPartItem);
+                        remaining = 0;
+                    }
+                }
+            }
+
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false;
+
+            // Trigger beautiful full screen side burst confetti [1]
+            triggerConfettiBurst();
+            return true;
+        }
+
+        // COGNIZANT CORRECTED: Payer Selection mapper for both manual form & Visual numpads [1, 2]
+        function selectNumpadPayer(payer) {
+            // Check if this was opened from the manual form [1]
+            if (isManualFormPayerSelection) {
+                document.getElementById('paidBy').value = payer;
+                
+                var labelMap = {
+                    "Unpaid": "Unpaid / Credit Tab (ఉంచాము)",
+                    "Ganesh": "Ganesh",
+                    "Sujatha": "Sujatha",
+                    "Hari": "Hari",
+                    "Other": "Other (ఇతరులు)"
+                };
+                
+                document.getElementById('manualPaidByTrigger').innerText = labelMap[payer] || payer;
+                safeClass('paymentModal', 'add', 'hidden');
+                isManualFormPayerSelection = false; 
+                return;
+            }
+
+            var finalAmt = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
+            if (isNaN(finalAmt) || finalAmt <= 0) return;
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: numpadActiveName,
+                amount: finalAmt,
+                qty: numpadQty, 
+                paid_by: payer,
+                category: numpadActiveCategory,
+                photo: "",
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            safeClass('paymentModal', 'add', 'hidden');
+            triggerConfettiBurst();
+            navigateTo('pageReports');
+        }
+
         function openManualPaidByModal() {
             isManualFormPayerSelection = true;
             safeClass('paymentModal', 'remove', 'hidden');
@@ -1269,7 +1273,7 @@
         function enableCloudSync() {
             var url = document.getElementById('syncUrl').value.trim();
             var key = document.getElementById('syncKey').value.trim();
-            if (!url || !key) { alert("Please fill in all fields."); return; }
+            if (!url || !key) { alert("Please fill in both fields."); return; }
             if (url.substring(url.length - 1) === '/') { url = url.substring(0, url.length - 1); }
             safeStorage.setItem('sync_url', url); safeStorage.setItem('sync_key', key);
             alert("Database linked! Syncing current records...");
@@ -1401,7 +1405,644 @@
         function processVoiceText(rawText) {
             var text = convertWordsToNumbers(rawText);
             var amount = "", qty = 1, item = rawText;
-            var matches = text.match(/\d+(\.\d+)?/g); 
+            var matches = text.match(/\d+(\.\d+)?/g);
+            if (matches) {
+                if (matches.length === 1) {
+                    amount = matches[0];
+                    item = rawText.replace(new RegExp(amount, 'g'), "").trim();
+                } else if (matches.length >= 2) {
+                    var rx = /(\d+)\s*(pack|packs|packet|packets|bag|bags|kg|kgs|ltr|ltrs|liter|litres|piece|pieces|ప్యాకెట్|ప్యాకెట్లు|కేజీ|లీటర్|లీటర్లు)/i;
+                    var uMatch = text.match(rx);
+                    if (uMatch) {
+                        qty = parseFloat(uMatch[1]);
+                        for (var i = 0; i < matches.length; i++) {
+                            var parsedNum = parseFloat(matches[i]);
+                            if (parsedNum !== qty) { amount = parsedNum; break; }
+                        }
+                        if (!amount) amount = Math.max(parseFloat(matches[0]), parseFloat(matches[1]));
+                        item = rawText.replace(new RegExp(qty, 'g'), "").replace(new RegExp(amount, 'g'), "").trim();
+                    } else {
+                        var num1 = parseFloat(matches[0]), num2 = parseFloat(matches[1]);
+                        amount = Math.max(num1, num2); qty = Math.min(num1, num2);
+                        item = rawText.replace(new RegExp(num1, 'g'), "").replace(new RegExp(num2, 'g'), "").trim();
+                    }
+                }
+            }
+            item = item.replace(/రూపాయలు|రూపాయల|rupees|rupee|rs|packets|packet|packs|pack|ప్యాకెట్|ప్యాకెట్లు/gi, "").trim();
+            var elN = document.getElementById('itemName'), elA = document.getElementById('itemAmount'), elQ = document.getElementById('itemQty');
+            if (elN) elN.value = item; if (elA) elA.value = amount; if (elQ) elQ.value = qty;
+        }
+
+        // ONE-TAP FAVORITES QUICK LOG ENGINE
+        function quickLogExpense(name, amount, qty, category) {
+            var dateVal = new Date().toISOString();
+            var creatorName = appUser || "Guest";
+            var newExpense = {
+                id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: "Unpaid", category: category, photo: "", recorded_by: creatorName, edited_by: ""
+            };
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+            appAlert("Saved successfully", "Logged: " + name + " (₹" + amount + ") successfully!");
+            navigateTo('pageReports');
+        }
+
+        // ==================== CALCS AND DATA INTERFACE ====================
+        function loadExpenses() {
+            var stored = safeStorage.getItem('family_expenses_data');
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", url + '/rest/v1/expenses?select=*&order=created_at.desc', true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        try {
+                            expenses = JSON.parse(xhr.responseText);
+                            safeStorage.setItem('family_expenses_data', xhr.responseText);
+                            renderExpenses(); calculateSummaryData(); renderComparisonTab();
+                        } catch(e) {}
+                    }
+                };
+                xhr.send();
+            }
+            try { expenses = stored ? JSON.parse(stored) : []; } catch(e) { expenses = []; }
+            renderExpenses(); calculateSummaryData(); renderComparisonTab();
+        }
+
+        function saveExpenseLocal() {
+            var nameEl = document.getElementById('itemName'), amtEl = document.getElementById('itemAmount'), qtyEl = document.getElementById('itemQty'), paidEl = document.getElementById('paidBy');
+            if (!nameEl || !amtEl || !qtyEl || !paidEl) return;
+            var name = nameEl.value.trim(), amount = parseFloat(amtEl.value), qty = parseFloat(qtyEl.value) || 1, paidBy = paidEl.value;
+            var category = detectCategory(name), dateVal = new Date().toISOString(); 
+            if (!name || isNaN(amount)) { appAlert("Error", "Enter valid details."); return; }
+            var creatorName = appUser || "Guest";
+
+            if (editingExpenseId !== null) {
+                expenses = expenses.map(function(exp) {
+                    if (exp.id === editingExpenseId) {
+                        return { id: exp.id, created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || exp.photo || "", recorded_by: exp.recorded_by || creatorName, edited_by: creatorName };
+                    }
+                    return exp;
+                });
+                editingExpenseId = null; appAlert("Success", "Item updated!");
+            } else {
+                expenses.push({ id: Date.now(), created_at: dateVal, name: name, amount: amount, qty: qty, paid_by: paidBy, category: category, photo: tempCompressedPhoto || "", recorded_by: creatorName, edited_by: "" });
+            }
+            saveToLocalAndCloud(expenses); clearAttachedPhoto(); cancelEditingMode(); loadExpenses(); navigateTo('pageReports');
+        }
+
+        // ==================== BALANCES ANALYSIS METRICS ====================
+        function calculateSummaryData() {
+            var dSum=0, wSum=0, mSum=0, ySum=0, spentG=0, spentS=0, spentH=0, spentO=0, spentU=0, spentMCE=0;
+            var now = new Date(), startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate()), lastWeek = new Date(); lastWeek.setDate(now.getDate() - 7);
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var itemTotalPrice = exp.amount; 
+
+                if (expDate >= startOfToday) dSum += itemTotalPrice;
+                if (expDate >= lastWeek) wSum += itemTotalPrice;
+                if (expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear()) mSum += itemTotalPrice;
+                if (expDate.getFullYear() === now.getFullYear()) ySum += itemTotalPrice;
+
+                if (exp.paid_by === 'Ganesh') spentG += itemTotalPrice;
+                else if (exp.paid_by === 'Sujatha') spentS += itemTotalPrice;
+                else if (exp.paid_by === 'Hari') spentH += itemTotalPrice;
+                else if (exp.paid_by === 'Other') spentO += itemTotalPrice;
+                else if (exp.paid_by === 'Unpaid') {
+                    spentU += itemTotalPrice;
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    if (isGrocery) spentMCE += itemTotalPrice;
+                }
+            });
+
+            safeSetText('cardDailyAmt', '₹' + dSum); safeSetText('cardWeeklyAmt', '₹' + wSum); safeSetText('cardMonthlyAmt', '₹' + mSum); safeSetText('cardYearlyAmt', '₹' + ySum);
+            safeSetText('totalGanesh', '₹' + spentG); safeSetText('totalSujatha', '₹' + spentS); safeSetText('totalHari', '₹' + spentH); safeSetText('totalOthers', '₹' + spentO);
+            safeSetText('totalUnpaid', '₹' + spentU); safeSetText('totalMilkCurdEggsUnpaid', '₹' + spentMCE);
+            
+            // Progress Update
+            var budD = parseFloat(safeStorage.getItem('budget_daily') || "500"), budW = parseFloat(safeStorage.getItem('budget_weekly') || "3000"), budM = parseFloat(safeStorage.getItem('budget_monthly') || "12000");
+            safeSetText('budgetDailyProgress', '₹' + dSum + ' / ₹' + budD); safeSetText('budgetWeeklyProgress', '₹' + wSum + ' / ₹' + budW); safeSetText('budgetMonthlyProgress', '₹' + mSum + ' / ₹' + budM);
+
+            var bD = document.getElementById('budgetDailyBar'), bW = document.getElementById('budgetWeeklyBar'), bM = document.getElementById('budgetMonthlyBar');
+            if (bD) bD.style.width = Math.min((dSum / budD) * 100, 100) + '%';
+            if (bW) bW.style.width = Math.min((wSum / budW) * 100, 100) + '%';
+            if (bM) bM.style.width = Math.min((mSum / budM) * 100, 100) + '%';
+
+            calculateCategoryGrid();
+        }
+
+        function calculateCategoryGrid() {
+            var categories = ['Milk', 'Curd', 'Eggs', 'Chicken', 'Mutton', 'Fish', 'Tiffins', 'Vegetables', 'Monthly Kirana', 'Oil', 'Other expenses'];
+            var gridData = {};
+            for (var i = 0; i < categories.length; i++) { gridData[categories[i]] = { paid: 0, unpaid: 0, total: 0 }; }
+
+            var maxSpentCategoryValue = 0;
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (isNaN(expDate.getTime())) expDate = new Date();
+                var yyyy = expDate.getFullYear(), mm = String(expDate.getMonth() + 1).padStart(2, '0'), dd = String(expDate.getDate()).padStart(2, '0');
+                var expDateStr = yyyy + '-' + mm + '-' + dd;
+
+                var isMatched = true;
+                if (activeFilter === 'calendar' && selectedCalendarDate) {
+                    if (selectedCalendarDate.length === 4) { 
+                        isMatched = (String(yyyy) === selectedCalendarDate);
+                    } else if (selectedCalendarDate.length === 7) { 
+                        isMatched = ((yyyy + '-' + mm) === selectedCalendarDate);
+                    } else { 
+                        isMatched = (expDateStr === selectedCalendarDate);
+                    }
+                }
+
+                if (isMatched) {
+                    var cat = exp.category || 'Other expenses';
+                    var price = exp.amount; 
+                    if (!gridData[cat]) gridData[cat] = { paid: 0, unpaid: 0, total: 0 };
+                    gridData[cat].total += price;
+                    if (exp.paid_by === 'Unpaid') gridData[cat].unpaid += price;
+                    else gridData[cat].paid += price;
+
+                    if (gridData[cat].total > maxSpentCategoryValue) {
+                        maxSpentCategoryValue = gridData[cat].total;
+                    }
+                }
+            });
+
+            var tbody = document.getElementById('categoryTableBody');
+            if (!tbody) return; tbody.innerHTML = "";
+
+            for (var j = 0; j < categories.length; j++) {
+                var c = categories[j]; var d = gridData[c];
+                
+                var heatmapRowColor = "bg-white text-slate-800"; 
+                if (maxSpentCategoryValue > 0 && d.total > 0) {
+                    if (d.total === maxSpentCategoryValue) {
+                        heatmapRowColor = "bg-rose-50 text-rose-900 border-l-4 border-rose-300 font-black";
+                    } else if (d.total >= (maxSpentCategoryValue * 0.50)) {
+                        heatmapRowColor = "bg-amber-50 text-amber-900 border-l-4 border-amber-300 font-bold";
+                    }
+                }
+
+                tbody.insertAdjacentHTML('beforeend', '<tr class="border-b border-slate-100 ' + heatmapRowColor + '"><td class="py-3 px-2 font-bold">' + c + '</td><td class="py-3 px-2 text-right">₹' + d.paid + '</td><td class="py-3 px-2 text-right">₹' + d.unpaid + '</td><td class="py-3 px-2 text-right font-black">₹' + d.total + '</td></tr>');
+            }
+        }
+
+        function renderComparisonTab() {
+            var now = new Date(), monthsMap = {};
+            var monthlyLedgerData = {}; 
+
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at); if (isNaN(expDate.getTime())) expDate = new Date();
+                var monthName = expDate.toLocaleString('default', { month: 'long' }) + ' ' + expDate.getFullYear();
+                
+                monthsMap[monthName] = (monthsMap[monthName] || 0) + exp.amount;
+
+                if (!monthlyLedgerData[monthName]) {
+                    monthlyLedgerData[monthName] = { paid: 0, unpaid: 0, total: 0 };
+                }
+                monthlyLedgerData[monthName].total += exp.amount;
+                if (exp.paid_by === 'Unpaid') {
+                    monthlyLedgerData[monthName].unpaid += exp.amount;
+                } else {
+                    monthlyLedgerData[monthName].paid += exp.amount;
+                }
+            });
+
+            var listContainer = document.getElementById('comparisonList');
+            if (listContainer) {
+                listContainer.innerHTML = "";
+                var keys = Object.keys(monthsMap);
+                if (keys.length === 0) {
+                    listContainer.innerHTML = '<p class="text-slate-400 text-center py-4">No records to compare yet.</p>';
+                } else {
+                    keys.forEach(function(mName) {
+                        listContainer.insertAdjacentHTML('beforeend', '<div class="flex justify-between items-center py-2.5"><span class="font-bold text-slate-700">' + mName + '</span><span class="font-black text-slate-900 text-md">₹' + monthsMap[mName] + '</span></div>');
+                    });
+                }
+            }
+
+            var mTableBody = document.getElementById('monthlyHistoryTableBody');
+            if (mTableBody) {
+                mTableBody.innerHTML = "";
+                var mKeys = Object.keys(monthlyLedgerData);
+                if (mKeys.length === 0) {
+                    mTableBody.innerHTML = '<tr><td colspan="4" class="text-slate-400 text-center py-4">No records available.</td></tr>';
+                } else {
+                    mKeys.forEach(function(mName) {
+                        var mData = monthlyLedgerData[mName];
+                        mTableBody.insertAdjacentHTML('beforeend', '<tr class="border-b border-amber-100 bg-white"><td class="py-3 px-1 text-slate-800 font-bold">' + mName + '</td><td class="py-3 px-1 text-right text-green-600 font-bold">₹' + mData.paid + '</td><td class="py-3 px-1 text-right text-red-500 font-bold">₹' + mData.unpaid + '</td><td class="py-3 px-1 text-right font-black text-slate-900">₹' + mData.total + '</td></tr>');
+                    });
+                }
+            }
+
+            var alertDetails = document.getElementById('overspentDetails');
+            if (!alertDetails) return; alertDetails.innerHTML = "";
+
+            var currentMonthName = now.toLocaleString('default', { month: 'long' }) + ' ' + now.getFullYear(), lastMonth = new Date(); lastMonth.setMonth(now.getMonth() - 1);
+            var lastMonthName = lastMonth.toLocaleString('default', { month: 'long' }) + ' ' + lastMonth.getFullYear();
+
+            var curTotal = monthsMap[currentMonthName] || 0, prevTotal = monthsMap[lastMonthName] || 0;
+            if (prevTotal > 0) {
+                if (curTotal > prevTotal) alertDetails.insertAdjacentHTML('beforeend', '<p class="text-red-700">⚠️ You spent ₹' + (curTotal - prevTotal) + ' more this month than last month (' + lastMonthName + ').</p>');
+                else alertDetails.insertAdjacentHTML('beforeend', '<p class="text-green-700">💡 Great job! You are currently ₹' + (prevTotal - curTotal) + ' under last month\'s budget.</p>');
+            }
+
+            var tiffinSum = 0;
+            expenses.forEach(function(exp) {
+                var expDate = new Date(exp.created_at);
+                if (!isNaN(expDate.getTime()) && expDate.getMonth() === now.getMonth() && expDate.getFullYear() === now.getFullYear() && exp.category === 'Tiffins') {
+                    tiffinSum += exp.amount;
+                }
+            });
+
+            if (tiffinSum > (curTotal * 0.25) && curTotal > 0) {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-amber-800">💡 Tiffins make up over 25% of your spending! Preparing breakfast at home could save around ₹' + Math.round(tiffinSum * 0.4) + '.</p>');
+            } else {
+                alertDetails.insertAdjacentHTML('beforeend', '<p class="text-slate-600">📊 Your discretionary spending categories are currently stable.</p>');
+            }
+        }
+
+        // ==================== DUES SETTLEMENT AND SPLITTING [1] ====================
+        function duesSettlementFlowProceed(amtToClear) {
+            if (!duesSettleMode) return false;
+
+            var remaining = amtToClear;
+            for (var i = expenses.length - 1; i >= 0; i--) {
+                if (remaining <= 0) break;
+                
+                var exp = expenses[i];
+                var isTargetMatch = false;
+
+                if (duesSettleTarget === 'MilkCurdEggs') {
+                    var isGrocery = (exp.category === 'Milk' || exp.category === 'Curd' || exp.category === 'Eggs');
+                    isTargetMatch = (exp.paid_by === 'Unpaid' && isGrocery);
+                } else if (duesSettleTarget === 'Unpaid') {
+                    isTargetMatch = (exp.paid_by === 'Unpaid');
+                } else {
+                    isTargetMatch = (exp.paid_by === duesSettleTarget);
+                }
+
+                if (isTargetMatch) {
+                    if (exp.amount <= remaining) {
+                        // Settle item, convert outstanding status to Cleared [1]
+                        remaining -= exp.amount;
+                        exp.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
+                    } else {
+                        // Split Item into Paid and Unpaid segments mathematically [1]
+                        var originalAmt = exp.amount;
+                        exp.amount = originalAmt - remaining; // Remaining unpaid amount [1]
+
+                        var clearedPartItem = JSON.parse(JSON.stringify(exp));
+                        clearedPartItem.id = Date.now() + i;
+                        clearedPartItem.amount = remaining; // Paid segment [1]
+                        clearedPartItem.paid_by = (duesSettleTarget === 'Unpaid' || duesSettleTarget === 'MilkCurdEggs') ? 'Cleared' : duesSettleTarget + ' (Setted)';
+                        
+                        expenses.push(clearedPartItem);
+                        remaining = 0;
+                    }
+                }
+            }
+
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            safeClass('numpadModal', 'add', 'hidden');
+            duesSettleMode = false;
+
+            // CONFETTI! [1]
+            triggerConfettiBurst();
+            return true;
+        }
+
+        function selectNumpadPayer(payer) {
+            if (isManualFormPayerSelection) {
+                document.getElementById('paidBy').value = payer;
+                
+                var labelMap = {
+                    "Unpaid": "Unpaid / Credit Tab (ఉంచాము)",
+                    "Ganesh": "Ganesh",
+                    "Sujatha": "Sujatha",
+                    "Hari": "Hari",
+                    "Other": "Other (ఇతరులు)"
+                };
+                
+                document.getElementById('manualPaidByTrigger').innerText = labelMap[payer] || payer;
+                safeClass('paymentModal', 'add', 'hidden');
+                isManualFormPayerSelection = false; 
+                return;
+            }
+
+            var finalAmt = parseFloat(safeStorage.getItem('last_temp_amt') || "0");
+            if (isNaN(finalAmt) || finalAmt <= 0) return;
+
+            var newExpense = {
+                id: Date.now(),
+                created_at: new Date().toISOString(),
+                name: numpadActiveName,
+                amount: finalAmt,
+                qty: numpadQty, 
+                paid_by: payer,
+                category: numpadActiveCategory,
+                photo: "",
+                recorded_by: appUser || "Guest",
+                edited_by: ""
+            };
+
+            expenses.push(newExpense);
+            saveToLocalAndCloud(expenses);
+            loadExpenses();
+
+            safeClass('paymentModal', 'add', 'hidden');
+            triggerConfettiBurst();
+            navigateTo('pageReports');
+        }
+
+        // ==================== AUTO-CALENDAR FILTER [1] ====================
+        function openCustomDatePickerModal(target) {
+            calendarFilterTarget = target; 
+            switchFilterTab('day');
+            safeClass('appFilterModal', 'remove', 'hidden');
+        }
+
+        function closeFilterModal() {
+            safeClass('appFilterModal', 'add', 'hidden');
+        }
+
+        function switchFilterTab(tabType) {
+            calendarModeType = tabType;
+            var tDay = document.getElementById('tabDay'), tMonth = document.getElementById('tabMonth'), tYear = document.getElementById('tabYear');
+            
+            if (tDay) tDay.className = "px-3 py-1.5 rounded-md " + (tabType === 'day' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+            if (tMonth) tMonth.className = "px-3 py-1.5 rounded-md " + (tabType === 'month' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+            if (tYear) tYear.className = "px-3 py-1.5 rounded-md " + (tabType === 'year' ? 'bg-white text-slate-900 shadow' : 'text-slate-500');
+
+            generateFilterGrid();
+        }
+
+        // AUTO CALENDAR GENERATOR (No borders, simple bold underlines) [1]
+        function generateFilterGrid() {
+            var gridArea = document.getElementById('filterGridArea');
+            if (!gridArea) return;
+            gridArea.innerHTML = "";
+
+            if (calendarModeType === 'day') {
+                var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                
+                var headerHTML = 
+                    '<div class="col-span-7 flex justify-between items-center px-2 py-1 font-bold text-sm text-slate-800 border-b pb-2">' +
+                        '<button onclick="changeCalMonth(-1)">◀</button>' +
+                        '<span>' + monthNames[calMonth] + ' ' + calYear + '</span>' +
+                        '<button onclick="changeCalMonth(1)">▶</button>' +
+                    '</div>';
+                
+                gridArea.innerHTML = headerHTML;
+
+                var weekdays = ["S", "M", "T", "W", "T", "F", "S"];
+                for (var i = 0; i < weekdays.length; i++) {
+                    gridArea.insertAdjacentHTML('beforeend', '<span class="text-center font-black text-[10px] text-slate-400 py-1">' + weekdays[i] + '</span>');
+                }
+
+                var firstDayIdx = new Date(calYear, calMonth, 1).getDay();
+                var totalDays = new Date(calYear, calMonth + 1, 0).getDate();
+
+                for (var space = 0; space < firstDayIdx; space++) {
+                    gridArea.insertAdjacentHTML('beforeend', '<span></span>');
+                }
+
+                // Render day buttons borderless [1]
+                for (var d = 1; d <= totalDays; d++) {
+                    var dStr = String(d).padStart(2, '0');
+                    var mStr = String(calMonth + 1).padStart(2, '0');
+                    var fullDateVal = calYear + '-' + mStr + '-' + dStr;
+                    
+                    var isSelected = (selectedGridVal === fullDateVal);
+                    var btnClass = isSelected ? "text-center font-black text-sm text-slate-900 underline" : "text-center text-sm font-semibold text-slate-500 hover:text-slate-900";
+                    
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectCalDate(\'' + fullDateVal + '\')" class="' + btnClass + '">' + d + '</button>');
+                }
+            } else if (calendarModeType === 'month') {
+                // borderless text months [1]
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                for (var m = 0; m < months.length; m++) {
+                    var mVal = String(m + 1).padStart(2, '0');
+                    var isSelected = (selectedGridVal === mVal);
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + mVal + '\')" class="' + btnClass + '">' + months[m] + '</button>');
+                }
+            } else {
+                // borderless text years [1]
+                var years = ["2025", "2026", "2027", "2028"];
+                for (var y = 0; y < years.length; y++) {
+                    var isSelected = (selectedGridVal === years[y]);
+                    var btnClass = isSelected ? "p-2 text-sm font-black text-slate-900 underline col-span-2" : "p-2 text-sm font-semibold text-slate-500 hover:text-slate-800 col-span-2";
+                    gridArea.insertAdjacentHTML('beforeend', '<button onclick="selectGridValue(\'' + years[y] + '\')" class="' + btnClass + '">' + years[y] + '</button>');
+                }
+            }
+        }
+
+        function changeCalMonth(dir) {
+            calMonth += dir;
+            if (calMonth < 0) {
+                calMonth = 11;
+                calYear -= 1;
+            } else if (calMonth > 11) {
+                calMonth = 0;
+                calYear += 1;
+            }
+            generateCalendarDayGrid();
+        }
+
+        function generateCalendarDayGrid() {
+            generateFilterGrid();
+        }
+
+        function selectCalDate(dateVal) {
+            selectedGridVal = dateVal;
+            generateCalendarDayGrid(); 
+        }
+
+        function selectGridValue(val) {
+            selectedGridVal = val;
+            generateFilterGrid();
+        }
+
+        function applyFilterDirect() {
+            if (!selectedGridVal) {
+                alert("Please select a date from the calendar!");
+                return;
+            }
+
+            var now = new Date();
+            var targetFilterString = "";
+
+            if (calendarModeType === 'day') {
+                targetFilterString = selectedGridVal; 
+            } else if (calendarModeType === 'month') {
+                targetFilterString = now.getFullYear() + "-" + selectedGridVal; 
+            } else {
+                targetFilterString = selectedGridVal; 
+            }
+
+            closeFilterModal();
+
+            if (calendarFilterTarget === 'category') {
+                activeFilter = targetFilterString;
+                var displayLabels = { "day": "Day", "month": "Month", "year": "Year" };
+                safeSetText('categoryActiveTimeframe', displayLabels[calendarModeType] + ": " + selectedGridVal);
+                calculateCategoryGrid();
+            } else {
+                filterLogBySpecificDate(targetFilterString);
+            }
+            selectedGridVal = ""; 
+        }
+
+        function openManualPaidByModal() {
+            isManualFormPayerSelection = true;
+            safeClass('paymentModal', 'remove', 'hidden');
+            document.getElementById('paymentModalTitle').innerText = "Select Who Paid (ఎవరు చెల్లించారు?)";
+        }
+
+        // ==================== CLOUD DATABASE SYNC ====================
+        function enableCloudSync() {
+            var url = document.getElementById('syncUrl').value.trim();
+            var key = document.getElementById('syncKey').value.trim();
+            if (!url || !key) { alert("Please fill in both fields."); return; }
+            if (url.substring(url.length - 1) === '/') { url = url.substring(0, url.length - 1); }
+            safeStorage.setItem('sync_url', url); safeStorage.setItem('sync_key', key);
+            alert("Database linked! Syncing current records...");
+            loadExpenses();
+        }
+
+        function disableCloudSync() {
+            safeStorage.removeItem('sync_url'); safeStorage.removeItem('sync_key');
+            document.getElementById('syncUrl').value = ""; document.getElementById('syncKey').value = "";
+            alert("Switched to Local Offline Mode!");
+            loadExpenses();
+        }
+
+        function saveToLocalAndCloud(expensesArray) {
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expensesArray));
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
+                var lastItem = expensesArray[expensesArray.length - 1];
+                if (!lastItem) return;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url + '/rest/v1/expenses', true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                xhr.setRequestHeader("Content-Type", "application/json"); xhr.setRequestHeader("Prefer", "resolution=merge-duplicates");
+                xhr.send(JSON.stringify(lastItem));
+            }
+        }
+
+        // BUDGETS
+        function loadSavedBudgets() {
+            var d = safeStorage.getItem('budget_daily') || "500";
+            var w = safeStorage.getItem('budget_weekly') || "3000";
+            var m = safeStorage.getItem('budget_monthly') || "12000";
+            var elD = document.getElementById('budgetDailyInput'), elW = document.getElementById('budgetWeeklyInput'), elM = document.getElementById('budgetMonthlyInput');
+            if (elD) elD.value = d; if (elW) elW.value = w; if (elM) elM.value = m;
+        }
+
+        function saveBudgets() {
+            safeStorage.setItem('budget_daily', document.getElementById('budgetDailyInput').value);
+            safeStorage.setItem('budget_weekly', document.getElementById('budgetWeeklyInput').value);
+            safeStorage.setItem('budget_monthly', document.getElementById('budgetMonthlyInput').value);
+            alert("Budgets updated successfully!");
+            calculateSummaryData();
+        }
+
+        // AUTO CATEGORIZE SYNONYMS MAP
+        function detectCategory(itemName) {
+            var name = itemName.toLowerCase();
+            if (name.indexOf('milk') !== -1 || name.indexOf('పాలు') !== -1 || name.indexOf('packet') !== -1 || name.indexOf('ప్యాకెట్') !== -1) return 'Milk';
+            if (name.indexOf('curd') !== -1 || name.indexOf('పెరుగు') !== -1) return 'Curd';
+            if (name.indexOf('egg') !== -1 || name.indexOf('guddu') !== -1 || name.indexOf('gudlu') !== -1 || name.indexOf('గుడ్లు') !== -1 || name.indexOf('గుడ్డు') !== -1) return 'Eggs';
+            if (name.indexOf('chicken') !== -1 || name.indexOf('chiken') !== -1 || name.indexOf('చికెన్') !== -1) return 'Chicken';
+            if (name.indexOf('mutton') !== -1 || name.indexOf('మటన్') !== -1 || name.indexOf('goat') !== -1 || name.indexOf('lamb') !== -1) return 'Mutton';
+            if (name.indexOf('fish') !== -1 || name.indexOf('చేప') !== -1 || name.indexOf('చేపలు') !== -1 || name.indexOf('prawns') !== -1) return 'Fish';
+            
+            var veg = ['tomato', 'tomatoes', 'onion', 'onions', 'potato', 'potatoes', 'chilli', 'mirchi', 'vegetable', 'vegetables', 'కూరగాయలు', 'టమోటా', 'ఉల్లిపాయలు', 'బంగాళాదుంపలు', 'క్యారెట్', 'carrot', 'carrots', 'beans', 'okra', 'ladyfinger', 'brinjal', 'వంకాయ', 'cucumber', 'gourd'];
+            for (var i = 0; i < veg.length; i++) { if (name.indexOf(veg[i]) !== -1) return 'Vegetables'; }
+
+            var kir = ['kirana', 'provisions', 'dmart', 'grocery', 'groceries', 'supermarket', 'సామాన్లు', 'కిరాణా', 'సరుకులు', 'నెల సామాన్లు'];
+            for (var k = 0; k < kir.length; k++) { if (name.indexOf(kir[k]) !== -1) return 'Monthly Kirana'; }
+
+            var oil = ['oil', 'cooking oil', 'sunflower oil', 'nune', 'నూనె', 'ఆయిల్'];
+            for (var o = 0; o < oil.length; o++) { if (name.indexOf(oil[o]) !== -1) return 'Oil'; }
+
+            if (name.indexOf('tiffin') !== -1 || name.indexOf('breakfast') !== -1 || name.indexOf('టిఫిన్') !== -1 || name.indexOf('ఇడ్లీ') !== -1 || name.indexOf('దోస') !== -1 || name.indexOf('idly') !== -1) return 'Tiffins';
+            return 'Other expenses';
+        }
+
+        // MIC INPUT
+        function setSpeechLanguage(lang) {
+            speechLanguage = lang;
+            var btnTe = document.getElementById('btnTe');
+            var btnEn = document.getElementById('btnEn');
+            if (lang === 'te-IN') {
+                if (btnTe) { btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm"; }
+                if (btnEn) { btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600"; }
+            } else {
+                if (btnTe) { btnTe.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-100 text-slate-600"; }
+                if (btnEn) { btnEn.className = "px-4 py-1 text-xs font-bold rounded-full bg-slate-900 text-white shadow-sm"; }
+            }
+        }
+
+        // BILINGUAL LOGIC
+        function convertWordsToNumbers(text) {
+            var t = text.toLowerCase();
+            var words = {
+                "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10,
+                "double": 2, "dozen": 12, "half": 0.5, "pack": 1, "packet": 1,
+                "fifteen": 15, "twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90, "hundred": 100,
+                "సగం": 0.5, "అర": 0.5, "ఒకటి": 1, "ఒక": 1, "రెండు": 2, "మూడు": 3, "నాలుగు": 4, "ఐదు": 5, "ఆరు": 6, "ఏడు": 7, "ఎనిమిది": 8, "తొమ్మిది": 9, "పది": 10,
+                "పదిహేను": 15, "ఇరవై": 20, "ముప్పై": 30, "నలభై": 40, "యాభై": 50, "అరవై": 60, "డెబ్బై": 70, "ఎనభై": 80, "తొంభై": 90, "వంద": 100
+            };
+            for (var key in words) {
+                t = t.replace(new RegExp(key, 'g'), words[key]);
+            }
+            return t;
+        }
+
+        function startListening() {
+            var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRec) { alert("Voice typing is not supported on this browser."); return; }
+            var rec = new SpeechRec(); rec.continuous = false; rec.interimResults = false; rec.lang = speechLanguage;
+            var txt = document.getElementById('statusText'), mic = document.getElementById('micBtn');
+
+            rec.onstart = function() {
+                if (txt) txt.innerText = translations[uiLanguage].statusListening;
+                if (mic) { mic.classList.add('bg-slate-300', 'animate-pulse'); mic.classList.remove('bg-slate-100'); }
+            };
+            rec.onend = function() {
+                if (txt) txt.innerText = translations[uiLanguage].statusIdle;
+                if (mic) { mic.classList.remove('bg-slate-300', 'animate-pulse'); mic.classList.add('bg-slate-100'); }
+            };
+            rec.onresult = function(event) {
+                var textResult = event.results[0][0].transcript;
+                processVoiceText(textResult);
+            };
+            rec.onerror = function(event) {
+                if (event.error === 'not-allowed') {
+                    alert("Mic Access Denied!\nPlease check browser settings and allow Microphone permissions.");
+                } else if (event.error === 'no-speech') {
+                    alert("No speech detected.");
+                } else {
+                    alert("Microphone Error: " + event.error);
+                    speechLanguage = 'en-IN';
+                }
+            };
+            rec.start();
+        }
+
+        function processVoiceText(rawText) {
+            var text = convertWordsToNumbers(rawText);
+            var amount = "", qty = 1, item = rawText;
+            var matches = text.match(/\d+(\.\d+)?/g);
             if (matches) {
                 if (matches.length === 1) {
                     amount = matches[0];
@@ -1495,11 +2136,7 @@
             document.getElementById('itemName').value = target.name;
             document.getElementById('itemAmount').value = target.amount;
             document.getElementById('itemQty').value = target.qty;
-            
             document.getElementById('paidBy').value = target.paid_by;
-            var labelMap = { "Unpaid": "Unpaid / Credit Tab (ఉంచాము)", "Ganesh": "Ganesh", "Sujatha": "Sujatha", "Hari": "Hari", "Other": "Other (ఇతరులు)" };
-            document.getElementById('manualPaidByTrigger').innerText = labelMap[target.paid_by] || target.paid_by;
-
             if (target.photo) {
                 tempCompressedPhoto = target.photo;
                 var pr = document.getElementById('imagePreview');
@@ -1518,17 +2155,16 @@
         }
 
         function deleteExpenseLocal(id) {
-            appConfirm("Delete Expense", "Are you sure you want to delete this expense?", function() {
-                var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
-                if (url && key) {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
-                    xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
-                    xhr.send();
-                }
-                expenses = expenses.filter(function(exp) { return exp.id !== id; });
-                safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
-            });
+            if (!confirm("Delete this expense?")) return;
+            var url = safeStorage.getItem('sync_url'), key = safeStorage.getItem('sync_key');
+            if (url && key) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE", url + '/rest/v1/expenses?id=eq.' + id, true);
+                xhr.setRequestHeader("apikey", key); xhr.setRequestHeader("Authorization", "Bearer " + key);
+                xhr.send();
+            }
+            expenses = expenses.filter(function(exp) { return exp.id !== id; });
+            safeStorage.setItem('family_expenses_data', JSON.stringify(expenses)); loadExpenses();
         }
 
         // ==================== CLEAR DUELS (SECURED) ====================
@@ -1838,3 +2474,5 @@
     </script>
 </body>
 </html>
+```
+
